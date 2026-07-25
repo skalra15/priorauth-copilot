@@ -1,0 +1,18 @@
+{
+  "policy_id": "L33591",
+  "variant": "meets_all",
+  "target_criterion_id": null,
+  "note_text": "Patient is a 34-year-old woman presenting with a 6-month history of recurrent episodes of sneezing, nasal congestion, and itchy watery eyes that occur predominantly in the spring and early summer, with occasional urticaria after spending time outdoors near freshly cut grass. She also reports mild wheezing after visiting a friend's home with several cats.\n\nHistory: No prior allergy testing. Denies food-related symptoms, anaphylaxis, or angioedema. No history of asthma exacerbations requiring hospitalization. Family history notable for allergic rhinitis in mother.\n\nPhysical exam: Alert, comfortable, in no acute distress. HEENT: pale, boggy nasal turbinates bilaterally with clear rhinorrhea; conjunctivae mildly injected without discharge; oropharynx clear. Lungs: mild end-expiratory wheeze bilaterally on forced expiration, otherwise clear. Skin: no active urticaria at time of visit, no dermatographism elicited. Cardiovascular exam unremarkable.\n\nAssessment: Findings on history and physical exam (seasonal pattern of symptoms, nasal mucosal changes, exam evidence of possible reactive airway component, and reported exposure-related urticaria) are consistent with allergic rhinoconjunctivitis with possible sensitization to grass pollen and cat dander. Given the clinical picture, in-vivo skin testing is deferred due to patient's use of daily antihistamines that cannot be safely discontinued given symptom severity.\n\nPlan: Based on the specific findings from this history and physical exam, will order serum-specific IgE (RAST/FAST) testing for a targeted panel including timothy grass, mixed grass pollens, and cat epithelium to confirm sensitization pattern and guide allergen avoidance counseling and consideration of immunotherapy. Will follow up in 2 weeks with results to finalize management plan.",
+  "addressed_required_ids": [
+    "c1"
+  ],
+  "triggered_exclusion_ids": [],
+  "expected_verdicts": {
+    "c1": "met",
+    "c2": "not_met",
+    "c3": "not_met",
+    "c4": "not_met",
+    "c5": "not_met",
+    "c6": "not_met"
+  }
+}

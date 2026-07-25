@@ -1,0 +1,27 @@
+{
+  "policy_id": "L34056",
+  "variant": "meets_all",
+  "target_criterion_id": null,
+  "note_text": "CC: Urinary urgency, frequency, and intermittent leakage x 6 months\n\nHPI: 68-year-old woman presents with a 6-month history of urinary urgency, daytime frequency (voiding every 1-2 hours), and episodes of urge incontinence occurring several times weekly, requiring pad use. She denies dysuria, gross hematuria, or fever. She has failed a trial of behavioral modification (timed voiding, fluid management) and a 4-week trial of an anticholinergic (oxybutynin) without adequate symptom relief. She reports some sensation of incomplete emptying but no significant straining to void.\n\nPMH: Hypertension, type 2 diabetes mellitus (well-controlled), no prior pelvic surgery.\n\nPhysical Exam: Abdomen soft, nontender, no palpable bladder distension. Pelvic exam reveals well-supported vaginal walls, no evidence of significant prolapse. Neurologic exam of lower extremities and perineal sensation intact, normal rectal tone.\n\nLabs: Urinalysis with microscopy performed today in office: negative for leukocyte esterase, negative nitrites, no bacteria or WBCs seen on microscopy, no hematuria. Urine culture not indicated given clean urinalysis.\n\nAssessment: Refractory overactive bladder with mixed features, failed conservative and first-line pharmacologic therapy. Given persistent symptoms despite treatment, and negative infectious workup, urodynamic evaluation is indicated to characterize detrusor function, assess for detrusor overactivity vs outlet obstruction, and guide decision-making regarding third-line therapy (sacral neuromodulation vs onabotulinumtoxinA).\n\nPlan: Schedule multichannel urodynamic study (filling cystometry with pressure-flow voiding study) limited to the studies necessary to clarify the etiology of her voiding dysfunction \u2014 no additional testing beyond what is needed for this purpose. Will use findings to determine candidacy for third-line therapy. Continue current medications. Follow up after urodynamics to discuss results and next steps.",
+  "addressed_required_ids": [
+    "c1",
+    "c2",
+    "c3",
+    "c5",
+    "c6",
+    "c7"
+  ],
+  "triggered_exclusion_ids": [],
+  "expected_verdicts": {
+    "c1": "met",
+    "c2": "met",
+    "c3": "met",
+    "c4": "insufficient_evidence",
+    "c5": "met",
+    "c6": "met",
+    "c7": "met",
+    "c8": "not_met",
+    "c9": "not_met",
+    "c10": "not_met"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "policy_id": "L35222",
+  "variant": "fails_one",
+  "target_criterion_id": "c1",
+  "note_text": "CLINIC NOTE - PAIN MANAGEMENT\n\nChief Complaint: Bilateral foot and lower leg burning pain in a patient with known diabetic peripheral neuropathy.\n\nHistory of Present Illness: The patient is a 64-year-old with a 12-year history of type 2 diabetes mellitus complicated by symmetric distal sensorimotor peripheral neuropathy, presenting with progressively worsening burning, tingling pain in both feet and distal lower legs, worse at night, with associated allodynia to light touch. HbA1c is 8.4%. The patient has tried gabapentin, duloxetine, and topical lidocaine patches with only partial relief and is requesting further intervention for pain control.\n\nPast Medical History: Type 2 diabetes mellitus with diabetic peripheral neuropathy, hypertension, hyperlipidemia.\n\nExam: Symmetric stocking-distribution decreased sensation to light touch, vibration, and pinprick bilaterally to mid-shin. Diminished ankle reflexes bilaterally. No focal motor deficit. Skin intact, no ulceration.\n\nAssessment: Diabetic peripheral neuropathy (polyneuropathy secondary to underlying systemic diabetes mellitus) with inadequate pain control on oral neuropathic agents.\n\nPlan: Given the patient's ongoing severe symptoms despite optimized oral pharmacotherapy, discussed proceeding with bilateral peripheral nerve blocks (tibial and common peroneal) for symptomatic relief of the diabetic peripheral neuropathy pain. Risks, benefits, and alternatives discussed. Will schedule nerve block procedure. Continue current oral regimen and diabetes management with endocrinology. Follow up in 2 weeks post-procedure to assess response.",
+  "addressed_required_ids": [],
+  "triggered_exclusion_ids": [
+    "c1"
+  ],
+  "expected_verdicts": {
+    "c1": "met",
+    "c2": "not_met",
+    "c3": "not_met",
+    "c4": "not_met",
+    "c5": "not_met"
+  }
+}

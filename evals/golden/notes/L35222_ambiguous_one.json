@@ -1,0 +1,15 @@
+{
+  "policy_id": "L35222",
+  "variant": "ambiguous_one",
+  "target_criterion_id": "c3",
+  "note_text": "Patient is a 54-year-old male referred to pain management for evaluation of persistent left lower extremity pain. He reports a well-localized, sharp, burning pain along the distribution of the common peroneal nerve following a knee dislocation and surgical repair 4 months ago. Pain is exacerbated by ambulation and pressure over the fibular head. Tinel's sign is positive over the fibular neck. There is no numbness or tingling elsewhere in the body, and the patient denies any diabetes, thyroid disease, autoimmune disorders, or other systemic illness. Prior conservative measures including gabapentin, physical therapy, and NSAIDs have provided only partial relief.\n\nOn exam, strength is 4/5 in ankle dorsiflexion on the left with preserved reflexes. Sensory exam shows diminished light touch limited to the lateral lower leg and dorsum of the foot, consistent with a single peripheral nerve territory.\n\nPlan: Discussed with patient the option of a diagnostic/therapeutic common peroneal nerve block under ultrasound guidance to localize the source of pain and provide symptomatic relief prior to consideration of surgical neurolysis. Risks, benefits, and alternatives were reviewed, and the patient wishes to proceed. Will schedule single-injection nerve block at fibular neck under ultrasound guidance in the next available slot. Follow-up in 2 weeks to assess response.",
+  "addressed_required_ids": [],
+  "triggered_exclusion_ids": [],
+  "expected_verdicts": {
+    "c1": "not_met",
+    "c2": "not_met",
+    "c3": "insufficient_evidence",
+    "c4": "not_met",
+    "c5": "not_met"
+  }
+}

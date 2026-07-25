@@ -1,0 +1,17 @@
+{
+  "policy_id": "L33922",
+  "variant": "meets_all",
+  "target_criterion_id": null,
+  "note_text": "CHIEF COMPLAINT: Painful thickened toenails, difficulty ambulating\n\nHISTORY OF PRESENT ILLNESS:\nPatient is a 74-year-old ambulatory male with long-standing type 2 diabetes mellitus who presents to podiatry clinic for routine foot care and evaluation of his toenails. He reports that his great toenails have become progressively thickened and discolored over the past several years. Over the last 2-3 months he notes increasing pain with weight-bearing and states that his shoes no longer fit comfortably, which has caused him to shorten his daily walks and limit time on his feet due to discomfort.\n\nPAST MEDICAL HISTORY: Type 2 diabetes mellitus with peripheral neuropathy, peripheral arterial disease (mild), hypertension.\n\nMEDICATIONS: Metformin, lisinopril. Patient completed a 12-week course of oral terbinafine approximately 18 months ago prescribed by his primary care physician with only modest improvement in nail appearance.\n\nPHYSICAL EXAM:\nVascular: Pedal pulses palpable but diminished bilaterally, capillary refill slightly delayed.\nNeurologic: Decreased protective sensation to monofilament testing bilaterally, consistent with diabetic peripheral neuropathy.\nDermatologic/Nail exam: Bilateral hallux toenails markedly thickened (onychauxis) with yellow-brown discoloration, extensive subungual hyperkeratotic debris, and onycholysis of the distal nail plate. Mild periungual erythema of the right great toe consistent with early secondary infection. No frank purulence. Nail plates are dystrophic and irregular in contour, causing pressure against the toe box of the shoe with ambulation.\n\nASSESSMENT:\nOnychomycosis of bilateral great toenails with associated pain and marked limitation of ambulation attributable to nail plate thickening and dystrophy, complicated by early secondary periungual infection on the right. Given the patient's diabetic neuropathy and peripheral vascular disease, he is at increased risk for skin breakdown, and self-care of the nails is unsafe. Patient completed an adequate trial of systemic oral antifungal therapy (terbinafine) previously without full mycologic cure, and given his hepatic function borderline elevated on recent labs, further systemic antifungal therapy is being deferred at this time in favor of mechanical debridement and topical antifungal management.\n\nPLAN:\n1. Mechanical debridement of bilateral hallux nail plates performed today in-office using a nail drill/burr, reducing bulk and length to relieve pressure and pain.\n2. Continue topical ciclopirox lacquer to affected nails.\n3. Diabetic foot care education reinforced; return to clinic in 9-10 weeks for repeat debridement given ongoing mycotic involvement and inability to safely self-trim.\n4. Monitor right great toe for progression of secondary infection; will start topical antibiotic ointment if worsens.\n",
+  "addressed_required_ids": [
+    "c1",
+    "c2",
+    "c3"
+  ],
+  "triggered_exclusion_ids": [],
+  "expected_verdicts": {
+    "c1": "met",
+    "c2": "met",
+    "c3": "met"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "policy_id": "L38303",
+  "variant": "meets_all",
+  "target_criterion_id": null,
+  "note_text": "Urology Clinic Note\n\nPatient: 61-year-old male, otherwise healthy, no significant comorbidities, ECOG 0.\n\nHistory: Patient presented with an elevated PSA of 6.8 ng/mL on routine screening. Subsequent 12-core transrectal ultrasound-guided prostate biopsy revealed Gleason 3+4=7 (Grade Group 2) adenocarcinoma in 2 of 12 cores, with the largest core showing 7 mm of linear tumor involvement. Staging with digital rectal exam, bone scan, and pelvic MRI showed no evidence of extraprostatic extension, seminal vesicle invasion, or distant metastatic disease. Clinical stage T1c, NccN intermediate risk.\n\nLife expectancy: Patient has no significant cardiovascular, pulmonary, or renal disease; Charlson comorbidity index low. Estimated life expectancy is well over 10 years based on age and overall health status.\n\nTreatment history: Patient is treatment-naive \u2014 has not received any pelvic radiation therapy or androgen deprivation therapy prior to biopsy. Biopsy tissue was collected and processed as FFPE with confirmed tumor content of 7 mm linear extent in the dominant core, adequate for molecular testing per pathology report.\n\nAssessment/Plan: Given the intermediate-risk classification, patient is currently deciding between active surveillance versus definitive treatment (radical prostatectomy or radiotherapy). To help refine this treatment decision-making process in accordance with NCCN guideline-based risk stratification, we are ordering a genomic classifier assay (e.g., Decipher) on the FFPE biopsy tissue with adequate tumor content as above. Results will be reviewed at follow-up visit to guide the shared decision between surveillance and active treatment, per established practice guidelines.\n\nPatient will continue to be followed with serial PSA measurements every 3 months and repeat biopsy/MRI as clinically indicated per standard active surveillance monitoring protocol regardless of chosen pathway, to monitor for disease progression.\n\nFollow-up scheduled in 3 weeks to discuss genomic classifier results and finalize treatment plan.\n",
+  "addressed_required_ids": [
+    "c1",
+    "c2",
+    "c3",
+    "c4",
+    "c5",
+    "c6",
+    "c7"
+  ],
+  "triggered_exclusion_ids": [],
+  "expected_verdicts": {
+    "c1": "met",
+    "c2": "met",
+    "c3": "met",
+    "c4": "met",
+    "c5": "met",
+    "c6": "met",
+    "c7": "met"
+  }
+}

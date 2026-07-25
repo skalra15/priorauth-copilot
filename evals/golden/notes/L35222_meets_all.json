@@ -1,0 +1,15 @@
+{
+  "policy_id": "L35222",
+  "variant": "meets_all",
+  "target_criterion_id": null,
+  "note_text": "CC: Right-sided facial pain and numbness following dental extraction.\n\nHPI: 42-year-old woman presents with 6 weeks of persistent burning pain and numbness in the distribution of the right mental nerve following a lower right third molar extraction 8 weeks ago. She describes constant burning, allodynia to light touch over the chin, and intermittent electric shock-like pain triggered by chewing. No history of diabetes, no history of alcohol use disorder, no renal disease, no chemotherapy exposure, and no other systemic illness. She has failed a 4-week trial of gabapentin (titrated to 900 mg TID) and a 2-week course of nortriptyline due to inadequate relief and intolerable sedation.\n\nPMH: Otherwise healthy. No diabetes mellitus, no HIV, no autoimmune disease, no history of chemotherapy.\nMeds: Gabapentin (discontinuing), acetaminophen PRN.\nAllergies: NKDA.\n\nExam: Alert, oriented. Cranial nerves II-XII intact except for decreased light touch and pinprick sensation over the right chin and lower lip in the mental nerve distribution. Marked mechanical allodynia to light stroking. No motor deficits. Facial symmetry preserved. No signs of systemic neuropathy elsewhere (normal sensation in bilateral feet, normal gait, no other cranial nerve findings).\n\nAssessment: Post-traumatic mental nerve neuropathy secondary to dental extraction, isolated to a single peripheral nerve distribution. This is a focal, mononeuropathic process related to a discrete surgical/traumatic injury rather than a systemic disease process (e.g., diabetes, alcohol-related, chemotherapy-induced, or other polyneuropathy).\n\nPlan: Discussed diagnostic and therapeutic options given failure of conservative pharmacologic management. Given the localized nature of her mental nerve injury, will proceed with a single mental nerve block using local anesthetic (bupivacaine 0.5%) for diagnostic confirmation and symptomatic relief. Procedure and risks/benefits discussed; patient consents. Will perform a single injection today in clinic, without electrostimulation and without ultrasound guidance, given the easily palpable and reliably localized landmark at the mental foramen. Will reassess response in 2 weeks and consider repeat block or referral to oral/maxillofacial surgery if pain persists.",
+  "addressed_required_ids": [],
+  "triggered_exclusion_ids": [],
+  "expected_verdicts": {
+    "c1": "not_met",
+    "c2": "not_met",
+    "c3": "not_met",
+    "c4": "not_met",
+    "c5": "not_met"
+  }
+}

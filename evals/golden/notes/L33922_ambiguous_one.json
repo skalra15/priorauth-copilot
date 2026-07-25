@@ -1,0 +1,16 @@
+{
+  "policy_id": "L33922",
+  "variant": "ambiguous_one",
+  "target_criterion_id": "c1",
+  "note_text": "75-year-old male with type 2 diabetes and peripheral neuropathy presents to podiatry clinic for routine nail care. Patient reports increasing difficulty walking over the past two months due to discomfort at the toes when wearing shoes. He is ambulatory but uses a cane for balance. On exam, patient is noted to have several thickened toenails bilaterally, most notably the great toenails, which appear grossly overgrown and are catching on his socks. There is mild tenderness to palpation at the distal nail borders of the first and second toenails bilaterally, and the patient reports his gait has been affected as a result, favoring the lateral aspect of his feet to avoid pressure on the toes.\n\nNo overt drainage or malodor noted. Skin of the feet is dry with some fissuring at the heels, consistent with diabetic xerosis. Pedal pulses are diminished but palpable bilaterally. Sensation to monofilament testing is markedly reduced.\n\nGiven the patient's diabetes and neuropathy, along with the pain and gait limitation attributable to the thickened nail plates, nail debridement was performed today on all ten toenails using a nail nipper and rotary burr, with significant improvement in nail contour and reduction in mechanical irritation.\n\nPatient was previously trialed on oral terbinafine approximately one year ago but discontinued after four weeks due to elevated liver enzymes noted on routine labs; hepatology was consulted at the time and further systemic antifungal therapy was deemed inadvisable given his hepatic risk profile. Topical antifungal lacquer has been recommended as an alternative going forward.\n\nPlan: continue routine nail debridement every 9-10 weeks, diabetic foot care education reinforced, follow-up in 10 weeks.",
+  "addressed_required_ids": [
+    "c2",
+    "c3"
+  ],
+  "triggered_exclusion_ids": [],
+  "expected_verdicts": {
+    "c1": "insufficient_evidence",
+    "c2": "met",
+    "c3": "met"
+  }
+}

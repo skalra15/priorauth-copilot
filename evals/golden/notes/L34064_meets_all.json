@@ -1,0 +1,22 @@
+{
+  "policy_id": "L34064",
+  "variant": "meets_all",
+  "target_criterion_id": null,
+  "note_text": "CHIEF COMPLAINT: Blurred vision, right eye, in patient with longstanding diabetes.\n\nHISTORY: 58-year-old male with type 2 diabetes mellitus of 19 years duration, HbA1c 9.1%, presents for follow-up of diabetic eye disease. He reports progressive blurring of vision in the right eye over the past 2 months along with occasional floaters. No prior ocular laser treatment. He has been under close observation by our retina service for the past 6 months given evolving proliferative changes, with treatment deferred until now while risks and benefits were weighed against his stable vision at that time.\n\nEXAM: Visual acuity 20/40 OD, 20/25 OS. IOP 16 and 15 mmHg. Anterior segment unremarkable, no rubeosis. Dilated fundus exam OD reveals extensive intraretinal hemorrhages in all four quadrants, venous beading in two quadrants, prominent IRMA, and new neovascularization of the disc measuring approximately one disc diameter, along with scattered neovascularization elsewhere. No vitreous hemorrhage currently. OS shows moderate nonproliferative diabetic retinopathy without high-risk features.\n\nDIAGNOSTIC TESTING: Fluorescein angiography of the right eye confirms widespread capillary non-perfusion with leakage from disc and peripheral neovascular fronds, consistent with high-risk proliferative diabetic retinopathy. OCT macula OD shows no significant center-involving edema at this time.\n\nASSESSMENT: High-risk proliferative diabetic retinopathy, right eye, meeting criteria for prompt intervention now that the risk of vision-threatening complications (vitreous hemorrhage, tractional detachment) clearly outweighs the risks of treatment. This has progressed from the pre-proliferative stage that was being monitored serially.\n\nPLAN: Discussed findings and treatment options extensively with patient, including risks of panretinal photocoagulation (peripheral visual field constriction, transient worsening of central vision, need for possible repeat treatment) versus risks of continued observation (progression to vitreous hemorrhage, tractional retinal detachment, neovascular glaucoma). Patient elects to proceed with panretinal (scatter) laser photocoagulation of the right eye today. Procedure performed by myself (retina-trained ophthalmologist) using argon laser, approximately 1200-1400 spots placed in the mid and far peripheral retina sparing the macula, in standard scatter pattern over the temporal, superior, inferior, and nasal periphery in a single session. Patient tolerated procedure well. Will follow up in 4-6 weeks to assess regression of neovascularization and determine need for supplemental spots. No additional laser sessions planned within the global period unless regression is inadequate, in which case any supplemental treatment would be included in the initial procedure's global allowance per payer policy.",
+  "addressed_required_ids": [
+    "c1",
+    "c2",
+    "c3",
+    "c7"
+  ],
+  "triggered_exclusion_ids": [],
+  "expected_verdicts": {
+    "c1": "met",
+    "c2": "met",
+    "c3": "met",
+    "c4": "not_met",
+    "c5": "not_met",
+    "c6": "not_met",
+    "c7": "met"
+  }
+}

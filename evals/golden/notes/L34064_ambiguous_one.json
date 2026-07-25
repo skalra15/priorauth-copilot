@@ -1,0 +1,21 @@
+{
+  "policy_id": "L34064",
+  "variant": "ambiguous_one",
+  "target_criterion_id": "c1",
+  "note_text": "Ophthalmology Clinic - New Consultation\n\nCC: Referred for laser evaluation, blurry vision OD x 3 months.\n\nHPI: 58-year-old patient with longstanding type 2 diabetes mellitus referred by primary care for ophthalmologic evaluation given deteriorating vision and concern for retinal pathology. Patient reports gradual blurring of vision in the right eye over the past several months, no flashes or floaters currently, no eye pain. Denies prior eye surgery or laser treatment. Blood sugars have been poorly controlled per patient report, last HbA1c pending.\n\nPMH: Type 2 diabetes mellitus (duration ~12 years), hypertension, hyperlipidemia.\nMeds: Metformin, lisinopril, atorvastatin.\nAllergies: NKDA.\n\nExam:\nVA: OD 20/60, OS 20/30 (correction: glasses)\nIOP: OD 16, OS 15 mmHg\nAnterior segment: unremarkable bilaterally, clear corneas, quiet anterior chambers\nPupils: reactive, no APD\nDilated fundus exam: OD reveals scattered dot-blot hemorrhages, some microaneurysms, mild venous caliber changes; disc appears healthy without obvious neovascularization noted on this visit. OS with a few scattered microaneurysms and dot hemorrhages in the posterior pole.\nOCT: mild macular thickening OD, unremarkable OS.\n\nAssessment: Diabetic retinopathy, findings under further characterization. Will obtain fluorescein angiography and wide-field fundus photography for staging prior to finalizing management plan. Patient counseled extensively on importance of glycemic control and follow-up.\n\nPlan:\n- Wide-field fundus photography and FA to be scheduled\n- Follow-up in 4 weeks to review imaging and determine whether laser photocoagulation is indicated\n- Diabetes education reinforced; recommend close coordination with endocrinology for glucose optimization\n- Return sooner if new floaters, flashes, or acute vision changes\n",
+  "addressed_required_ids": [
+    "c2",
+    "c3",
+    "c7"
+  ],
+  "triggered_exclusion_ids": [],
+  "expected_verdicts": {
+    "c1": "insufficient_evidence",
+    "c2": "met",
+    "c3": "met",
+    "c4": "not_met",
+    "c5": "not_met",
+    "c6": "not_met",
+    "c7": "met"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "policy_id": "L38303",
+  "variant": "fails_one",
+  "target_criterion_id": "c4",
+  "note_text": "Urology Clinic Follow-up Note\n\nPatient: 62-year-old male, referred by primary care for elevated PSA (6.1 ng/mL) found on routine screening.\n\nHistory: No prior history of prostate cancer. No prior pelvic radiation or androgen deprivation therapy. Digital rectal exam notable for a subtle nodule in the right lobe. Patient is otherwise healthy, active, ambulatory, no significant comorbidities. Estimated life expectancy well in excess of 10 years given age and overall good health.\n\nBiopsy: Transrectal ultrasound-guided 12-core prostate biopsy performed two weeks ago. Pathology reveals Gleason 3+4=7 adenocarcinoma involving 2 of 12 cores from the right base and right mid gland. Imaging (bone scan and pelvic CT) negative for metastatic disease. Clinical stage T1c, N0, M0.\n\nAssessment: This is clinically localized prostate adenocarcinoma. Patient is an appropriate candidate for active surveillance versus definitive local therapy (radical prostatectomy vs. radiation), and he is actively weighing these options with his family.\n\nPlan: Given the intermediate-risk features, a genomic classifier assay was ordered to help refine risk stratification and guide the treatment decision per NCCN guideline recommendations. Result will be used, together with clinical/pathologic parameters, to determine whether the patient proceeds with active surveillance or definitive treatment.\n\nTissue submitted for the assay: the pathology lab reviewed the biopsy slides and found that although tumor was identified in two cores, the maximum linear extent of tumor in any single core measured only 0.3 mm, well below the threshold typically required for reliable genomic assay performance. The lab flagged this as a limited-quantity specimen and noted the sample may not meet minimum tissue adequacy standards for the assay; the reference laboratory was informed of this limitation prior to processing.\n\nPatient counseled that if the assay is unable to be validly performed or interpreted due to insufficient tumor tissue, we will proceed with standard risk-stratification tools and repeat discussion of surveillance versus treatment based on clinical and pathologic factors alone.\n\nFollow-up scheduled in 4 weeks to review genomic assay result (if obtainable) and finalize treatment plan. Patient will continue to be monitored per standard of care with serial PSA and surveillance biopsies if active surveillance is ultimately chosen.\n",
+  "addressed_required_ids": [
+    "c1",
+    "c2",
+    "c3",
+    "c5",
+    "c6",
+    "c7"
+  ],
+  "triggered_exclusion_ids": [],
+  "expected_verdicts": {
+    "c1": "met",
+    "c2": "met",
+    "c3": "met",
+    "c4": "not_met",
+    "c5": "met",
+    "c6": "met",
+    "c7": "met"
+  }
+}

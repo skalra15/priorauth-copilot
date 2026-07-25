@@ -1,0 +1,40 @@
+{
+  "policy_id": "L39849",
+  "variant": "fails_one",
+  "target_criterion_id": "c18",
+  "note_text": "OPIOID TREATMENT PROGRAM - PERIODIC ASSESSMENT\n\nPatient: 41-year-old male, enrolled in OTP for methadone maintenance, diagnosed with Opioid Use Disorder, severe, per DSM-5 criteria (confirmed at intake 5 months ago). Patient voluntarily continues maintenance treatment and reports no desire to taper at this time.\n\nInterval history: Patient presents for scheduled periodic visit, currently stable on methadone 110 mg daily. States he continues to attend dosing 6 days/week and picks up take-home doses on Sundays without incident.\n\nDrug abuse testing review: Urine drug screen collected today; last three consecutive screens (documented in chart) were negative for illicit opioids, cocaine, and benzodiazepines; positive only for prescribed methadone. Counselor confirms compliance with testing schedule, no missed collections in this period.\n\nPsychosocial needs: Patient reports stable housing, has re-established contact with his sister, and continues part-time employment at a warehouse. He denies any unmet psychosocial needs at this time; counseling sessions continue weekly with his assigned case manager, no gaps identified.\n\nNecessity for visit: Visit substantiated as scheduled monthly medical review required per program protocol for continued methadone dispensing and dose management; patient also requested visit due to mild GI upset attributed to dose, wanted to discuss.\n\nVitals: BP 122/78, HR 76, RR 14, afebrile. Alert, cooperative, no acute distress. Pupils midsize, reactive. No withdrawal signs noted (COWS not indicated today).\n\nPlan: Continue methadone 110 mg daily unchanged, no dose adjustment ordered this visit. Continue take-home naloxone supply, patient confirms he still has kit at home, unused. Return to clinic in 4 weeks for next periodic review; continue counseling as scheduled.\n\nCare provided by program physician at certified OTP facility (SAMHSA/DEA certified, 42 CFR 8.11 compliant).\n\nRecord maintained in EHR available for MAC review upon request.",
+  "addressed_required_ids": [
+    "c1",
+    "c2",
+    "c3",
+    "c19",
+    "c20",
+    "c21",
+    "c22",
+    "c24"
+  ],
+  "triggered_exclusion_ids": [],
+  "expected_verdicts": {
+    "c1": "met",
+    "c2": "met",
+    "c3": "met",
+    "c4": "insufficient_evidence",
+    "c5": "insufficient_evidence",
+    "c6": "insufficient_evidence",
+    "c7": "insufficient_evidence",
+    "c8": "insufficient_evidence",
+    "c9": "insufficient_evidence",
+    "c10": "insufficient_evidence",
+    "c11": "insufficient_evidence",
+    "c12": "insufficient_evidence",
+    "c13": "insufficient_evidence",
+    "c14": "insufficient_evidence",
+    "c17": "insufficient_evidence",
+    "c18": "not_met",
+    "c19": "met",
+    "c20": "met",
+    "c21": "met",
+    "c22": "met",
+    "c24": "met"
+  }
+}

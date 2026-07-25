@@ -1,0 +1,16 @@
+{
+  "policy_id": "L33922",
+  "variant": "fails_one",
+  "target_criterion_id": "c3",
+  "note_text": "Patient is a 74-year-old ambulatory male with type 2 diabetes mellitus presenting to podiatry clinic for routine nail care. He reports increasing pain over the great toenails bilaterally, worse when wearing shoes, and difficulty walking distances greater than one block due to discomfort.\n\nOn exam: bilateral hallux toenails show marked yellow-brown discoloration, onycholysis, and significant subungual debris with thickening of the nail plate (>3mm). Mild erythema of the adjacent periungual skin on the right great toe consistent with secondary infection. No ulceration noted. Pedal pulses palpable, monofilament sensation diminished distally.\n\nAssessment: Onychomycosis, bilateral great toenails, with marked thickening and dystrophy causing pain and limitation of ambulation, complicated by mild secondary periungual infection.\n\nPlan: Discussed treatment options with patient including oral terbinafine and topical antifungal lacquer. Patient declined any antifungal medication at this time, stating he \"doesn't like taking extra pills\" and prefers to just have the nails trimmed periodically. No medical contraindication to antifungal therapy was identified (LFTs at baseline within normal limits, no drug interactions noted on current medication list). Proceeded with mechanical debridement of nails #1 and #2 today using nail nippers and burr to reduce thickness and remove subungual debris, improving pain with ambulation. Discussed risks of foregoing antifungal treatment and recommended reconsideration at next visit. Follow-up in 9-10 weeks for repeat debridement given diabetic foot care needs.",
+  "addressed_required_ids": [
+    "c1",
+    "c2"
+  ],
+  "triggered_exclusion_ids": [],
+  "expected_verdicts": {
+    "c1": "met",
+    "c2": "met",
+    "c3": "not_met"
+  }
+}

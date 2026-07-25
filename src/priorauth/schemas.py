@@ -101,6 +101,47 @@ class ExtractedCriteria(BaseModel):
 
 
 # --------------------------------------------------------------------------
+# Synthetic clinical notes ()
+# --------------------------------------------------------------------------
+
+
+class SyntheticNote(BaseModel):
+    note_text: str = Field(description="A realistic clinical note. Synthetic -- no real PHI, ever.")
+    variant: Literal["meets_all", "fails_one", "ambiguous_one"] = Field(
+        description=(
+            "'meets_all': documents one coherent, realistic clinical scenario that clearly "
+            "satisfies every required criterion that plausibly applies to it, and triggers no "
+            "exclusions. 'fails_one': same, except target_criterion_id, which it clearly fails "
+            "(or, for an exclusion criterion, clearly triggers). 'ambiguous_one': same, except "
+            "target_criterion_id, which the note is silent or ambiguous about."
+        )
+    )
+    target_criterion_id: str | None = Field(
+        default=None, description="Required for fails_one/ambiguous_one. Null for meets_all."
+    )
+    addressed_required_ids: list[str] = Field(
+        description=(
+            "IDs of the REQUIRED criteria this specific note's clinical scenario actually "
+            "addresses and clearly satisfies (excluding target_criterion_id for fails_one, "
+            "which is deliberately NOT satisfied). Some policies offer alternative, mutually "
+            "exclusive coverage pathways (e.g. 'covered for condition A' OR 'covered as an "
+            "adjunct to treatment B') -- one coherent note can only realistically document ONE "
+            "such pathway. Required criteria describing a pathway this note's scenario doesn't "
+            "pertain to must be OMITTED here, not force-included -- a checker reading this note "
+            "should correctly find no evidence for them, not incorrectly find them satisfied."
+        )
+    )
+    triggered_exclusion_ids: list[str] = Field(
+        default_factory=list,
+        description=(
+            "IDs of EXCLUSION criteria this note's scenario actually triggers (the excluding "
+            "circumstance is present). Normally empty for meets_all/ambiguous_one. For "
+            "fails_one with an exclusion-type target, include exactly that target here."
+        ),
+    )
+
+
+# --------------------------------------------------------------------------
 # Checking ()
 # --------------------------------------------------------------------------
 
@@ -128,6 +169,15 @@ class CriterionCheck(BaseModel):
     )
     reasoning: str = Field(description="One or two sentences. No hedging boilerplate.")
     confidence: float = Field(ge=0.0, le=1.0)
+
+
+class CriterionChecks(BaseModel):
+    """What the model actually produces for one note. The aggregate `decision`
+    below is computed deterministically from these in check.py, not asked of
+    the model -- required-met/exclusion-triggered logic is exact and auditable,
+    not something to spend a model call re-deriving each time."""
+
+    checks: list[CriterionCheck]
 
 
 class CoverageDecision(BaseModel):

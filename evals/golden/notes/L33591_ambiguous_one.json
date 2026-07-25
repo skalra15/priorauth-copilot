@@ -1,0 +1,18 @@
+{
+  "policy_id": "L33591",
+  "variant": "ambiguous_one",
+  "target_criterion_id": "c6",
+  "note_text": "Patient is a 34-year-old woman referred by her primary care physician for evaluation of recurrent episodes of urticaria, nasal congestion, and throat tightness occurring intermittently over the past six months. A detailed history and physical examination was performed today.\n\nHistory: Patient reports symptoms tend to occur within 30-60 minutes of eating certain seafood dishes, particularly shrimp and crab, with associated perioral tingling and hives on the trunk and arms. She denies wheezing or syncope. No history of anaphylaxis requiring epinephrine. She has tried avoiding shellfish for the past month with resolution of symptoms. Family history notable for atopic dermatitis in mother and allergic rhinitis in sister. No known drug allergies.\n\nPhysical exam: Vitals stable, afebrile. Skin exam without active lesions today. Nasal mucosa mildly edematous with clear discharge. Lungs clear to auscultation bilaterally, no wheeze. Oropharynx without edema. Cardiovascular exam unremarkable.\n\nAssessment: Clinical history and exam findings are consistent with IgE-mediated food allergy to crustacean shellfish. Given the temporal relationship between ingestion and onset of urticaria/angioedema symptoms, in-vitro specific IgE (RAST) testing is indicated to confirm sensitization to shrimp, crab, and related crustacean allergens, as skin testing is deferred due to her ongoing use of antihistamines that cannot be discontinued at this time.\n\nPlan:\n1. Serum specific IgE (RAST) panel for shrimp, crab, lobster, and dust mite (cross-reactivity concern) ordered today based on history and physical exam findings.\n2. Counseled patient on strict avoidance of shellfish pending results.\n3. Prescribed epinephrine auto-injector and reviewed proper use.\n4. Follow-up in 2 weeks to review RAST results and discuss further dietary modification or referral to allergy/immunology if results are equivocal.\n5. Discussed general food allergy education materials.\n",
+  "addressed_required_ids": [
+    "c1"
+  ],
+  "triggered_exclusion_ids": [],
+  "expected_verdicts": {
+    "c1": "met",
+    "c2": "not_met",
+    "c3": "not_met",
+    "c4": "not_met",
+    "c5": "not_met",
+    "c6": "insufficient_evidence"
+  }
+}

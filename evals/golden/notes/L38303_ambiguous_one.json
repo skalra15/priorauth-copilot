@@ -1,0 +1,24 @@
+{
+  "policy_id": "L38303",
+  "variant": "ambiguous_one",
+  "target_criterion_id": "c2",
+  "note_text": "64-year-old male referred to urology clinic after routine PSA screening returned elevated at 7.8 ng/mL. Transrectal ultrasound-guided prostate biopsy performed, 12-core sampling. Pathology reveals Gleason 3+4=7 adenocarcinoma involving 3 of 12 cores, with the dominant core showing 0.9 mm linear tumor extent. No prior pelvic radiation therapy or androgen deprivation therapy administered before biopsy. Digital rectal exam notes no palpable extraprostatic extension. Bone scan and pelvic CT obtained given intermediate-risk features; both negative for metastatic disease.\n\nPatient is currently weighing active surveillance versus definitive local therapy (radical prostatectomy vs. external beam radiation) and is quite anxious about overtreatment given his otherwise good health. Given the intermediate-risk classification and the ambiguity in risk stratification based on grade group alone, FFPE biopsy tissue (block confirmed to contain >0.5 mm linear tumor) was sent for genomic classifier testing (Decipher) to further inform the treatment decision per NCCN guideline-concordant use. Once results are available, they will be incorporated into the shared decision-making discussion regarding surveillance intensity versus intervention. Plan for follow-up PSA and repeat biopsy per active surveillance protocol if that pathway is chosen, or referral to radiation oncology/surgery if definitive treatment is pursued.\n\nPatient counseled on the plan, agreeable to proceeding with testing and follow-up as outlined. Will monitor with serial PSA every 3 months and repeat imaging as clinically indicated.",
+  "addressed_required_ids": [
+    "c1",
+    "c3",
+    "c4",
+    "c5",
+    "c6",
+    "c7"
+  ],
+  "triggered_exclusion_ids": [],
+  "expected_verdicts": {
+    "c1": "met",
+    "c2": "insufficient_evidence",
+    "c3": "met",
+    "c4": "met",
+    "c5": "met",
+    "c6": "met",
+    "c7": "met"
+  }
+}

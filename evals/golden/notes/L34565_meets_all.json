@@ -1,0 +1,27 @@
+{
+  "policy_id": "L34565",
+  "variant": "meets_all",
+  "target_criterion_id": null,
+  "note_text": "HOME HEALTH CERTIFICATION AND SKILLED NURSING/SLP VISIT NOTE\n\nPatient: 78-year-old male with history of left MCA ischemic stroke (3 weeks ago) resulting in moderate oropharyngeal dysphagia, confirmed on modified barium swallow study showing delayed pharyngeal swallow initiation and mild aspiration with thin liquids.\n\nPhysician of Record: Dr. A. Reyes, Internal Medicine, following patient in outpatient/home setting.\n\nFace-to-Face Encounter: Dr. Reyes evaluated the patient in person on 09/02/2024, 12 days prior to the start of home health care (start of care 09/14/2024), documenting the stroke-related dysphagia, decreased oral intake, and generalized deconditioning limiting safe ambulation. This encounter supports the need for skilled home health services and falls within the required window relative to start of care.\n\nHomebound Status: Patient requires the assistance of another person and a rolling walker to ambulate due to left-sided hemiparesis and poor balance; leaving the home requires considerable and taxing effort and is medically contraindicated except for physician visits. He has not left the home except for one follow-up medical appointment since discharge from rehab. This is documented in the intake assessment and updated at each visit.\n\nPlan of Care: A physician-signed and dated plan of care (signed by Dr. Reyes, 09/13/2024) is on file, specifying skilled speech-language pathology services three times weekly for four weeks for swallowing rehabilitation including surface neuromuscular electrical stimulation (NMES) as an adjunct to traditional dysphagia therapy exercises, along with skilled nursing for medication management and monitoring of nutritional status.\n\nSkilled Need: The SLP performed skilled bedside dysphagia treatment today including application of surface electrical stimulation electrodes to the anterior neck musculature in conjunction with effortful swallow exercises and thermal-tactile stimulation. Patient tolerated stimulation at 8mA without adverse effect. Skilled instruction was provided to the patient's spouse regarding safe swallowing strategies and diet texture modification (nectar-thick liquids, mechanical soft solids). This level of skilled intervention, titration of stimulation parameters, and ongoing assessment of swallow function requires the specialized judgment of a licensed SLP and cannot be safely or effectively performed by unskilled caregivers.\n\nProgress: Mild improvement noted in laryngeal elevation and reduced pocketing of food since initiation of therapy. Plan to continue current POC and reassess swallow function in 2 weeks with possible advancement of diet.\n\nRecertification Plan: Home health services were certified for an initial 60-day episode beginning 09/14/2024. Recertification will be completed and signed by the certifying physician on or before 11/13/2024 if continued skilled dysphagia therapy is warranted, consistent with the requirement for recertification at intervals not exceeding 60 days.\n\nDocumentation: This note, the signed plan of care, physician face-to-face encounter documentation, and homebound assessment are maintained in the patient's legible electronic medical record and are available for review by the A/B MAC upon request.\n\nSigned: J. Patel, MS, CCC-SLP\nCo-signed: A. Reyes, MD (certifying physician)",
+  "addressed_required_ids": [
+    "c2",
+    "c3",
+    "c4",
+    "c5",
+    "c6",
+    "c8",
+    "c9"
+  ],
+  "triggered_exclusion_ids": [],
+  "expected_verdicts": {
+    "c1": "not_met",
+    "c2": "met",
+    "c3": "met",
+    "c4": "met",
+    "c5": "met",
+    "c6": "met",
+    "c7": "not_met",
+    "c8": "met",
+    "c9": "met"
+  }
+}

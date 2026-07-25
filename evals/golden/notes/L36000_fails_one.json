@@ -1,0 +1,33 @@
+{
+  "policy_id": "L36000",
+  "variant": "fails_one",
+  "target_criterion_id": "c3",
+  "note_text": "Patient is a 52-year-old woman referred for evaluation of chronic right-sided low back and buttock pain of 14 months duration. She reports the pain is non-radiating, unilateral, located caudal to the L5 level, and consistent with SIJ origin. She has completed 8 months of intensive conservative management including optimized NSAID and gabapentin dosing, activity modification with avoidance of prolonged standing/asymmetric loading, and a structured course of active physical therapy focused on core and pelvic stabilization, without durable relief.\n\nOn examination today, palpation over the posterior right SIJ does reproduce discomfort, but the patient also has notable tenderness of similar intensity over the right greater trochanter and along the lumbar paraspinal musculature at L4-L5, raising concern for a coexisting trochanteric bursitis and myofascial lumbar component contributing to her overall pain pattern. Palpation findings are therefore not clearly localized to the posterior SIJ alone.\n\nProvocative testing: thigh thrust test is positive on the right. Gaenslen's test and Patrick's (FABER) test are also positive on the right, meeting criteria for two additional positive provocative maneuvers.\n\nShe denies widespread body pain, denies symptoms suggestive of fibromyalgia or somatoform pain disorder, and there is no evidence of generalized pain behavior on exam.\n\nImaging review: Plain radiographs and MRI of the SI joints show no destructive lesion, no infection, and no inflammatory sacroiliitis. Plain radiographs of the right hip show no osteoarthritis. Lumbar MRI shows mild degenerative disc changes without significant neural compression or other lesion accounting for her symptoms.\n\nShe subsequently underwent two separate image-guided, contrast-enhanced right SIJ injections (performed 5 weeks apart), each of which produced greater than 75% reduction of her pain for the expected duration of the local anesthetic, confirming the SIJ as a pain generator despite the equivocal exam findings noted above.\n\nGiven the diagnostic confirmation from the injections, she is being considered for percutaneous SIJ fusion, though the presence of comparable tenderness at the trochanter and lumbar paraspinals will be discussed further with the patient as a potential confounder.",
+  "addressed_required_ids": [
+    "c1",
+    "c2",
+    "c4",
+    "c5",
+    "c6",
+    "c7",
+    "c8",
+    "c9"
+  ],
+  "triggered_exclusion_ids": [],
+  "expected_verdicts": {
+    "c1": "met",
+    "c2": "met",
+    "c3": "not_met",
+    "c4": "met",
+    "c5": "met",
+    "c6": "met",
+    "c7": "met",
+    "c8": "met",
+    "c9": "met",
+    "c10": "not_met",
+    "c11": "not_met",
+    "c12": "not_met",
+    "c13": "not_met",
+    "c14": "not_met"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "policy_id": "L33967",
+  "variant": "fails_one",
+  "target_criterion_id": "c5",
+  "note_text": "Patient is a 58-year-old male with a history of plantar fasciitis and Achilles tendinopathy, previously treated conservatively with stretching, orthotics, and physical therapy with only partial relief. He presents today requesting vitamin B12 injections, having read online that B12 can \"strengthen\" weakened tendons and ligaments in the foot and accelerate healing of his chronic Achilles and plantar fascia complaints.\n\nOn exam, gait is mildly antalgic on the right. Tenderness noted along the plantar fascia insertion at the calcaneus and along the Achilles tendon body. No swelling, erythema, or warmth. Neurovascular exam of the foot is intact, sensation to light touch normal, no paresthesias.\n\nReview of recent labs: serum B12 level checked six months ago was 610 pg/mL (normal range), and there is no history of pernicious anemia, malabsorption syndrome, gastric bypass, strict vegan diet, or other condition associated with B12 deficiency. He is not on pemetrexed or pralatrexate chemotherapy, has no oncologic history, and takes no medications known to cause B12 depletion.\n\nDiscussed with patient that his B12 status is normal and there is no medical indication for B12 supplementation in his case; his request is specifically for the purpose of strengthening the tendons and ligaments of the foot, which is not a recognized therapeutic use for B12 injection. Explained that this is not a covered indication and would be considered a non-covered service if pursued for this purpose. Recommended continued conservative management of his tendinopathy with PT, night splints, and consideration of orthotic adjustment. Patient understands and will proceed with conservative treatment; declines further discussion of injection therapy at this time given lack of medical necessity.",
+  "addressed_required_ids": [],
+  "triggered_exclusion_ids": [
+    "c5"
+  ],
+  "expected_verdicts": {
+    "c1": "insufficient_evidence",
+    "c2": "insufficient_evidence",
+    "c3": "insufficient_evidence",
+    "c5": "met"
+  }
+}

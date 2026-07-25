@@ -1,0 +1,16 @@
+{
+  "policy_id": "L33967",
+  "variant": "ambiguous_one",
+  "target_criterion_id": "c3",
+  "note_text": "Patient is a 61-year-old woman with relapsed/refractory peripheral T-cell lymphoma referred for consideration of pralatrexate therapy. Prior to initiating chemotherapy, labs were reviewed and revealed a serum B12 level of 178 pg/mL (low-normal/borderline low), consistent with mild vitamin B12 insufficiency likely related to poor dietary intake and possible malabsorption from prior bowel surgery. Patient reports occasional paresthesias in the fingertips, which may be related to her low B12 status.\n\nGiven the diagnosis of low serum B12, the patient was started on vitamin B12 supplementation. She was also counseled extensively on the folic acid and vitamin B12 requirements associated with pralatrexate therapy, and the pharmacy has been notified regarding the planned chemotherapy regimen. Oncology will coordinate the chemotherapy start date with the treatment team.\n\nPlan:\n- Continue vitamin B12 supplementation for documented low serum B12\n- Oncology to finalize pralatrexate treatment plan and schedule\n- Follow up in clinic in 2 weeks to reassess symptoms and review B12 level\n- CBC, CMP, LDH prior to next visit",
+  "addressed_required_ids": [
+    "c1"
+  ],
+  "triggered_exclusion_ids": [],
+  "expected_verdicts": {
+    "c1": "met",
+    "c2": "insufficient_evidence",
+    "c3": "insufficient_evidence",
+    "c5": "not_met"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "policy_id": "L34056",
+  "variant": "ambiguous_one",
+  "target_criterion_id": "c9",
+  "note_text": "CC: 62-year-old woman referred by urology for evaluation of urinary incontinence and voiding difficulty.\n\nHPI: Patient reports several months of urinary urgency, urge incontinence episodes 2-3 times per week, and a sensation of incomplete bladder emptying. She denies dysuria or hematuria. No fevers or flank pain. She has tried timed voiding and pelvic floor exercises without significant improvement.\n\nPMH: Hypertension, two prior vaginal deliveries.\n\nExam: Abdomen soft, nontender, no suprapubic fullness. Pelvic exam reveals grade 2 cystocele on straining; no other significant descensus noted. Neurologic exam of lower extremities is normal.\n\nUA/microscopy: Clean-catch specimen obtained in office; no leukocytes, no nitrites, no bacteria seen on microscopy. Urine culture not indicated at this time given negative microscopy.\n\nAssessment: Mixed urinary symptoms with urgency, urge incontinence, and possible incomplete emptying in the setting of a cystocele. Given the combination of storage and possible voiding-phase complaints, plan to proceed with urodynamic evaluation (uroflowmetry, cystometrogram, and pressure-flow study) to clarify the underlying etiology \u2014 detrusor overactivity versus outlet obstruction from prolapse versus impaired contractility \u2014 before deciding on further management, which may include pessary fitting, medication adjustment, or surgical referral. Testing will be limited to the studies needed to answer this specific clinical question; no additional ancillary tests are planned at this time.\n\nPlan: Schedule multichannel urodynamics with fluoroscopy as above. Continue to monitor for signs of infection; none currently present. Follow up after testing to discuss results and next steps.",
+  "addressed_required_ids": [
+    "c1",
+    "c2",
+    "c3",
+    "c5",
+    "c6",
+    "c7"
+  ],
+  "triggered_exclusion_ids": [],
+  "expected_verdicts": {
+    "c1": "met",
+    "c2": "met",
+    "c3": "met",
+    "c4": "insufficient_evidence",
+    "c5": "met",
+    "c6": "met",
+    "c7": "met",
+    "c8": "not_met",
+    "c9": "insufficient_evidence",
+    "c10": "not_met"
+  }
+}

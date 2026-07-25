@@ -1,0 +1,16 @@
+{
+  "policy_id": "L33967",
+  "variant": "meets_all",
+  "target_criterion_id": null,
+  "note_text": "CC: Follow-up for vitamin B12 deficiency\n\nHPI: 68-year-old male with history of pernicious anemia diagnosed 3 years ago, presents for routine B12 injection. He reports fatigue, occasional paresthesias in his feet, and mild memory difficulty that have been longstanding. Serum B12 level checked one month ago was 145 pg/mL (low, reference range 200-900), confirming ongoing deficiency. He has been on monthly IM cyanocobalamin injections since diagnosis with some improvement in energy but persistent low-normal levels.\n\nPMH: Pernicious anemia, atrophic gastritis, hypothyroidism.\n\nMeds: Levothyroxine 75 mcg daily, cyanocobalamin 1000 mcg IM monthly.\n\nExam: Alert, oriented x3. Mild decreased vibratory sensation in bilateral toes. No ataxia. Conjunctivae pale pink. Abdomen soft, non-tender. No pedal edema or foot deformity.\n\nLabs: CBC shows macrocytic red cells with MCV 102. Intrinsic factor antibody positive. Serum B12 145 pg/mL.\n\nA/P: Vitamin B12 deficiency secondary to pernicious anemia, with ongoing hematologic and neurologic manifestations. Continue monthly intramuscular cyanocobalamin 1000 mcg injections indefinitely given malabsorption from lack of intrinsic factor. Administered today's dose in clinic. Will recheck CBC and B12 level in 3 months. Counseled patient on symptoms of worsening neuropathy to report. Return to clinic in 4 weeks for next injection.",
+  "addressed_required_ids": [
+    "c1"
+  ],
+  "triggered_exclusion_ids": [],
+  "expected_verdicts": {
+    "c1": "met",
+    "c2": "insufficient_evidence",
+    "c3": "insufficient_evidence",
+    "c5": "not_met"
+  }
+}

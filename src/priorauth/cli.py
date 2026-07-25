@@ -9,8 +9,8 @@ import typer
 from rich.console import Console
 from rich.table import Table
 
-from . import config, db, extract, ingest, retrieve, verify
-from .schemas import ExtractedCriteria
+from . import appeal, check, config, db, extract, ingest, retrieve, synth, verify
+from .schemas import CoverageDecision, ExtractedCriteria
 
 app = typer.Typer(add_completion=False, help="PriorAuth Copilot")
 console = Console()
@@ -345,6 +345,145 @@ def eval_retrieval_cmd(
         console.print(f"\n[green]✓ [/green] (LCD combined-code recall@5 = {both_recall[1]:.2f})")
     else:
         console.print(f"\n[red][/red] (LCD combined-code recall@5 = {both_recall[1]:.2f}, need > 0.90)")
+
+
+DEFAULT_NOTE_POLICIES = [
+    "L33591", "L33922", "L33967", "L34056", "L34064",
+    "L34565", "L35222", "L36000", "L38303", "L39849",
+]
+
+
+@app.command("synthesize-notes")
+def synthesize_notes_cmd(
+    policy_id: list[str] = typer.Option(None, help="Specific policy IDs; defaults to a fixed set of 10"),
+    notes_dir: Path = typer.Option(config.GOLDEN_DIR / "notes"),
+    model: str = typer.Option(config.MODEL),
+) -> None:
+    """synthesize meets_all/fails_one/ambiguous_one notes per policy."""
+    import random
+
+    ids = policy_id or DEFAULT_NOTE_POLICIES
+    notes_dir.mkdir(parents=True, exist_ok=True)
+    n_written = 0
+
+    for pid in ids:
+        p = db.get_policy(pid)
+        if not p:
+            console.print(f"[red]{pid}: not found, skipping[/red]")
+            continue
+        predicted, _ = extract.extract_criteria(pid, p["title"], p["coverage_text"], model=model)
+        testable_ids = [c.id for c in predicted.criteria if c.type.value in ("required", "exclusion")]
+        if not testable_ids:
+            console.print(f"[yellow]{pid}: no testable criteria, skipping[/yellow]")
+            continue
+
+        rnd = random.Random(hash(pid) & 0xFFFFFFFF)
+        variants: list[tuple[str, str | None]] = [
+            ("meets_all", None),
+            ("fails_one", rnd.choice(testable_ids)),
+            ("ambiguous_one", rnd.choice(testable_ids)),
+        ]
+
+        for variant, target in variants:
+            note, _ = synth.synthesize_note(pid, p["title"], predicted.criteria, variant, target, model=model)
+            expected = synth.expected_verdicts(predicted.criteria, note)
+            out = {
+                "policy_id": pid,
+                "variant": variant,
+                "target_criterion_id": target,
+                "note_text": note.note_text,
+                "addressed_required_ids": note.addressed_required_ids,
+                "triggered_exclusion_ids": note.triggered_exclusion_ids,
+                "expected_verdicts": expected,
+            }
+            (notes_dir / f"{pid}_{variant}.json").write_text(json.dumps(out, indent=2) + "\n")
+            n_written += 1
+
+    console.print(f"[green]✓[/green] wrote {n_written} synthetic notes to {notes_dir}")
+
+
+@app.command("eval-checker")
+def eval_checker_cmd(
+    notes_dir: Path = typer.Option(config.GOLDEN_DIR / "notes"),
+    model: str = typer.Option(config.MODEL),
+) -> None:
+    """: per-criterion verdict accuracy, abstention correctness, and appeal
+    citation integrity across the synthesized note set."""
+    files = sorted(f for f in notes_dir.glob("*.json") if f.name != ".gitkeep")
+    if not files:
+        console.print(f"[yellow]No synthetic notes in {notes_dir}. Run synthesize-notes first.[/yellow]")
+        raise typer.Exit(1)
+
+    total = correct = 0
+    should_abstain = correct_abstain = 0
+    all_evidence_spans: list[str | None] = []
+    all_notes: list[str] = []
+    n_deny = n_appeal_ok = n_appeal_failed = 0
+    table = Table("policy_id", "variant", "decision", "verdict acc")
+
+    for path in files:
+        raw = json.loads(path.read_text())
+        pid = raw["policy_id"]
+        p = db.get_policy(pid)
+        if not p:
+            continue
+        predicted, _ = extract.extract_criteria(pid, p["title"], p["coverage_text"], model=model)
+        decision, _ = check.check_note(pid, predicted.criteria, raw["note_text"], model=model)
+        checks_by_id = {c.criterion_id: c for c in decision.checks}
+
+        case_total = case_correct = 0
+        for cid, expected in raw["expected_verdicts"].items():
+            actual = checks_by_id.get(cid)
+            actual_verdict = actual.verdict.value if actual else None
+            total += 1
+            case_total += 1
+            if actual_verdict == expected:
+                correct += 1
+                case_correct += 1
+            if expected == "insufficient_evidence":
+                should_abstain += 1
+                if actual_verdict == "insufficient_evidence":
+                    correct_abstain += 1
+
+        all_evidence_spans.extend(c.evidence_span for c in decision.checks)
+        all_notes.extend([raw["note_text"]] * len(decision.checks))
+
+        table.add_row(pid, raw["variant"], decision.decision, f"{case_correct}/{case_total}")
+
+        if decision.decision == "likely_deny":
+            n_deny += 1
+            try:
+                appeal.draft_appeal(pid, p["title"], p["coverage_text"], predicted.criteria, decision, model=model)
+                n_appeal_ok += 1
+            except RuntimeError as exc:
+                n_appeal_failed += 1
+                console.print(f"[red]{pid}/{raw['variant']}: appeal citation failure — {exc}[/red]")
+
+    console.print(table)
+
+    # grounding_report assumes one shared source; each evidence_span here is grounded
+    # against its OWN note, so check individually for a correct hallucination count.
+    grounded_count = sum(
+        1 for span, note in zip(all_evidence_spans, all_notes) if span and verify.span_is_grounded(span, note)
+    )
+    checked_count = sum(1 for span in all_evidence_spans if span)
+    hallucination_rate = 1 - (grounded_count / checked_count if checked_count else 1.0)
+
+    verdict_accuracy = correct / total if total else 0.0
+    abstention_precision = correct_abstain / should_abstain if should_abstain else 0.0
+
+    console.print(
+        f"\nper-criterion verdict accuracy: {correct}/{total} ({verdict_accuracy:.1%})\n"
+        f"correct abstention rate: {correct_abstain}/{should_abstain} ({abstention_precision:.1%}) "
+        f"— of cases that SHOULD abstain, how many did\n"
+        f"evidence-span hallucination rate: {hallucination_rate:.1%} (against the note, not the policy)\n"
+        f"appeal drafts: {n_appeal_ok} ok, {n_appeal_failed} citation failures (of {n_deny} denial cases)"
+    )
+
+    if verdict_accuracy >= 0.80 and n_appeal_failed == 0:
+        console.print("[green]✓ [/green]")
+    else:
+        console.print("[yellow]not clearly passed — review the numbers above[/yellow]")
 
 
 if __name__ == "__main__":

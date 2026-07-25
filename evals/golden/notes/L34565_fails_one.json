@@ -1,0 +1,26 @@
+{
+  "policy_id": "L34565",
+  "variant": "fails_one",
+  "target_criterion_id": "c3",
+  "note_text": "Home Health Certification / Skilled Nursing Visit Note\n\nPatient: 71-year-old male with history of ischemic stroke (6 weeks ago) complicated by moderate oropharyngeal dysphagia confirmed on modified barium swallow study, now referred for home health services including surface electrical stimulation therapy for dysphagia.\n\nPhysician of record: Dr. R. Alvarez, attending neurologist, continues to oversee the patient's care and has signed and dated a comprehensive plan of care outlining skilled nursing and speech-language pathology visits, including the electrical stimulation protocol targeting swallowing musculature.\n\nFace-to-face encounter: Patient was evaluated in the outpatient neurology clinic 3 weeks prior to the start of home health services; findings of persistent dysphagia and functional decline were documented at that visit, supporting the need for skilled home care.\n\nFunctional status: Patient reports that he has returned to driving himself to his part-time volunteer job three days a week and is independently grocery shopping and attending his grandson's soccer games on weekends. He states he feels \"back to normal\" in terms of mobility and endurance, and ambulates in the community without a cane or assistive device. No mention is made of any physician-imposed restriction on leaving the home, and the patient does not describe requiring assistance or a taxing effort to leave home for these activities.\n\nSkilled need: Speech-language pathologist has documented ongoing need for skilled swallowing therapy with surface electrical stimulation given persistent aspiration risk on thin liquids, with clear rationale for continued skilled intervention recorded in the chart including specific electrode placement, stimulation parameters, and swallow maneuvers trained during the visit.\n\nRecertification: Plan of care will be reviewed and recertified by Dr. Alvarez at the 60-day mark if continued skilled services are indicated.\n\nDocumentation: All clinical notes, evaluations, and physician orders related to this episode of care are legibly recorded, maintained in the electronic medical record, and available for MAC review upon request.\n\nPlan: Continue biweekly SLP visits with e-stim protocol per plan of care; monitor swallow function and aspiration risk; reassess need for continued skilled services at next physician visit.",
+  "addressed_required_ids": [
+    "c2",
+    "c4",
+    "c5",
+    "c6",
+    "c8",
+    "c9"
+  ],
+  "triggered_exclusion_ids": [],
+  "expected_verdicts": {
+    "c1": "not_met",
+    "c2": "met",
+    "c3": "not_met",
+    "c4": "met",
+    "c5": "met",
+    "c6": "met",
+    "c7": "not_met",
+    "c8": "met",
+    "c9": "met"
+  }
+}

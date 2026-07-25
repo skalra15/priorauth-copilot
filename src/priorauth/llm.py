@@ -94,39 +94,52 @@ def structured(
         "input_schema": schema.model_json_schema(),
     }
 
-    started = time.perf_counter()
-    msg = client().messages.create(
-        model=model,
-        max_tokens=max_tokens,
-        temperature=temperature if temperature is not None else anthropic.NOT_GIVEN,
-        system=system or anthropic.NOT_GIVEN,
-        tools=[tool],
-        tool_choice={"type": "tool", "name": "emit_result"},
-        messages=[{"role": "user", "content": prompt}],
-    )
-    latency = time.perf_counter() - started
-
-    if msg.stop_reason == "max_tokens":
-        raise RuntimeError(
-            f"Response truncated at max_tokens={max_tokens} ({msg.usage.output_tokens} "
-            f"output tokens) before the tool call completed. Raise max_tokens rather than "
-            f"treat this as a bad extraction — the failure is a token budget, not the model."
+    # Malformed tool-use responses (truncation aside, handled separately below) are
+    # rare, nondeterministic sampling glitches, not systematic bugs -- we've seen a
+    # spurious wrapper key, and a bare string instead of an object, on different
+    # calls to the same schema. Rather than keep adding shape-specific patches for
+    # each new one, retry the call itself once before giving up. A genuine content
+    # problem (wrong enum value, hallucinated field) will fail validation the same
+    # way twice and still surface as a real error -- this only absorbs the
+    # protocol-level flakiness.
+    for attempt in range(2):
+        started = time.perf_counter()
+        msg = client().messages.create(
+            model=model,
+            max_tokens=max_tokens,
+            temperature=temperature if temperature is not None else anthropic.NOT_GIVEN,
+            system=system or anthropic.NOT_GIVEN,
+            tools=[tool],
+            tool_choice={"type": "tool", "name": "emit_result"},
+            messages=[{"role": "user", "content": prompt}],
         )
+        latency = time.perf_counter() - started
 
-    block = next(b for b in msg.content if b.type == "tool_use")
-    payload = block.input
-    try:
-        parsed = schema.model_validate(payload)
-    except pydantic.ValidationError:
-        # Rare tool-use quirk: the model occasionally wraps the whole answer in a
-        # single spurious key (seen as both "parameters" and "parameter name")
-        # instead of emitting the schema's fields at the top level. Unwrap once if
-        # that shape matches, then let a genuine validation error propagate normally
-        # — this targets the wrapper, not tolerance for actually-wrong content.
-        if isinstance(payload, dict) and len(payload) == 1:
-            (inner,) = payload.values()
-            payload = inner
-        parsed = schema.model_validate(payload)
+        if msg.stop_reason == "max_tokens":
+            raise RuntimeError(
+                f"Response truncated at max_tokens={max_tokens} ({msg.usage.output_tokens} "
+                f"output tokens) before the tool call completed. Raise max_tokens rather than "
+                f"treat this as a bad extraction — the failure is a token budget, not the model."
+            )
+
+        block = next(b for b in msg.content if b.type == "tool_use")
+        payload = block.input
+        try:
+            parsed = schema.model_validate(payload)
+            break
+        except pydantic.ValidationError as exc:
+            # Spurious single-key wrapper (seen as both "parameters" and
+            # "parameter name") — unwrap once before deciding this attempt failed.
+            if isinstance(payload, dict) and len(payload) == 1:
+                (inner,) = payload.values()
+                try:
+                    parsed = schema.model_validate(inner)
+                    break
+                except pydantic.ValidationError:
+                    pass
+            if attempt == 0:
+                continue
+            raise
 
     if config.CACHE_ENABLED:
         with db.connect() as conn:
