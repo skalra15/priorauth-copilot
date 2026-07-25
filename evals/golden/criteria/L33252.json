@@ -34,6 +34,15 @@
       "source_span": "when the patient has a previously established diagnosis of a neurological condition or dementia and is not amenable to the evaluation and therapy, unless there has been an acute and/or marked mental status change, a request for second opinion, or diagnostic clarification is necessary to rule out additional psychiatric or neurological processes, which may be treatable"
     },
     {
+      "id": "g3b",
+      "text": "Patient has a previously established neurological/dementia diagnosis and is not amenable to evaluation and therapy",
+      "type": "exclusion",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "the patient has a previously established diagnosis of a neurological condition or dementia and is not amenable to the evaluation and therapy"
+    },
+    {
       "id": "g4",
       "text": "A psychiatric diagnostic evaluation can be conducted once, at the onset of an illness or suspected illness; repeatable by the same provider only if one of the listed conditions holds",
       "type": "required",
@@ -45,6 +54,15 @@
       ],
       "temporal": "An extended hiatus is generally defined as approximately 6 months from the last time the patient was seen or treated for their psychiatric condition.",
       "source_span": "A psychiatric diagnostic evaluation can be conducted once, at the onset of an illness or suspected illness. The same provider may repeat it for the same patient if an extended hiatus in treatment occurs, if the patient requires admission to an inpatient status for a psychiatric illness, or for a significant change in mental status requiring further assessment"
+    },
+    {
+      "id": "g4b",
+      "text": "A psychiatric diagnostic evaluation can be conducted once, at the onset of an illness or suspected illness",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "A psychiatric diagnostic evaluation can be conducted once, at the onset of an illness or suspected illness"
     },
     {
       "id": "g5",
@@ -237,6 +255,15 @@
       "source_span": "Family psychotherapy will be considered medically reasonable and necessary only in clinically appropriate circumstances and when the primary purpose of such psychotherapy is the treatment/management of the patient\u2019s condition"
     },
     {
+      "id": "j1b",
+      "text": "Family psychotherapy is medically necessary only in clinically appropriate circumstances when the primary purpose is treatment/management of the patient's condition",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "Family psychotherapy will be considered medically reasonable and necessary only in clinically appropriate circumstances and when the primary purpose of such psychotherapy is the treatment/management of the patient\u2019s condition"
+    },
+    {
       "id": "j2",
       "text": "Patient has a psychiatric illness and/or is demonstrating emotional or behavioral symptoms sufficient to cause inappropriate behavior or maladaptive functioning (family therapy)",
       "type": "required",
@@ -350,6 +377,15 @@
       "sub_conditions": [
         "the estimated duration of treatment in terms of number of sessions required and the target symptoms, measurable and objective goals of therapy related to changes in behavior, thought processes and/or medications, methods of monitoring outcome, and why the chosen therapy is an appropriate modality either in lieu of or in addition to another form of psychiatric treatment"
       ],
+      "temporal": null,
+      "source_span": "The documentation for psychoanalysis or psychotherapy services including group and family psychotherapy should include on a periodic basis the patient\u2019s capacity to participate and benefit from psychotherapy/psychoanalysis"
+    },
+    {
+      "id": "n1b",
+      "text": "Documentation for psychoanalysis/psychotherapy (including group and family) should include, on a periodic basis, the patient's capacity to participate and benefit",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
       "temporal": null,
       "source_span": "The documentation for psychoanalysis or psychotherapy services including group and family psychotherapy should include on a periodic basis the patient\u2019s capacity to participate and benefit from psychotherapy/psychoanalysis"
     },

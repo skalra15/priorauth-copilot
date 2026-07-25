@@ -191,17 +191,41 @@ def score_extraction(gold: ExtractedCriteria, predicted: ExtractedCriteria) -> d
     "how many criteria" is itself a labeling choice that gold and predicted
     routinely disagree on (bundled vs. one-per-item), and scoring at that level
     would mostly measure which convention was used, not extraction quality.
+
+    Also reports `type_agreement`: of the atoms that matched on content, what
+    fraction also agree on the parent criterion's `type` (required/exclusion/
+    informational). Matching text alone can't catch a matched pair that
+    disagrees on type -- e.g. one side calls a clause an exclusion, the other
+    calls the same clause required -- which inverts the actual coverage
+    decision downstream. That's a real correctness failure precision/recall
+    on span text alone is structurally blind to.
     """
     matches, unmatched_gold, unmatched_pred, gold_atoms, pred_atoms = match_atoms(
         gold.criteria, predicted.criteria
     )
     n_gold, n_pred = len(gold_atoms), len(pred_atoms)
+
+    type_agree = 0
+    type_disagreements = []
+    for gpos, ppos in matches:
+        g_crit = gold.criteria[gold_atoms[gpos][0]]
+        p_crit = predicted.criteria[pred_atoms[ppos][0]]
+        if g_crit.type == p_crit.type:
+            type_agree += 1
+        else:
+            type_disagreements.append(
+                {"text": gold_atoms[gpos][1], "gold_type": g_crit.type.value, "predicted_type": p_crit.type.value}
+            )
+
     return {
         "n_gold": n_gold,
         "n_predicted": n_pred,
         "n_matched": len(matches),
         "precision": len(matches) / n_pred if n_pred else 0.0,
         "recall": len(matches) / n_gold if n_gold else 0.0,
+        "type_agree_count": type_agree,
+        "type_agreement": type_agree / len(matches) if matches else 0.0,
+        "type_disagreements": type_disagreements,
         "missed_gold": [gold_atoms[i][1] for i in unmatched_gold],
         "spurious_predicted": [pred_atoms[i][1] for i in unmatched_pred],
     }

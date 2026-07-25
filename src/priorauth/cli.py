@@ -144,8 +144,10 @@ def eval_extraction_cmd(
         console.print(f"[yellow]No golden files in {golden_dir}[/yellow]")
         raise typer.Exit(1)
 
-    table = Table("policy_id", "gold", "pred", "matched", "precision", "recall", "grounded")
+    table = Table("policy_id", "gold", "pred", "matched", "precision", "recall", "type agree", "grounded")
     total_gold = total_pred = total_matched = 0
+    total_type_matched = total_type_agree = 0
+    all_type_disagreements: list[tuple[str, dict]] = []
     all_spans: list[str | None] = []
     all_sources: list[str] = []
     n_unlabeled = 0
@@ -170,13 +172,16 @@ def eval_extraction_cmd(
             # Visible in the report, not swallowed — a malformed extraction is a
             # real data point (see the project docs: failures should show up in the eval).
             failed.append((policy_id, str(exc)))
-            table.add_row(policy_id, str(len(gold.criteria)), "FAILED", "-", "-", "-", "-")
+            table.add_row(policy_id, str(len(gold.criteria)), "FAILED", "-", "-", "-", "-", "-")
             continue
 
         result = extract.score_extraction(gold, predicted)
         total_gold += result["n_gold"]
         total_pred += result["n_predicted"]
         total_matched += result["n_matched"]
+        total_type_matched += result["n_matched"]
+        total_type_agree += result["type_agree_count"]
+        all_type_disagreements.extend((policy_id, d) for d in result["type_disagreements"])
 
         spans = [c.source_span for c in predicted.criteria]
         all_spans.extend(spans)
@@ -190,6 +195,7 @@ def eval_extraction_cmd(
             str(result["n_matched"]),
             f"{result['precision']:.2f}",
             f"{result['recall']:.2f}",
+            f"{result['type_agreement']:.2f}",
             f"{grounded['grounded']}/{grounded['n']}",
         )
 
@@ -214,10 +220,11 @@ def eval_extraction_cmd(
         if all_spans
         else 0
     )
+    type_agreement = total_type_agree / total_type_matched if total_type_matched else 0.0
 
     console.print(
         f"\n[bold]micro-averaged precision {precision:.2f} | recall {recall:.2f} | "
-        f"hallucination rate {hallucination:.1%}[/bold]"
+        f"hallucination rate {hallucination:.1%} | type agreement {type_agreement:.1%}[/bold]"
     )
 
     if precision > 0.80 and recall > 0.80 and hallucination < 0.05:
@@ -229,6 +236,20 @@ def eval_extraction_cmd(
             "[red]— per the project docs, stop and pivot to the "
             "CMS-0057-F Transparency Agent.[/red]"
         )
+
+    # type_agreement isn't one of the project docs's thresholds, but a matched
+    # span with the wrong type (e.g. exclusion mislabeled required) inverts the
+    # actual coverage decision downstream -- too consequential to bury.
+    if all_type_disagreements:
+        console.print(
+            f"\n[yellow]{len(all_type_disagreements)} matched criteria disagree on `type` "
+            f"({type_agreement:.1%} agreement) -- span-matching alone can't see this:[/yellow]"
+        )
+        for policy_id, d in all_type_disagreements:
+            console.print(
+                f"  [yellow]{policy_id}:[/yellow] gold={d['gold_type']} predicted={d['predicted_type']} "
+                f"— {d['text'][:80]!r}"
+            )
 
 
 if __name__ == "__main__":

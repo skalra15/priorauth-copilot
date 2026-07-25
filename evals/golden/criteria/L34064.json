@@ -59,6 +59,15 @@
       ],
       "temporal": null,
       "source_span": "The patient's medical record must contain documentation that fully supports the medical necessity for services included within this LCD."
+    },
+    {
+      "id": "e6b",
+      "text": "Medical record must fully support the medical necessity for services included within this LCD",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "The patient's medical record must contain documentation that fully supports the medical necessity for services included within this LCD."
     }
   ],
   "notes": "Jurisdictional claims-routing note and limitation-of-liability/refund boilerplate omitted as administrative, not testable coverage conditions."
