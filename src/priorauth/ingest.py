@@ -26,11 +26,24 @@ from . import config, db
 csv.field_size_limit(min(sys.maxsize, 2**31 - 1))
 
 
+_BLOCK_TAGS = ["p", "div", "li", "tr", "br", "h1", "h2", "h3", "h4", "h5", "h6"]
+
+
 def strip_html(raw: str | None) -> str:
-    """CMS ships coverage text as HTML. The extractor needs clean prose."""
+    """CMS ships coverage text as HTML. The extractor needs clean prose.
+
+    Only break lines at block-level tags. get_text(separator="\\n") breaks at
+    EVERY tag boundary, including inline formatting — CMS policy text is full
+    of <sub>/<sup>/<strong> mid-sentence (e.g. "Vitamin B<sub>12</sub>"), which
+    would otherwise fragment into "Vitamin B", "12", "Injections" on separate
+    lines and break every source_span that quotes across one."""
     if not raw:
         return ""
-    text = BeautifulSoup(raw, "lxml").get_text(separator="\n")
+    soup = BeautifulSoup(raw, "lxml")
+    for tag in soup.find_all(_BLOCK_TAGS):
+        tag.insert_before("\n")
+        tag.insert_after("\n")
+    text = soup.get_text()
     lines = [ln.strip() for ln in text.splitlines()]
     return "\n".join(ln for ln in lines if ln)
 

@@ -1,6 +1,46 @@
 {
   "policy_id": "L33922",
   "_title": "Nail Debridement",
-  "criteria": [],
+  "criteria": [
+    {
+      "id": "b1",
+      "text": "Clinical evidence of mycosis of the nail by generally accepted clinical findings",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "Clinical evidence of mycosis of the nail, by generally accepted clinical findings such as discoloration, onycholysis, subungual debris, thickening, or secondary skin infection"
+    },
+    {
+      "id": "b2",
+      "text": "One of the ambulatory/non-ambulatory documentation criteria must be met for mycotic toenails",
+      "type": "required",
+      "logic": "one_of",
+      "sub_conditions": [
+        "the ambulatory patient has marked limitation of ambulation, pain, or secondary infection resulting from the thickening and dystrophy of the infected toenail plate(s)",
+        "the non-ambulatory patient suffers from pain or secondary infection resulting from the thickening and dystrophy of the infected toenail plate(s)"
+      ],
+      "temporal": null,
+      "source_span": "In addition one of the following must be documented for mycotic toenails:"
+    },
+    {
+      "id": "b3",
+      "text": "Appropriate anti-fungal treatment is necessary to qualify nail debridement as medically necessary, unless contraindicated (and the contraindication must be documented if not used)",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "Appropriate anti-fungal treatment is necessary to qualify nail debridement as a medically necessary and reimbursable service unless contraindicated. If an anti-fungal treatment is not used, the contraindication must be documented in the medical record."
+    },
+    {
+      "id": "b4",
+      "text": "Patients need not have an underlying systemic condition to be covered for mycotic nail care",
+      "type": "informational",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "Patients need not have an underlying systemic condition to be covered for mycotic nail care."
+    }
+  ],
   "notes": null
 }

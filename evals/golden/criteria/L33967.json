@@ -1,6 +1,37 @@
 {
   "policy_id": "L33967",
   "_title": "Vitamin B 12 Injections",
-  "criteria": [],
-  "notes": null
+  "criteria": [
+    {
+      "id": "c1",
+      "text": "Vitamin B12 injection is covered when beneficiary has a history of low serum B12 or conditions causing/caused by low serum B12",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "Vitamin B12 administration by injection is a covered benefit accepted as medically necessary when the beneficiary has a history of a low serum B12 or conditions causing or caused by a low serum B12."
+    },
+    {
+      "id": "c2",
+      "text": "Vitamin B12 is also medically necessary as an adjunct to pemetrexed or pralatrexate treatment, per the specified schedule for each",
+      "type": "required",
+      "logic": "one_of",
+      "sub_conditions": [
+        "For pemetrexed patients, patients must receive one intramuscular injection of vitamin B12 during the week preceding the first dose of pemetrexed and every three cycles thereafter",
+        "For pralatrexate patients, supplement patients with vitamin B12 1 mg intramuscularly no more than 10 weeks prior to the first dose of pralatrexate, and every 8-10 weeks thereafter"
+      ],
+      "temporal": null,
+      "source_span": "vitamin B12 will be considered medically reasonable and necessary when administered as an adjunct to pemetrexed or pralatrexate treatment as follows:"
+    },
+    {
+      "id": "c3",
+      "text": "Subsequent vitamin B12 injections may be given the same day as either pemetrexed or pralatrexate",
+      "type": "informational",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "Subsequent vitamin B12 injections may be given the same day as either pemetrexed or pralatrexate."
+    }
+  ],
+  "notes": "Generic 'must meet all indications/limitations/NCDs/payment rules' boilerplate omitted -- it's standard disclaimer language, not a distinguishing testable criterion for this policy."
 }

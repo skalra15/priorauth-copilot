@@ -1,6 +1,102 @@
 {
   "policy_id": "L34056",
   "_title": "Urodynamics",
-  "criteria": [],
-  "notes": null
+  "criteria": [
+    {
+      "id": "d1",
+      "text": "Urodynamic studies indicated only after an initial evaluation (history, physical exam, urinalysis with microscopy)",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "Urodynamic studies are indicated only after an initial evaluation is performed that at minimum includes an appropriate history, physical exam, and urinalysis with microscopy."
+    },
+    {
+      "id": "d1b",
+      "text": "Infection, if present, should be treated and effectiveness observed before further diagnostic testing",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "Infection, if present, should be treated and effectiveness of treatment observed before further diagnostic (urodynamic) testing or other therapeutic interventions are undertaken."
+    },
+    {
+      "id": "d2",
+      "text": "Urodynamic testing covered when medically necessary to diagnose urologic dysfunction and one of the listed conditions applies",
+      "type": "required",
+      "logic": "one_of",
+      "sub_conditions": [
+        "Uncertain diagnosis and inability to develop an appropriate treatment plan based on the basic diagnostic evaluation above.",
+        "Failure to respond to an adequate therapeutic trial.",
+        "Consideration of urologic surgical intervention, particularly if previous surgery failed or if the patient is a high surgical risk.",
+        "Presence of other comorbid conditions such as incontinence associated with recurrent symptomatic urinary tract infection, persistent symptoms of difficult bladder emptying, history of previous anti-incontinence surgery or radical pelvic surgery, beyond hymen and symptomatic pelvic prolapse, prostate nodule, asymmetry or other suspicion of prostate cancer, abnormal post-void-residual urinalysis, and neurologic conditions affecting voiding function such as multiple sclerosis and spinal cord lesions or injury."
+      ],
+      "temporal": null,
+      "source_span": "Urodynamic testing is covered under Medicare when medically necessary to assist in the diagnosis of urologic dysfunction and when any of the following apply:"
+    },
+    {
+      "id": "d3",
+      "text": "Manometric studies may be medically necessary for reconstruction or obstruction of the ureter",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "Manometric studies may be medically necessary when performed for reconstruction of the ureter or obstruction of the ureter."
+    },
+    {
+      "id": "d4",
+      "text": "Testing must be restricted to only procedures necessary to differentiate the etiology, not a routine battery applied to all patients",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "Testing must be restricted to only those urodynamic testing procedures which are necessary to differentiate the etiology of the voiding dysfunction and must not consist of an entire battery of tests applied routinely to all patients."
+    },
+    {
+      "id": "d5",
+      "text": "Payment predicated on presence of signs/symptoms of voiding dysfunction clearly documented in the medical record",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "Payment for these procedures is predicated on the presence of signs and symptoms of voiding dysfunction that must be clearly documented in the medical record."
+    },
+    {
+      "id": "d6",
+      "text": "Tests performed must be appropriate to analyze the patient's signs/symptoms or guide further medical/surgical decision-making",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "The tests performed must be appropriate to analyze the patient's signs and symptoms or to guide further medical and/or surgical decision-making."
+    },
+    {
+      "id": "d7",
+      "text": "Use of these procedures in a screening capacity does not represent a payable service",
+      "type": "exclusion",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "The use of any of these procedures in a screening capacity does not represent a payable service."
+    },
+    {
+      "id": "d8",
+      "text": "Pelvic descensus syndromes without urinary symptoms do not qualify for urodynamic testing",
+      "type": "exclusion",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "Pelvic descensus syndromes without urinary symptoms do not qualify for urodynamic testing."
+    },
+    {
+      "id": "d9",
+      "text": "Urinary flow rates determined by the patient at home and recorded for physician evaluation are not eligible for Medicare reimbursement",
+      "type": "exclusion",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "Urinary flow rates determined by the patient at home and recorded for physician evaluation are not eligible for Medicare reimbursement."
+    }
+  ],
+  "notes": "'Other Comments' section (jurisdictional claims-routing note, limitation-of-liability/refund boilerplate) omitted as administrative, not testable coverage conditions."
 }

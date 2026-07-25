@@ -1,6 +1,39 @@
 {
   "policy_id": "L33591",
   "_title": "RAST Type Tests",
-  "criteria": [],
+  "criteria": [
+    {
+      "id": "a1",
+      "text": "The need for RAST/FAST/multiple-antigen allergy testing is based on findings during a complete history and physical examination",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "the need for such tests is based on the findings during a complete history and physical examination of the patient"
+    },
+    {
+      "id": "a2",
+      "text": "The following tests are not medically necessary and will be denied",
+      "type": "exclusion",
+      "logic": "one_of",
+      "sub_conditions": [
+        "ELISA/Act qualitative antibody testing",
+        "LMRA (Lymphocyte Mitogen Response Assays) by ELISA/Act",
+        "IgG ELISA, indirect method",
+        "Qualitative multi-allergen screen"
+      ],
+      "temporal": null,
+      "source_span": "The following tests are considered to be not medically necessary and will be denied."
+    },
+    {
+      "id": "a3",
+      "text": "IgG and IgG subclass antibody tests for food allergy are not covered",
+      "type": "exclusion",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "IgG and IgG subclass antibody tests for food allergy do not have clinical relevance, are not validated, lack sufficient quality control, and should not be performed"
+    }
+  ],
   "notes": null
 }
