@@ -102,33 +102,61 @@ def extract_criteria(
 # Scoring against hand-labeled golden criteria 
 # ---------------------------------------------------------------------------
 
-MATCH_THRESHOLD = 0.5  # token-overlap (Jaccard) needed to count two spans as the same criterion
+MATCH_THRESHOLD = 0.5  # token-overlap needed to count two criteria as the same one
 
 
-def _span_overlap(a: str, b: str) -> float:
-    ta, tb = set(verify.normalize(a).split()), set(verify.normalize(b).split())
+def _tokens(text: str) -> set[str]:
+    return set(verify.normalize(text).split())
+
+
+def _overlap(a: str, b: str) -> float:
+    """Best of Jaccard and containment on normalized tokens.
+
+    Jaccard penalizes two spans of very different length even when the shorter
+    is entirely inside the longer — common here, since one labeler quotes a bare
+    clause and the other quotes the whole sentence around it. Containment
+    (intersection / smaller set) catches that case; Jaccard still catches
+    same-length rewordings containment would over-credit. Taking the max means
+    either signal is enough — this measures "same criterion," not "same
+    quoting style."
+    """
+    ta, tb = _tokens(a), _tokens(b)
     if not ta or not tb:
         return 0.0
-    return len(ta & tb) / len(ta | tb)
+    inter = len(ta & tb)
+    jaccard = inter / len(ta | tb)
+    containment = inter / min(len(ta), len(tb))
+    return max(jaccard, containment)
+
+
+def _criterion_text(c: Criterion) -> str:
+    return " ".join([c.source_span, *c.sub_conditions])
+
+
+def _pair_score(g: Criterion, p: Criterion) -> float:
+    """Best of two comparisons: source_span alone, and source_span+sub_conditions.
+
+    Neither is strictly better: comparing full text catches cases where both
+    sides break a criterion into the same sub-conditions but anchor source_span
+    differently (see the earlier documentation-requirements example); comparing
+    source_span alone catches the opposite case, where only one side chose to
+    itemize sub_conditions and the other left everything in prose — appending
+    that extra text would drag an otherwise-clear match below threshold."""
+    return max(_overlap(g.source_span, p.source_span), _overlap(_criterion_text(g), _criterion_text(p)))
 
 
 def match_criteria(
     gold: list[Criterion], predicted: list[Criterion], threshold: float = MATCH_THRESHOLD
 ) -> tuple[list[tuple[int, int]], list[int], list[int]]:
-    """Greedy one-to-one match by source_span token overlap.
-
-    Gold and a model's own carve-up of the same clause rarely land on identical
-    substrings, so exact string equality is too strict. Jaccard overlap on the
-    (whitespace/case-normalized) span tokens is the same normalization
-    `verify.span_is_grounded` already uses — a real string match on a rewording
-    would score ~0 here just like it should.
+    """Greedy one-to-one match — see `_overlap` and `_pair_score` for why this
+    isn't exact string equality or plain Jaccard on source_span alone.
 
     Returns (matched (gold_idx, pred_idx) pairs, unmatched gold indices, unmatched
     predicted indices).
     """
     candidates = sorted(
         (
-            (_span_overlap(g.source_span, p.source_span), gi, pi)
+            (_pair_score(g, p), gi, pi)
             for gi, g in enumerate(gold)
             for pi, p in enumerate(predicted)
         ),

@@ -1,6 +1,394 @@
 {
   "policy_id": "L33252",
   "_title": "Psychiatric Diagnostic Evaluation and Psychotherapy Services",
-  "criteria": [],
-  "notes": null
+  "criteria": [
+    {
+      "id": "g1",
+      "text": "Patient has a psychiatric illness and/or is demonstrating emotional or behavioral symptoms sufficient to cause inappropriate behavior patterns or maladaptive functioning in personal or social settings, suggestive of a psychiatric illness",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "the patient has a psychiatric illness and /or is demonstrating emotional or behavioral symptoms sufficient to cause inappropriate behavior patterns or maladaptive functioning in personal or social settings, which may be suggestive of a psychiatric illness"
+    },
+    {
+      "id": "g2",
+      "text": "Not medically necessary when rendered to a patient with a medical/neurological condition (e.g. dementia, delirium) that has produced a cognitive defect severe enough to prevent effective communication and assessment",
+      "type": "exclusion",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "when it is rendered to a patient who has a medical/neurological condition such as dementia, delirium, or other psychiatric conditions, which have produced a severe enough cognitive defect to prevent effective communication and the ability to assess the patient"
+    },
+    {
+      "id": "g3",
+      "text": "Not necessary when the patient has a previously established neurological/dementia diagnosis and is not amenable to evaluation and therapy, unless one of the listed exceptions applies",
+      "type": "exclusion",
+      "logic": "one_of",
+      "sub_conditions": [
+        "an acute and/or marked mental status change",
+        "a request for second opinion",
+        "diagnostic clarification is necessary to rule out additional psychiatric or neurological processes, which may be treatable"
+      ],
+      "temporal": null,
+      "source_span": "when the patient has a previously established diagnosis of a neurological condition or dementia and is not amenable to the evaluation and therapy, unless there has been an acute and/or marked mental status change, a request for second opinion, or diagnostic clarification is necessary to rule out additional psychiatric or neurological processes, which may be treatable"
+    },
+    {
+      "id": "g4",
+      "text": "A psychiatric diagnostic evaluation can be conducted once, at the onset of an illness or suspected illness; repeatable by the same provider only if one of the listed conditions holds",
+      "type": "required",
+      "logic": "one_of",
+      "sub_conditions": [
+        "an extended hiatus in treatment occurs",
+        "the patient requires admission to an inpatient status for a psychiatric illness",
+        "a significant change in mental status requiring further assessment"
+      ],
+      "temporal": "An extended hiatus is generally defined as approximately 6 months from the last time the patient was seen or treated for their psychiatric condition.",
+      "source_span": "A psychiatric diagnostic evaluation can be conducted once, at the onset of an illness or suspected illness. The same provider may repeat it for the same patient if an extended hiatus in treatment occurs, if the patient requires admission to an inpatient status for a psychiatric illness, or for a significant change in mental status requiring further assessment"
+    },
+    {
+      "id": "g5",
+      "text": "The medical record for the diagnostic evaluation must document all of the listed elements",
+      "type": "required",
+      "logic": "all_of",
+      "sub_conditions": [
+        "The reason for the evaluation/patient\u2019s chief complaint",
+        "A referral source (if applicable)",
+        "History of present illness, including length of existence of problems/symptoms/conditions",
+        "Past history (psychiatric)",
+        "Significant medical history and current medications",
+        "Social history",
+        "Family history",
+        "Mental status exam",
+        "Strengths/liabilities",
+        "Multi-axis diagnosis or diagnostic impression list-including problem list",
+        "Treatment plan (including methods of therapy, anticipated length of treatment to the extent possible, and a description of the planned measurable and objective goals related to expected changes in behavior or thought processes)"
+      ],
+      "temporal": null,
+      "source_span": "The diagnostic evaluation should include:"
+    },
+    {
+      "id": "h1",
+      "text": "Psychotherapy is medically necessary when patient has a psychiatric illness and/or is demonstrating emotional or behavioral symptoms sufficient to cause inappropriate behavior or maladaptive functioning",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "Psychotherapy will be considered medically necessary when the patient has a psychiatric illness and/or is demonstrating emotional or behavioral symptoms sufficient to cause inappropriate behavior or maladaptive functioning"
+    },
+    {
+      "id": "h2",
+      "text": "Psychotherapy services must be performed by a person licensed by the state where practicing, whose training and scope of practice allow performing such services",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "Psychotherapy services must be performed by a person licensed by the state where practicing, and whose training and scope of practice allow that person to perform such services"
+    },
+    {
+      "id": "h3",
+      "text": "Psychotherapy must be provided as an integral part of an active treatment plan directly related to the patient\u2019s identified condition/diagnoses",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "Psychotherapy must be provided as an integral part of an active treatment plan for which it is directly related to the patient\u2019s identified condition/diagnoses"
+    },
+    {
+      "id": "h4",
+      "text": "Patient should be amenable to allowing insight-oriented therapy techniques to be effective",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "The patient should be amenable to allowing insight-oriented therapy such as behavioral modification techniques, interpersonal psychotherapy techniques, supportive therapy, and cognitive/behavioral techniques to be effective"
+    },
+    {
+      "id": "h5",
+      "text": "When a medical evaluation and management service is provided the same day as psychotherapy by the same provider, the two services must be significantly different and separately identifiable",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "Some psychiatric patients receive a medical evaluation and management service on the same day as a psychotherapy service by the same physician or other qualified health care professional. These services to be medically necessary should be significantly different and separately identifiable"
+    },
+    {
+      "id": "h6",
+      "text": "Psychotherapy/psychoanalysis services are not medically reasonable and necessary when rendered to a patient with a medical/neurological condition producing a cognitive deficit severe enough to prevent effective communication for insight-oriented therapy",
+      "type": "exclusion",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "Psychotherapy/psychoanalysis services are not considered to be medically reasonable and necessary when they are rendered to a patient who has a medical/neurological condition such as dementia, delirium or other psychiatric conditions, which have produced a severe enough cognitive deficit to prevent effective communication with interaction of sufficient quality to allow insight oriented therapy"
+    },
+    {
+      "id": "h7",
+      "text": "Psychotherapy services are not medically necessary when primarily teaching grooming skills, monitoring ADLs, recreational therapy, or social interaction",
+      "type": "exclusion",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "Psychotherapy services are not considered to be medically reasonable and necessary when they primarily include the teaching of grooming skills, monitoring activities of daily living, recreational therapy (dance, art play), or social interaction"
+    },
+    {
+      "id": "h8",
+      "text": "Treatment plan for outpatient psychotherapy/psychoanalysis must be updated periodically",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": "generally at least every three months",
+      "source_span": "the treatment plan for a patient receiving outpatient psychotherapy or psychoanalysis services, (i.e., measurable and objective treatment goals, descriptive documentation of therapeutic intervention, frequency of sessions, and estimated duration of treatment) will be updated on a periodic basis, generally at least every three months"
+    },
+    {
+      "id": "h9",
+      "text": "If psychotherapy services are performed incident-to, all incident-to rules must be met and the person providing the service must be licensed",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "If psychotherapy services are performed incident-to, all incident-to rules must be met, and the person providing the psychotherapy service must be licensed in the state to perform psychotherapy"
+    },
+    {
+      "id": "h10",
+      "text": "Medical record must indicate the medical necessity of each psychotherapy/psychoanalysis session",
+      "type": "required",
+      "logic": "all_of",
+      "sub_conditions": [
+        "The presence of a psychiatric illness and/or the demonstration of emotional or behavioral symptoms sufficient to alter baseline functioning",
+        "A detailed summary of the session, including descriptive documentation of therapeutic interventions such as examples of attempted behavior modification, supportive interaction, and discussion of reality",
+        "The degree of patient participation and interaction with the therapist, the reaction of the patient to the therapy session, documentation toward goal-oriented outcomes and the changes or lack of changes in patient symptoms and/or behavior as a result of the therapy session"
+      ],
+      "temporal": null,
+      "source_span": "For psychotherapy and psychoanalysis services, the medical record documentation maintained by the provider must indicate the medical necessity of each psychotherapy/psychoanalysis session and include the following:"
+    },
+    {
+      "id": "i1",
+      "text": "Group psychotherapy must be led by a person authorized by state statute to perform this service",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "it must be led by a person, authorized by state statute to perform this service"
+    },
+    {
+      "id": "i2",
+      "text": "Group size should be a size considered therapeutically successful (maximum 12 people)",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "The group size should be of a size that can be considered therapeutically successful (i.e., maximum 12 people)"
+    },
+    {
+      "id": "i3",
+      "text": "Patient has a psychiatric illness and/or is demonstrating emotional or behavioral symptoms sufficient to cause inappropriate behavior patterns or maladaptive functioning in personal or social settings (group therapy)",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "Group therapy will be considered medically necessary when the patient has a psychiatric illness and /or is demonstrating emotional or behavioral symptoms sufficient to cause inappropriate behavior patterns or maladaptive functioning in personal or social settings"
+    },
+    {
+      "id": "i4",
+      "text": "Group psychotherapy must be ordered by a provider as part of an active treatment plan directly related to the patient\u2019s diagnosis, adhered to and endorsed/monitored by the treating physician",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "Group psychotherapy must be ordered by a provider as an integral part of an active treatment plan for which it is directly related to the patient\u2019s identified condition/diagnosis. This treatment plan must be adhered to and should be endorsed and monitored by the treating physician or physician of record"
+    },
+    {
+      "id": "i5",
+      "text": "The specialized skills of a mental health care professional must be required",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "The specialized skills of a mental health care professional must be required"
+    },
+    {
+      "id": "i6",
+      "text": "Group psychotherapy not medically necessary when cognitive deficit prevents effective communication with therapist/group members",
+      "type": "exclusion",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "Group psychotherapy services are not considered to be medically reasonable and necessary when they are rendered to a patient who has a medical/neurological condition such as dementia, delirium, or other psychiatric conditions, which have produced a severe enough cognitive deficit to prevent effective communication including interaction of sufficient quality with the therapist and members of the group"
+    },
+    {
+      "id": "i7",
+      "text": "Music therapy, socialization, recreational activities, art therapy, excursions, sensory stimulation, eating together, cognitive stimulation, or motion therapy are not medically necessary",
+      "type": "exclusion",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "Other services such as music therapy, socialization, recreational activities/recreational therapy, art classes/art therapy, excursions, sensory stimulation, eating together, cognitive stimulation, or motion therapy are not considered to be medically reasonable and necessary"
+    },
+    {
+      "id": "j1",
+      "text": "Family psychotherapy medically necessary only in clinically appropriate circumstances when primary purpose is treatment/management of the patient\u2019s condition",
+      "type": "required",
+      "logic": "one_of",
+      "sub_conditions": [
+        "when there is a need to observe and correct, through psychotherapeutic techniques, the patient\u2019s interaction with family members",
+        "where there is a need to assess the conflicts or impediments within the family, and assist, through psychotherapeutic techniques, the family members in the management of the patient"
+      ],
+      "temporal": null,
+      "source_span": "Family psychotherapy will be considered medically reasonable and necessary only in clinically appropriate circumstances and when the primary purpose of such psychotherapy is the treatment/management of the patient\u2019s condition"
+    },
+    {
+      "id": "j2",
+      "text": "Patient has a psychiatric illness and/or is demonstrating emotional or behavioral symptoms sufficient to cause inappropriate behavior or maladaptive functioning (family therapy)",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "Family psychotherapy is considered to be medically reasonable and necessary when the patient has a psychiatric illness and/or is demonstrating emotional or behavioral symptoms sufficient to cause inappropriate behavior or maladaptive functioning"
+    },
+    {
+      "id": "j3",
+      "text": "Family psychotherapy not reasonable/necessary for unconscious or comatose patients",
+      "type": "exclusion",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "In certain types of medical conditions, such as the unconscious or comatose patient, family psychotherapy would not be medically reasonable or necessary"
+    },
+    {
+      "id": "j4",
+      "text": "Medical record must indicate the medical necessity of each family psychotherapy session",
+      "type": "required",
+      "logic": "all_of",
+      "sub_conditions": [
+        "The presence of a psychiatric illness and/or the demonstration of emotional or behavioral symptoms sufficient to alter baseline functioning",
+        "The summary of themes addressed in the family psychotherapy session, including descriptive documentation of therapeutic interventions such as examples of attempted behavior modification, supportive interaction, and discussion of reality",
+        "The degree of patient participation and interaction with the family members and leader, the reaction of the patient to the group, the group's reaction to the patient and the changes or lack of changes in patient symptoms and/or behavior as a result of the family psychotherapy session"
+      ],
+      "temporal": null,
+      "source_span": "For family psychotherapy services (with or without the patient present), the medical record documentation maintained by the provider must indicate the medical necessity of each family psychotherapy session and include the following:"
+    },
+    {
+      "id": "j5",
+      "text": "Family psychotherapy must be conducted face to face by physicians, psychologists, or other licensed mental health professionals",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "Family psychotherapy must be conducted face to face by physicians (MD/DO), psychologists, or other mental health professionals licensed or authorized by state statutes and considered eligible for reimbursement"
+    },
+    {
+      "id": "k1",
+      "text": "Psychoanalysis uses psychoanalytic theory and transference to gain insight into unconscious motivations and conflicts",
+      "type": "informational",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "Psychoanalysis uses a special technique to gain insight into a patient's unconscious motivations and conflicts using the development and resolution of a therapeutic transference to achieve therapeutic effect"
+    },
+    {
+      "id": "k2",
+      "text": "Psychoanalysis is generally considered unsuitable for psychoses",
+      "type": "exclusion",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "Psychoanalysis is generally considered unsuitable for psychoses"
+    },
+    {
+      "id": "k3",
+      "text": "For psychoanalysis, medical record must document indications, description of transference, and use of psychoanalytic techniques; physician must be trained/credentialed; CNS/NP not eligible for payment",
+      "type": "required",
+      "logic": "all_of",
+      "sub_conditions": [
+        "the medical record must document the indications for psychoanalysis, description of the transference, and that psychoanalytic techniques were used",
+        "The physician using this technique must be trained and credentialed in its use",
+        "CNS\u2019s and NP\u2019s are not eligible for payment for psychoanalysis"
+      ],
+      "temporal": null,
+      "source_span": "Additionally, for psychoanalysis, the medical record must document the indications for psychoanalysis, description of the transference, and that psychoanalytic techniques were used"
+    },
+    {
+      "id": "l1",
+      "text": "Medical record must indicate presence of one of the listed communication factors for interactive complexity services",
+      "type": "required",
+      "logic": "one_of",
+      "sub_conditions": [
+        "The need to manage maladaptive communication among participants (related to, e.g., high anxiety, high reactivity, repeated questions, or disagreement) that complicates delivery of care",
+        "Caregiver emotions or behaviors that interfere with implementation of the treatment plan",
+        "Evidence or disclosure of a sentinel event and mandated report to a third party (e.g., abuse or neglect with report to state agency) with initiation of discussion of the sentinel event and/or report with patient and other visit participants",
+        "Use of play equipment, physical devices, interpreter, or translator to overcome barriers to diagnostic or therapeutic interaction with a patient who is not fluent in the same language or who has not developed or has lost expressive or receptive language skills to use or understand typical language"
+      ],
+      "temporal": null,
+      "source_span": "The medical record must indicate that the person being evaluated has one of the following communication factors present during the visit:"
+    },
+    {
+      "id": "l2",
+      "text": "Medical record must include adaptations used to overcome communication difficulty, the rationale, and treatment recommendations",
+      "type": "required",
+      "logic": "all_of",
+      "sub_conditions": [
+        "the medical record must include adaptations utilized in the session to overcome the difficulty in communication and the rationale for employing these techniques justifying the interactive complexity of the service",
+        "The medical record must include treatment recommendations"
+      ],
+      "temporal": null,
+      "source_span": "Additionally, the medical record must include adaptations utilized in the session to overcome the difficulty in communication and the rationale for employing these techniques justifying the interactive complexity of the service"
+    },
+    {
+      "id": "m1",
+      "text": "Psychotherapy for crisis is an urgent assessment/history, mental status exam, and disposition for a life-threatening or complex presenting problem requiring immediate attention",
+      "type": "informational",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "Psychotherapy for crisis is an urgent assessment and history of a crisis state, a mental status exam, and a disposition"
+    },
+    {
+      "id": "n1",
+      "text": "Periodic documentation of patient's capacity to participate/benefit, estimated treatment duration, and measurable goals is required for psychoanalysis/psychotherapy including group and family",
+      "type": "required",
+      "logic": "all_of",
+      "sub_conditions": [
+        "the estimated duration of treatment in terms of number of sessions required and the target symptoms, measurable and objective goals of therapy related to changes in behavior, thought processes and/or medications, methods of monitoring outcome, and why the chosen therapy is an appropriate modality either in lieu of or in addition to another form of psychiatric treatment"
+      ],
+      "temporal": null,
+      "source_span": "The documentation for psychoanalysis or psychotherapy services including group and family psychotherapy should include on a periodic basis the patient\u2019s capacity to participate and benefit from psychotherapy/psychoanalysis"
+    },
+    {
+      "id": "n2a",
+      "text": "There must be a reasonable expectation of improvement in the patient's disorder or maintenance of function where decline would otherwise be expected",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "There must be a reasonable expectation of improvement in the patient\u2019s disorder or condition, demonstrated by an improved level of functioning or maintenance of level of functioning where decline would otherwise be expected in the case of a disabling mental illness or condition or chronic mental disorder"
+    },
+    {
+      "id": "n2b",
+      "text": "Once no further improvement is expected and there is no reasonable expectation of improvement, psychological services are no longer reasonable or medically necessary",
+      "type": "exclusion",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "When a patient reaches a point in his/her treatment where further improvement does not appear to be indicated and there is no reasonable expectation of improvement, the psychological services are no longer considered reasonable or medically necessary"
+    },
+    {
+      "id": "n3",
+      "text": "Routine psychiatric/psychological services to evaluate or treat a nursing-home-placement adjustment disorder do not constitute medical necessity",
+      "type": "exclusion",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "Psychiatric and/or psychological services routinely performed to evaluate and/or treat an adjustment disorder associated with placement in a nursing home do not constitute medical necessity"
+    },
+    {
+      "id": "n4",
+      "text": "Patient must have the capacity to actively participate in all prescribed therapies, except family therapy without the patient present",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "The patient must have the capacity to actively participate in all therapies prescribed, except for family therapy without the patient present"
+    }
+  ],
+  "notes": "Covers all 7 service sections and all 20 numbered limitations. g3 is an exclusion-with-exceptions modeled as logic=one_of on the escape clauses -- a genuine ambiguity in how the schema represents \"exclusion voided by any one of several conditions\". Limitations #15 (HIPAA/privileged-info filing) and #20 (utilization-review risk flag) were left out -- record-keeping/audit notes, not testable coverage conditions.\n\nFirst full-policy result: precision 0.85, recall 0.92, hallucination 0/41 (all 41 predicted spans grounded verbatim). Manually reviewed all 6 \"spurious\" predictions: every one is a real, grounded quote from the policy that this gold set simply did not capture at the same granularity (e.g. model c20 splits out an alternate-informants sub-rule this gold folded into g5; c31 splits an acute-vs-chronic distinction this gold merged into n1). None are hallucinations -- so 0.85 is a lower bound on true precision, not the real number. The 3 genuine misses are h4 (a soft required condition) and two purely definitional/descriptive sentences (Psychoanalysis and Crisis section openers) that the model consistently skips when they are not phrased as a testable condition -- worth checking whether this holds across more policies before treating it as a real pattern."
 }
