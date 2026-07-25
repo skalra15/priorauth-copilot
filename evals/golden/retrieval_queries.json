@@ -1,352 +1,302 @@
 [
   {
-    "code": "S63.222D",
-    "code_system": "ICD10",
-    "state": "NM",
-    "expected_policy_id": "L34564",
-    "expected_title": "Home Health Physical Therapy"
+    "cpt": "70473",
+    "icd10": "I63.132",
+    "state": "OH",
+    "expected_policy_id": "L38694"
   },
   {
-    "code": "E10.A2",
-    "code_system": "ICD10",
+    "cpt": "44402",
+    "icd10": "C49.A5",
     "state": "MS",
-    "expected_policy_id": "L33822",
-    "expected_title": "Glucose Monitors"
+    "expected_policy_id": "L38812"
   },
   {
-    "code": "H10.213",
-    "code_system": "ICD10",
-    "state": "OH",
-    "expected_policy_id": "L34393",
-    "expected_title": "Ocular Photography - External"
-  },
-  {
-    "code": "S92.401A",
-    "code_system": "ICD10",
-    "state": "NE",
-    "expected_policy_id": "L33942",
-    "expected_title": "Physical Therapy - Home Health"
-  },
-  {
-    "code": "T45.3X6S",
-    "code_system": "ICD10",
-    "state": "ND",
-    "expected_policy_id": "L36402",
-    "expected_title": "Allergy Testing"
-  },
-  {
-    "code": "S52.234B",
-    "code_system": "ICD10",
-    "state": "MT",
-    "expected_policy_id": "L34771",
-    "expected_title": "Immune Globulins"
-  },
-  {
-    "code": "S19.80XD",
-    "code_system": "ICD10",
-    "state": "FL",
-    "expected_policy_id": "L33583",
-    "expected_title": "Diagnostic and Therapeutic Esophagogastroduodenoscopy"
-  },
-  {
-    "code": "T23.451A",
-    "code_system": "ICD10",
-    "state": "DE",
-    "expected_policy_id": "L34596",
-    "expected_title": "Immunizations"
-  },
-  {
-    "code": "S52.236H",
-    "code_system": "ICD10",
-    "state": "TN",
-    "expected_policy_id": "L34428",
-    "expected_title": "Outpatient Physical Therapy"
-  },
-  {
-    "code": "P36.4",
-    "code_system": "ICD10",
-    "state": "UT",
-    "expected_policy_id": "L34149",
-    "expected_title": "Respiratory Care"
-  },
-  {
-    "code": "T17.908S",
-    "code_system": "ICD10",
-    "state": "TN",
-    "expected_policy_id": "L33459",
-    "expected_title": "Computerized Axial Tomography (CT), Thorax"
-  },
-  {
-    "code": "H44.529",
-    "code_system": "ICD10",
-    "state": "VI",
-    "expected_policy_id": "L33766",
-    "expected_title": "Visual Field Examination"
-  },
-  {
-    "code": "S89.101A",
-    "code_system": "ICD10",
-    "state": "KY",
-    "expected_policy_id": "L33318",
-    "expected_title": "Knee Orthoses"
-  },
-  {
-    "code": "O14.12",
-    "code_system": "ICD10",
-    "state": "SD",
-    "expected_policy_id": "L36702",
-    "expected_title": "Serum Magnesium"
-  },
-  {
-    "code": "S72.133Q",
-    "code_system": "ICD10",
-    "state": "PR",
-    "expected_policy_id": "L33618",
-    "expected_title": "Major Joint Replacement (Hip and Knee)"
-  },
-  {
-    "code": "A4408",
-    "code_system": "HCPCS",
-    "state": "OR",
-    "expected_policy_id": "L33828",
-    "expected_title": "Ostomy Supplies"
-  },
-  {
-    "code": "M24.021",
-    "code_system": "ICD10",
-    "state": "GA",
-    "expected_policy_id": "L34427",
-    "expected_title": "Outpatient Occupational Therapy"
-  },
-  {
-    "code": "V24.19XD",
-    "code_system": "ICD10",
-    "state": "NC",
-    "expected_policy_id": "L39400",
-    "expected_title": "Magnesium"
-  },
-  {
-    "code": "S66.592S",
-    "code_system": "ICD10",
-    "state": "NM",
-    "expected_policy_id": "L34560",
-    "expected_title": "Home Health Occupational Therapy"
-  },
-  {
-    "code": "S39.83XA",
-    "code_system": "ICD10",
-    "state": "ND",
-    "expected_policy_id": "L34220",
-    "expected_title": "Lumbar MRI"
-  },
-  {
-    "code": "S24.159A",
-    "code_system": "ICD10",
-    "state": "FL",
-    "expected_policy_id": "L33941",
-    "expected_title": "Routine Foot Care"
-  },
-  {
-    "code": "N80.221",
-    "code_system": "ICD10",
-    "state": "NC",
-    "expected_policy_id": "L39387",
-    "expected_title": "Luteinizing Hormone-Releasing Hormone (LHRH) Analogs"
-  },
-  {
-    "code": "S90.821D",
-    "code_system": "ICD10",
-    "state": "OH",
-    "expected_policy_id": "L34032",
-    "expected_title": "Debridement Services"
-  },
-  {
-    "code": "E0958",
-    "code_system": "HCPCS",
-    "state": "NM",
-    "expected_policy_id": "L40345",
-    "expected_title": "Wheelchair Options/Accessories"
-  },
-  {
-    "code": "T42.1X2S",
-    "code_system": "ICD10",
-    "state": "WV",
-    "expected_policy_id": "L34417",
-    "expected_title": "CT of the Head"
-  },
-  {
-    "code": "S96.801A",
-    "code_system": "ICD10",
-    "state": "SC",
-    "expected_policy_id": "L37643",
-    "expected_title": "Routine Foot Care"
-  },
-  {
-    "code": "G44.52",
-    "code_system": "ICD10",
-    "state": "OR",
-    "expected_policy_id": "L37373",
-    "expected_title": "MRI and CT Scans of the Head and Neck"
-  },
-  {
-    "code": "H11.043",
-    "code_system": "ICD10",
-    "state": "NY",
-    "expected_policy_id": "L34380",
-    "expected_title": "Scanning Computerized Ophthalmic Diagnostic Imaging (SCODI)"
-  },
-  {
-    "code": "M1A.49X0",
-    "code_system": "ICD10",
-    "state": "IL",
-    "expected_policy_id": "L39995",
-    "expected_title": "Pharmacogenomic Testing"
-  },
-  {
-    "code": "M66.861",
-    "code_system": "ICD10",
-    "state": "RI",
-    "expected_policy_id": "L33619",
-    "expected_title": "Nonvascular Extremity Ultrasound"
-  },
-  {
-    "code": "S65.812S",
-    "code_system": "ICD10",
-    "state": "IL",
-    "expected_policy_id": "L33633",
-    "expected_title": "Magnetic Resonance Angiography (MRA)"
-  },
-  {
-    "code": "T22.729A",
-    "code_system": "ICD10",
-    "state": "OK",
-    "expected_policy_id": "L35434",
-    "expected_title": "Oximetry Services"
-  },
-  {
-    "code": "H59.351",
-    "code_system": "ICD10",
-    "state": "TN",
-    "expected_policy_id": "L34424",
-    "expected_title": "Magnetic Resonance Angiography"
-  },
-  {
-    "code": "B76.9",
-    "code_system": "ICD10",
-    "state": "KY",
-    "expected_policy_id": "L34005",
-    "expected_title": "Colonoscopy/Sigmoidoscopy/Proctosigmoidoscopy"
-  },
-  {
-    "code": "77078",
-    "code_system": "HCPCS",
-    "state": "SC",
-    "expected_policy_id": "L39268",
-    "expected_title": "Bone Mass Measurement"
-  },
-  {
-    "code": "S35.219D",
-    "code_system": "ICD10",
-    "state": "FL",
-    "expected_policy_id": "L33674",
-    "expected_title": "Duplex Scanning"
-  },
-  {
-    "code": "Z69.12",
-    "code_system": "ICD10",
-    "state": "DC",
-    "expected_policy_id": "L35070",
-    "expected_title": "Speech - Language Pathology (SLP) Services: Communication Disorders"
-  },
-  {
-    "code": "R10.A3",
-    "code_system": "ICD10",
-    "state": "VA",
-    "expected_policy_id": "L34577",
-    "expected_title": "Retroperitoneal Ultrasound"
-  },
-  {
-    "code": "L89.200",
-    "code_system": "ICD10",
+    "cpt": "92137",
+    "icd10": "S06.2XAD",
     "state": "MN",
-    "expected_policy_id": "L33642",
-    "expected_title": "Pressure Reducing Support Surfaces - Group 2"
+    "expected_policy_id": "L34380"
   },
   {
-    "code": "Q52.11",
-    "code_system": "ICD10",
+    "cpt": "64628",
+    "icd10": "M54.51",
     "state": "SC",
-    "expected_policy_id": "L34415",
-    "expected_title": "CT of the Abdomen and Pelvis"
+    "expected_policy_id": "L39420"
   },
   {
-    "code": "15278",
-    "code_system": "HCPCS",
-    "state": "OK",
-    "expected_policy_id": "L35041",
-    "expected_title": "Application of Bioengineered Skin Substitutes to Lower Extremity Chronic Non-Healing Wounds"
-  },
-  {
-    "code": "Q87.11",
-    "code_system": "ICD10",
+    "cpt": "81287",
+    "icd10": "C71.1",
     "state": "NC",
-    "expected_policy_id": "L33467",
-    "expected_title": "Ophthalmology: Extended Ophthalmoscopy and Fundus Photography"
+    "expected_policy_id": "L35974"
   },
   {
-    "code": "H50.639",
-    "code_system": "ICD10",
-    "state": "AL",
-    "expected_policy_id": "L34425",
-    "expected_title": "Magnetic Resonance Imaging of the Head and Neck"
+    "cpt": "91111",
+    "icd10": "K52.22",
+    "state": "KY",
+    "expected_policy_id": "L34081"
   },
   {
-    "code": "L1902",
-    "code_system": "HCPCS",
-    "state": "MO",
-    "expected_policy_id": "L33686",
-    "expected_title": "Ankle-Foot/Knee-Ankle-Foot Orthosis"
+    "cpt": "20552",
+    "icd10": "G44.201",
+    "state": "OH",
+    "expected_policy_id": "L39656"
   },
   {
-    "code": "E0779",
-    "code_system": "HCPCS",
+    "cpt": "43249",
+    "icd10": "K31.A15",
+    "state": "WV",
+    "expected_policy_id": "L34434"
+  },
+  {
+    "cpt": "61715",
+    "icd10": "G25.2",
+    "state": "OH",
+    "expected_policy_id": "L37790"
+  },
+  {
+    "cpt": "93930",
+    "icd10": "T81.718D",
+    "state": "DE",
+    "expected_policy_id": "L40275"
+  },
+  {
+    "cpt": "0333T",
+    "icd10": "E09.3211",
+    "state": "IL",
+    "expected_policy_id": "L36831"
+  },
+  {
+    "cpt": "G0300",
+    "icd10": "G30.9",
+    "state": "TX",
+    "expected_policy_id": "L34567"
+  },
+  {
+    "cpt": "J0588",
+    "icd10": "H50.51",
+    "state": "FL",
+    "expected_policy_id": "L33274"
+  },
+  {
+    "cpt": "86361",
+    "icd10": "Z03.89",
+    "state": "KY",
+    "expected_policy_id": "L34037"
+  },
+  {
+    "cpt": "92285",
+    "icd10": "H18.423",
+    "state": "OH",
+    "expected_policy_id": "L34393"
+  },
+  {
+    "cpt": "74230",
+    "icd10": "T17.318D",
+    "state": "NC",
+    "expected_policy_id": "L33449"
+  },
+  {
+    "cpt": "93971",
+    "icd10": "I82.441",
+    "state": "CO",
+    "expected_policy_id": "L35451"
+  },
+  {
+    "cpt": "20552",
+    "icd10": "M79.12",
+    "state": "AK",
+    "expected_policy_id": "L34211"
+  },
+  {
+    "cpt": "33225",
+    "icd10": "I44.1",
+    "state": "SC",
+    "expected_policy_id": "L39080"
+  },
+  {
+    "cpt": "95806",
+    "icd10": "G47.61",
+    "state": "OH",
+    "expected_policy_id": "L36902"
+  },
+  {
+    "cpt": "81554",
+    "icd10": "J84.111",
+    "state": "KY",
+    "expected_policy_id": "L37905"
+  },
+  {
+    "cpt": "81520",
+    "icd10": "C50.312",
+    "state": "MI",
+    "expected_policy_id": "L36811"
+  },
+  {
+    "cpt": "64600",
+    "icd10": "G57.61",
+    "state": "NV",
+    "expected_policy_id": "L40299"
+  },
+  {
+    "cpt": "80331",
+    "icd10": "R40.2A",
+    "state": "CA",
+    "expected_policy_id": "L34645"
+  },
+  {
+    "cpt": "94761",
+    "icd10": "J45.40",
     "state": "PR",
-    "expected_policy_id": "L40247",
-    "expected_title": "External Infusion Pumps"
+    "expected_policy_id": "L33923"
   },
   {
-    "code": "S95.812S",
-    "code_system": "ICD10",
+    "cpt": "93880",
+    "icd10": "H53.452",
+    "state": "KY",
+    "expected_policy_id": "L35753"
+  },
+  {
+    "cpt": "J0881",
+    "icd10": "C44.41",
+    "state": "OH",
+    "expected_policy_id": "L34356"
+  },
+  {
+    "cpt": "0660T",
+    "icd10": "H40.1131",
+    "state": "DN",
+    "expected_policy_id": "L40362"
+  },
+  {
+    "cpt": "0090U",
+    "icd10": "D22.62",
+    "state": "WV",
+    "expected_policy_id": "L39345"
+  },
+  {
+    "cpt": "94690",
+    "icd10": "T59.1X4D",
+    "state": "SD",
+    "expected_policy_id": "L34149"
+  },
+  {
+    "cpt": "22554",
+    "icd10": "S12.531B",
     "state": "CT",
-    "expected_policy_id": "L33627",
-    "expected_title": "Non-Invasive Vascular Studies"
+    "expected_policy_id": "L39770"
   },
   {
-    "code": "C8908",
-    "code_system": "HCPCS",
+    "cpt": "64644",
+    "icd10": "K60.519",
     "state": "KY",
-    "expected_policy_id": "L33950",
-    "expected_title": "Breast Imaging Mammography/Breast Echography (Sonography)/Breast MRI/Ductography"
+    "expected_policy_id": "L39857"
   },
   {
-    "code": "E2398",
-    "code_system": "HCPCS",
-    "state": "KY",
-    "expected_policy_id": "L33792",
-    "expected_title": "Wheelchair Options/Accessories"
+    "cpt": "82306",
+    "icd10": "M80.08XD",
+    "state": "PR",
+    "expected_policy_id": "L33771"
   },
   {
-    "code": "37278",
-    "code_system": "HCPCS",
-    "state": "KY",
-    "expected_policy_id": "L35998",
-    "expected_title": "Non-Coronary Vascular Stents"
+    "cpt": "64643",
+    "icd10": "H50.08",
+    "state": "MS",
+    "expected_policy_id": "L40381"
   },
   {
-    "code": "51725",
-    "code_system": "HCPCS",
-    "state": "KY",
-    "expected_policy_id": "L34056",
-    "expected_title": "Urodynamics"
+    "cpt": "J1566",
+    "icd10": "D59.19",
+    "state": "PR",
+    "expected_policy_id": "L34007"
+  },
+  {
+    "cpt": "76776",
+    "icd10": "C85.10",
+    "state": "AL",
+    "expected_policy_id": "L34577"
+  },
+  {
+    "cpt": "0107T",
+    "icd10": "S04.892S",
+    "state": "PR",
+    "expected_policy_id": "L34859"
+  },
+  {
+    "cpt": "81479",
+    "icd10": "C77.2",
+    "state": "WV",
+    "expected_policy_id": "L35073"
+  },
+  {
+    "cpt": "44401",
+    "icd10": "K94.09",
+    "state": "PR",
+    "expected_policy_id": "L33671"
+  },
+  {
+    "cpt": "70473",
+    "icd10": "R47.1",
+    "state": "IA",
+    "expected_policy_id": "L40342"
+  },
+  {
+    "cpt": "0388U",
+    "icd10": "C34.90",
+    "state": "UT",
+    "expected_policy_id": "L37897"
+  },
+  {
+    "cpt": "64644",
+    "icd10": "G43.919",
+    "state": "TN",
+    "expected_policy_id": "L39835"
+  },
+  {
+    "cpt": "93970",
+    "icd10": "S95.191S",
+    "state": "PR",
+    "expected_policy_id": "L33693"
+  },
+  {
+    "cpt": "0288U",
+    "icd10": "C34.12",
+    "state": "MI",
+    "expected_policy_id": "L38443"
+  },
+  {
+    "cpt": "90867",
+    "icd10": "F33.2",
+    "state": "PA",
+    "expected_policy_id": "L34641"
+  },
+  {
+    "cpt": "61715",
+    "icd10": "G20.B1",
+    "state": "GU",
+    "expected_policy_id": "L37729"
+  },
+  {
+    "cpt": "64611",
+    "icd10": "G25.2",
+    "state": "SC",
+    "expected_policy_id": "L39836"
+  },
+  {
+    "cpt": "19325",
+    "icd10": "N64.81",
+    "state": "TX",
+    "expected_policy_id": "L39051"
+  },
+  {
+    "cpt": "93016",
+    "icd10": "T86.32",
+    "state": "OH",
+    "expected_policy_id": "L33960"
+  },
+  {
+    "cpt": "92082",
+    "icd10": "I60.31",
+    "state": "MA",
+    "expected_policy_id": "L34615"
   }
 ]

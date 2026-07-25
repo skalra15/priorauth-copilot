@@ -1,0 +1,122 @@
+[
+  {
+    "expected_policy_id": "NCD-160.19",
+    "expected_title": "Phrenic Nerve Stimulator"
+  },
+  {
+    "expected_policy_id": "NCD-20.19",
+    "expected_title": "Ambulatory Blood Pressure Monitoring"
+  },
+  {
+    "expected_policy_id": "NCD-240.4.1",
+    "expected_title": "Sleep Testing for Obstructive Sleep Apnea (OSA)"
+  },
+  {
+    "expected_policy_id": "NCD-150.1",
+    "expected_title": "Manipulation"
+  },
+  {
+    "expected_policy_id": "NCD-10.2",
+    "expected_title": "Transcutaneous Electrical Nerve Stimulation (TENS) for Acute Post-Operative Pain"
+  },
+  {
+    "expected_policy_id": "NCD-190.28",
+    "expected_title": "Tumor Antigen by Immunoassay - CA 125"
+  },
+  {
+    "expected_policy_id": "NCD-210.15",
+    "expected_title": "Pre-Exposure Prophylaxis (PrEP) for Human Immunodeficiency Virus (HIV) Prevention"
+  },
+  {
+    "expected_policy_id": "NCD-270.3",
+    "expected_title": "Blood-Derived Products for Chronic Non-Healing Wounds"
+  },
+  {
+    "expected_policy_id": "NCD-70.1",
+    "expected_title": "Consultations with a Beneficiary's Family and Associates"
+  },
+  {
+    "expected_policy_id": "NCD-140.9",
+    "expected_title": "Gender Dysphoria and Gender Reassignment Surgery"
+  },
+  {
+    "expected_policy_id": "NCD-160.8",
+    "expected_title": "Electroencephalographic Monitoring During Surgical Procedures Involving the Cerebral Vasculature"
+  },
+  {
+    "expected_policy_id": "NCD-20.38",
+    "expected_title": "Transcatheter Edge-to-Edge Repair for Tricuspid Valve Regurgitation (T-TEER)"
+  },
+  {
+    "expected_policy_id": "NCD-150.2",
+    "expected_title": "Osteogenic Stimulators"
+  },
+  {
+    "expected_policy_id": "NCD-100.6",
+    "expected_title": "Gastric Freezing"
+  },
+  {
+    "expected_policy_id": "NCD-190.4",
+    "expected_title": "Electron Microscope - RETIRED"
+  },
+  {
+    "expected_policy_id": "NCD-230.2",
+    "expected_title": "Uroflowmetric Evaluations"
+  },
+  {
+    "expected_policy_id": "NCD-20.8.4",
+    "expected_title": "Leadless Pacemakers"
+  },
+  {
+    "expected_policy_id": "NCD-80.3",
+    "expected_title": "Photosensitive Drugs"
+  },
+  {
+    "expected_policy_id": "NCD-230.12",
+    "expected_title": "Dimethyl Sulfoxide (DMSO)"
+  },
+  {
+    "expected_policy_id": "NCD-210.2",
+    "expected_title": "Screening Pap Smears and Pelvic Examinations for Early Detection of Cervical or Vaginal Cancer"
+  },
+  {
+    "expected_policy_id": "NCD-190.33",
+    "expected_title": "Hepatitis Panel/Acute Hepatitis Panel"
+  },
+  {
+    "expected_policy_id": "NCD-110.20",
+    "expected_title": "Blood Brain Barrier Osmotic Disruption for Treatment of Brain Tumors"
+  },
+  {
+    "expected_policy_id": "NCD-50.8",
+    "expected_title": "Ultrasonic Surgery"
+  },
+  {
+    "expected_policy_id": "NCD-250.5",
+    "expected_title": "Dermal Injections for the Treatment of Facial Lipodystrophy Syndrome (LDS)"
+  },
+  {
+    "expected_policy_id": "NCD-80.11",
+    "expected_title": "Vitrectomy"
+  },
+  {
+    "expected_policy_id": "NCD-190.20",
+    "expected_title": "Blood Glucose Testing"
+  },
+  {
+    "expected_policy_id": "NCD-230.16",
+    "expected_title": "Bladder Stimulators (Pacemakers)"
+  },
+  {
+    "expected_policy_id": "NCD-210.11",
+    "expected_title": "Intensive Behavioral Therapy for Cardiovascular Disease"
+  },
+  {
+    "expected_policy_id": "NCD-220.6.16",
+    "expected_title": "FDG PET for Infection and Inflammation - RETIRED"
+  },
+  {
+    "expected_policy_id": "NCD-50.5",
+    "expected_title": "Oxygen Treatment of Inner Ear/Carbon Therapy"
+  }
+]

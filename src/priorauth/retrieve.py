@@ -125,6 +125,9 @@ def semantic_search(query: str, top_k: int = 5, model_name: str | None = None) -
 # ---------------------------------------------------------------------------
 
 
+BOTH_CODES_BONUS = 10.0  # dwarfs the 0.5-2.0 jurisdiction score so an AND-match always outranks a single-code match
+
+
 def retrieve(
     cpt: str | None = None,
     icd10: str | None = None,
@@ -132,15 +135,29 @@ def retrieve(
     query_text: str | None = None,
     top_k: int = 5,
 ) -> dict:
-    """Deterministic lookup first; semantic fallback only if it comes up empty."""
-    deterministic: dict[str, dict] = {}
-    for code, system in ((cpt, "HCPCS"), (icd10, "ICD10")):
-        if not code:
+    """Deterministic lookup first; semantic fallback only if it comes up empty.
+
+    A single code is often shared by dozens of unrelated policies (e.g. a common
+    lab test code referenced by every policy that happens to cover it, for
+    entirely different diagnoses) -- ranking on jurisdiction alone doesn't
+    disambiguate that. A policy matching BOTH the procedure code and the
+    diagnosis code is a much stronger, more specific signal than either alone,
+    so it's boosted to always outrank a single-code match.
+    """
+    by_system: dict[str, dict[str, dict]] = {}
+    for code, system in (("cpt", "HCPCS"), ("icd10", "ICD10")):
+        value = cpt if code == "cpt" else icd10
+        if not value:
             continue
-        for r in lookup_by_code(code, system, state):
-            existing = deterministic.get(r["policy_id"])
-            if not existing or r["score"] > existing["score"]:
-                deterministic[r["policy_id"]] = r
+        by_system[system] = {r["policy_id"]: r for r in lookup_by_code(value, system, state)}
+
+    all_policy_ids = set().union(*(d.keys() for d in by_system.values())) if by_system else set()
+    deterministic: dict[str, dict] = {}
+    for policy_id in all_policy_ids:
+        matches = [d[policy_id] for d in by_system.values() if policy_id in d]
+        r = dict(matches[0])
+        r["score"] = sum(m["score"] for m in matches) + (BOTH_CODES_BONUS if len(matches) > 1 else 0)
+        deterministic[policy_id] = r
 
     if deterministic:
         ranked = sorted(deterministic.values(), key=lambda x: (-x["score"], x["policy_id"]))

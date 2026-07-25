@@ -276,44 +276,75 @@ def retrieve_cmd(
     console.print(table)
 
 
+def _recall(hits_at_1: int, hits_at_5: int, n: int) -> tuple[float, float]:
+    return (hits_at_1 / n if n else 0.0, hits_at_5 / n if n else 0.0)
+
+
 @app.command("eval-retrieval")
 def eval_retrieval_cmd(
     queries_path: Path = typer.Option(config.GOLDEN_DIR / "retrieval_queries.json"),
+    ncd_queries_path: Path = typer.Option(config.GOLDEN_DIR / "retrieval_queries_ncd.json"),
 ) -> None:
-    """: recall@1/@5 for the deterministic path, and the semantic path for
-    comparison (title-as-query proxy — see the project docs )."""
+    """: recall@1/@5, reported per scenario rather than one blended number.
+
+    Three genuinely different situations, not one system: LCDs are code-indexed
+    and the caller has both a procedure and a diagnosis code (the common case);
+    LCDs where only one code is on hand; and NCDs, which this CMS download
+    carries with zero CPT/HCPCS/ICD-10 linkage at all (only a coarse benefit-
+    category classification) -- so NCDs are *only* ever reachable through the
+    semantic path, structurally, not as a fallback of last resort.
+    """
     if not queries_path.exists():
         console.print(f"[red]No query set at {queries_path}[/red]")
         raise typer.Exit(1)
     queries = json.loads(queries_path.read_text())
-
-    det_r1 = det_r5 = sem_r1 = sem_r5 = 0
-    for q in queries:
-        det_ids = [r["policy_id"] for r in retrieve.lookup_by_code(q["code"], q["code_system"], q["state"])]
-        det_r1 += det_ids[:1] == [q["expected_policy_id"]]
-        det_r5 += q["expected_policy_id"] in det_ids[:5]
-
-        sem_ids = [pid for pid, _ in retrieve.semantic_search(q["expected_title"], top_k=5)]
-        sem_r1 += sem_ids[:1] == [q["expected_policy_id"]]
-        sem_r5 += q["expected_policy_id"] in sem_ids[:5]
-
     n = len(queries)
-    table = Table("path", "recall@1", "recall@5")
-    table.add_row("deterministic (code+state)", f"{det_r1/n:.2f}", f"{det_r5/n:.2f}")
-    table.add_row("semantic (title as query)", f"{sem_r1/n:.2f}", f"{sem_r5/n:.2f}")
+
+    # Scenario 1: both codes + state — the query shape the project docs actually specifies.
+    both_r1 = both_r5 = 0
+    # Scenario 2: only one of the two codes — the weaker, still-realistic case.
+    single_r1 = single_r5 = 0
+    for q in queries:
+        result = retrieve.retrieve(cpt=q["cpt"], icd10=q["icd10"], state=q["state"], top_k=5)
+        ids = [r["policy_id"] for r in result["results"]]
+        both_r1 += ids[:1] == [q["expected_policy_id"]]
+        both_r5 += q["expected_policy_id"] in ids[:5]
+
+        single_ids = [r["policy_id"] for r in retrieve.lookup_by_code(q["icd10"], "ICD10", q["state"])]
+        single_r1 += single_ids[:1] == [q["expected_policy_id"]]
+        single_r5 += q["expected_policy_id"] in single_ids[:5]
+
+    both_recall = _recall(both_r1, both_r5, n)
+    single_recall = _recall(single_r1, single_r5, n)
+
+    # Scenario 3: NCDs — semantic-only by construction, not a fallback test.
+    ncd_recall = None
+    if ncd_queries_path.exists():
+        ncd_queries = json.loads(ncd_queries_path.read_text())
+        ncd_r1 = ncd_r5 = 0
+        for q in ncd_queries:
+            ids = [pid for pid, _ in retrieve.semantic_search(q["expected_title"], top_k=5)]
+            ncd_r1 += ids[:1] == [q["expected_policy_id"]]
+            ncd_r5 += q["expected_policy_id"] in ids[:5]
+        ncd_recall = _recall(ncd_r1, ncd_r5, len(ncd_queries))
+
+    table = Table("scenario", "n", "recall@1", "recall@5")
+    table.add_row("LCD, both CPT+ICD10+state (typical case)", str(n), f"{both_recall[0]:.2f}", f"{both_recall[1]:.2f}")
+    table.add_row("LCD, single code only (weaker case)", str(n), f"{single_recall[0]:.2f}", f"{single_recall[1]:.2f}")
+    if ncd_recall:
+        table.add_row("NCD, semantic-only (no codes exist)", str(len(ncd_queries)), f"{ncd_recall[0]:.2f}", f"{ncd_recall[1]:.2f}")
     console.print(table)
 
-    det_recall_5 = det_r5 / n
-    if det_recall_5 > 0.90:
-        console.print(f"[green]✓ [/green] (deterministic recall@5 = {det_recall_5:.2f})")
-    else:
-        console.print(f"[red][/red] (deterministic recall@5 = {det_recall_5:.2f}, need > 0.90)")
+    console.print(
+        "\n[dim]354 of 1,301 policies are NCDs. This CMS download carries zero CPT/HCPCS/"
+        "ICD-10 codes for any of them (only a coarse benefit-category classification) -- "
+        "NCDs are reachable only through semantic search, not as a last-resort fallback.[/dim]"
+    )
 
-    if det_r1 / n > sem_r1 / n:
-        console.print(
-            "[dim]The boring path wins: deterministic code lookup beats the embedding "
-            "fallback here.[/dim]"
-        )
+    if both_recall[1] > 0.90:
+        console.print(f"\n[green]✓ [/green] (LCD combined-code recall@5 = {both_recall[1]:.2f})")
+    else:
+        console.print(f"\n[red][/red] (LCD combined-code recall@5 = {both_recall[1]:.2f}, need > 0.90)")
 
 
 if __name__ == "__main__":
