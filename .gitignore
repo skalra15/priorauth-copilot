@@ -1,0 +1,20 @@
+.venv/
+__pycache__/
+*.py[cod]
+.env
+.DS_Store
+.pytest_cache/
+*.egg-info/
+build/
+dist/
+
+# CMS raw data is license-restricted — never commit it
+data/raw/
+data/*.db
+data/*.sqlite
+
+# generated indexes
+data/index/
+
+# eval outputs are committed on purpose (they're the point) — but not scratch runs
+evals/results/scratch/

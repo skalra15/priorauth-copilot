@@ -1,0 +1,19 @@
+anthropic>=0.40.0
+pydantic>=2.7
+python-dotenv>=1.0
+typer>=0.12
+rich>=13.7
+pandas>=2.2
+beautifulsoup4>=4.12
+lxml>=5.2
+
+# — install when you get there
+sentence-transformers>=3.0
+numpy>=1.26
+
+# — install when you get there
+fastapi>=0.111
+uvicorn>=0.30
+
+# dev
+pytest>=8.2
