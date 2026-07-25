@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 import typer
@@ -9,6 +10,7 @@ from rich.console import Console
 from rich.table import Table
 
 from . import config, db, extract, ingest, verify
+from .schemas import ExtractedCriteria
 
 app = typer.Typer(add_completion=False, help="PriorAuth Copilot")
 console = Console()
@@ -129,6 +131,91 @@ def extract_cmd(
 
     if parsed.notes:
         console.print(f"\n[dim]notes: {parsed.notes}[/dim]")
+
+
+@app.command("eval-extraction")
+def eval_extraction_cmd(
+    model: str = typer.Option(config.MODEL, help="Model to use for extraction"),
+    golden_dir: Path = typer.Option(config.GOLDEN_DIR / "criteria", help="Hand-labeled golden files"),
+) -> None:
+    """: precision/recall/hallucination-rate against your hand labels."""
+    files = sorted(golden_dir.glob("*.json"))
+    if not files:
+        console.print(f"[yellow]No golden files in {golden_dir}[/yellow]")
+        raise typer.Exit(1)
+
+    table = Table("policy_id", "gold", "pred", "matched", "precision", "recall", "grounded")
+    total_gold = total_pred = total_matched = 0
+    all_spans: list[str | None] = []
+    all_sources: list[str] = []
+    n_unlabeled = 0
+
+    for path in files:
+        raw = json.loads(path.read_text())
+        if not raw.get("criteria"):
+            n_unlabeled += 1
+            continue
+
+        policy_id = raw["policy_id"]
+        p = db.get_policy(policy_id)
+        if not p:
+            console.print(f"[red]{policy_id}: not found in policies table, skipping[/red]")
+            continue
+
+        gold = ExtractedCriteria.model_validate({k: v for k, v in raw.items() if not k.startswith("_")})
+        predicted, _ = extract.extract_criteria(policy_id, p["title"], p["coverage_text"], model=model)
+
+        result = extract.score_extraction(gold, predicted)
+        total_gold += result["n_gold"]
+        total_pred += result["n_predicted"]
+        total_matched += result["n_matched"]
+
+        spans = [c.source_span for c in predicted.criteria]
+        all_spans.extend(spans)
+        all_sources.extend([p["coverage_text"]] * len(spans))
+        grounded = verify.grounding_report(spans, p["coverage_text"])
+
+        table.add_row(
+            policy_id,
+            str(result["n_gold"]),
+            str(result["n_predicted"]),
+            str(result["n_matched"]),
+            f"{result['precision']:.2f}",
+            f"{result['recall']:.2f}",
+            f"{grounded['grounded']}/{grounded['n']}",
+        )
+
+    console.print(table)
+
+    if n_unlabeled:
+        console.print(f"[yellow]{n_unlabeled} golden file(s) still empty — not scored.[/yellow]")
+
+    if total_pred == 0:
+        console.print("[yellow]Nothing scored yet — label at least one golden file.[/yellow]")
+        raise typer.Exit(1)
+
+    precision = total_matched / total_pred
+    recall = total_matched / total_gold if total_gold else 0.0
+    hallucination = 1 - (
+        sum(verify.span_is_grounded(s, src) for s, src in zip(all_spans, all_sources)) / len(all_spans)
+        if all_spans
+        else 0
+    )
+
+    console.print(
+        f"\n[bold]micro-averaged precision {precision:.2f} | recall {recall:.2f} | "
+        f"hallucination rate {hallucination:.1%}[/bold]"
+    )
+
+    if precision > 0.80 and recall > 0.80 and hallucination < 0.05:
+        console.print("[green]✓ — continue to .[/green]")
+    elif precision >= 0.60 and recall >= 0.60 and hallucination < 0.10:
+        console.print("[yellow]: fixable range — one more weekend of prompt tuning, then re-decide.[/yellow]")
+    else:
+        console.print(
+            "[red]— per the project docs, stop and pivot to the "
+            "CMS-0057-F Transparency Agent.[/red]"
+        )
 
 
 if __name__ == "__main__":

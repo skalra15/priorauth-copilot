@@ -35,6 +35,14 @@ def strip_html(raw: str | None) -> str:
     return "\n".join(ln for ln in lines if ln)
 
 
+def strip_html_inline(raw: str | None) -> str:
+    """Same as strip_html but collapses to one line — for titles, not body text."""
+    if not raw:
+        return ""
+    text = BeautifulSoup(raw, "lxml").get_text(separator=" ")
+    return " ".join(text.split())
+
+
 def _safe_table_name(path: Path) -> str:
     stem = path.stem.lower()
     return "raw_" + "".join(ch if ch.isalnum() else "_" for ch in stem)
@@ -210,7 +218,7 @@ def normalize() -> tuple[int, int]:
                 {
                     "policy_id": policy_id,
                     "policy_type": "LCD",
-                    "title": row["title"],
+                    "title": strip_html_inline(row["title"]) or row["title"],
                     "jurisdiction": "; ".join(sorted(jurisdictions)) or None,
                     "states": sorted(lcd_states.get(lcd_id, set())),
                     "effective_date": _date(row["rev_eff_date"] or row["orig_det_eff_date"]),
@@ -265,7 +273,7 @@ def normalize() -> tuple[int, int]:
                 {
                     "policy_id": policy_id,
                     "policy_type": "NCD",
-                    "title": row["ncd_mnl_sect_title"],
+                    "title": strip_html_inline(row["ncd_mnl_sect_title"]) or row["ncd_mnl_sect_title"],
                     "jurisdiction": None,
                     "states": [],
                     "effective_date": _date(row["ncd_efctv_dt"]),
