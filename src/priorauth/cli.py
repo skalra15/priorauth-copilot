@@ -8,7 +8,7 @@ import typer
 from rich.console import Console
 from rich.table import Table
 
-from . import config, db, ingest
+from . import config, db, extract, ingest, verify
 
 app = typer.Typer(add_completion=False, help="PriorAuth Copilot")
 console = Console()
@@ -94,6 +94,41 @@ def policy(policy_id: str) -> None:
         raise typer.Exit(1)
     console.rule(f"[bold]{p['policy_id']} — {p['title']}[/bold]")
     console.print(p["coverage_text"])
+
+
+@app.command("extract")
+def extract_cmd(
+    policy_id: str,
+    model: str = typer.Option(config.MODEL, help="Model to use for extraction"),
+    force: bool = typer.Option(False, "--force", help="Bypass the extraction cache"),
+) -> None:
+    """Extract criteria for one policy and report the grounding check."""
+    p = db.get_policy(policy_id)
+    if not p:
+        console.print(f"[red]No policy {policy_id}[/red]")
+        raise typer.Exit(1)
+
+    parsed, response = extract.extract_criteria(
+        policy_id, p["title"], p["coverage_text"], model=model, force=force
+    )
+
+    table = Table("id", "type", "logic", "temporal", "text")
+    for c in parsed.criteria:
+        table.add_row(c.id, c.type.value, c.logic.value, c.temporal or "", c.text)
+    console.print(table)
+
+    spans = [c.source_span for c in parsed.criteria]
+    report = verify.grounding_report(spans, p["coverage_text"])
+    console.print(
+        f"\ngrounded {report['grounded']}/{report['n']} "
+        f"(hallucination rate {report['hallucination_rate']:.1%})"
+        + ("  [dim](cached)[/dim]" if response.cached else "")
+    )
+    for span in verify.ungrounded_spans(spans, p["coverage_text"]):
+        console.print(f"  [red]ungrounded:[/red] {span!r}")
+
+    if parsed.notes:
+        console.print(f"\n[dim]notes: {parsed.notes}[/dim]")
 
 
 if __name__ == "__main__":

@@ -63,7 +63,7 @@ def structured(
     system: str = "",
     model: str | None = None,
     max_tokens: int = 8000,
-    temperature: float = 0.0,
+    temperature: float | None = None,
 ) -> tuple[T, LLMResponse]:
     """Call Claude and get back a validated instance of `schema`.
 
@@ -97,7 +97,7 @@ def structured(
     msg = client().messages.create(
         model=model,
         max_tokens=max_tokens,
-        temperature=temperature,
+        temperature=temperature if temperature is not None else anthropic.NOT_GIVEN,
         system=system or anthropic.NOT_GIVEN,
         tools=[tool],
         tool_choice={"type": "tool", "name": "emit_result"},
