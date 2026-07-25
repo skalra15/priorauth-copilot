@@ -125,7 +125,16 @@ def semantic_search(query: str, top_k: int = 5, model_name: str | None = None) -
 # ---------------------------------------------------------------------------
 
 
-BOTH_CODES_BONUS = 10.0  # dwarfs the 0.5-2.0 jurisdiction score so an AND-match always outranks a single-code match
+BOTH_CODES_BONUS = 10.0
+# Belt-and-suspenders, not the mechanism that actually does the work: measured
+# directly (sensitivity sweep 0-50, identical top-1 results at every value on
+# the 50-query eval) that the real improvement from combined cpt+icd10 lookup
+# over single-code lookup comes from summing two independent jurisdiction
+# scores, not from this bonus. Kept anyway as a safeguard for the asymmetric
+# case this eval didn't happen to sample: a correct AND-match with weak
+# jurisdiction fit (e.g. 0.5+0.5) losing to an incorrect single-code match with
+# a strong one (2.0) -- summation alone doesn't guarantee the AND-match wins
+# there, this bonus does.
 
 
 def retrieve(
