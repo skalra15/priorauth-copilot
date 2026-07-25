@@ -94,9 +94,12 @@ def upsert_policy(conn: sqlite3.Connection, policy: dict[str, Any]) -> None:
                 :effective_date, :retired_date, :coverage_text, :source_url)
         ON CONFLICT(policy_id) DO UPDATE SET
             title=excluded.title,
+            jurisdiction=excluded.jurisdiction,
+            states=excluded.states,
             coverage_text=excluded.coverage_text,
             effective_date=excluded.effective_date,
-            retired_date=excluded.retired_date
+            retired_date=excluded.retired_date,
+            source_url=excluded.source_url
         """,
         {
             **policy,

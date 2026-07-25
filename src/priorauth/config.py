@@ -24,6 +24,9 @@ ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "")
 MODEL = os.getenv("PRIORAUTH_MODEL", "claude-sonnet-5")
 CACHE_ENABLED = os.getenv("PRIORAUTH_CACHE", "1") == "1"
 
+# Local, free, no API cost — semantic fallback for retrieval ().
+EMBEDDING_MODEL = os.getenv("PRIORAUTH_EMBEDDING_MODEL", "all-MiniLM-L6-v2")
+
 # Models swept in the cost/accuracy comparison.
 SWEEP_MODELS = ["claude-haiku-4-5-20251001", "claude-sonnet-5", "claude-opus-5"]
 

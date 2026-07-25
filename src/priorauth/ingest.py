@@ -190,6 +190,16 @@ def normalize() -> tuple[int, int]:
             for r in conn.execute("SELECT contractor_id, dmerc_rgn FROM raw_contractor")
         }
 
+        # raw_lcd_x_primary_jurisdiction only covers 17 policies -- too narrow to be
+        # the states signal retrieval ranks on. The real footprint is contractor ->
+        # states that contractor operates in, via the same lcd_x_contractor chain
+        # already used for the MAC jurisdiction code above.
+        states_by_contractor: dict[str, set[str]] = {}
+        for r in conn.execute("SELECT contractor_id, state_id FROM raw_contractor_jurisdiction"):
+            abbrev = state_abbrev.get(r["state_id"])
+            if abbrev:
+                states_by_contractor.setdefault(r["contractor_id"], set()).add(abbrev)
+
         lcd_states: dict[str, set[str]] = {}
         for r in conn.execute("SELECT lcd_id, state_id FROM raw_lcd_x_primary_jurisdiction"):
             abbrev = state_abbrev.get(r["state_id"])
@@ -201,6 +211,7 @@ def normalize() -> tuple[int, int]:
             mac = mac_by_contractor.get(r["contractor_id"])
             if mac:
                 lcd_jurisdictions.setdefault(r["lcd_id"], set()).add(mac)
+            lcd_states.setdefault(r["lcd_id"], set()).update(states_by_contractor.get(r["contractor_id"], set()))
 
         article_to_lcds: dict[str, set[str]] = {}
         skipped_articles_no_lcd = 0

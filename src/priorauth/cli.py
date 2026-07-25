@@ -9,7 +9,7 @@ import typer
 from rich.console import Console
 from rich.table import Table
 
-from . import config, db, extract, ingest, verify
+from . import config, db, extract, ingest, retrieve, verify
 from .schemas import ExtractedCriteria
 
 app = typer.Typer(add_completion=False, help="PriorAuth Copilot")
