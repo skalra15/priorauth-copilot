@@ -104,28 +104,192 @@ def describe_raw() -> dict[str, dict]:
 # ---------------------------------------------------------------------------
 
 
+def _date(raw: str | None) -> str | None:
+    if not raw:
+        return None
+    return raw[:10]
+
+
+def _coverage_text(row: sqlite3.Row) -> str:
+    """LCDs split 'Coverage Indications, Limitations, and/or Medical Necessity'
+    across several fields instead of one HTML blob. Concatenate the ones that
+    actually carry coverage criteria; skip evidentiary background fields."""
+    sections = [
+        ("Coverage Indications", row["indication"]),
+        ("ICD-10 Diagnoses That Support Medical Necessity", row["diagnoses_support"]),
+        ("ICD-10 Diagnoses That Do Not Support Medical Necessity", row["diagnoses_dont_support"]),
+        ("Coding Guidelines", row["coding_guidelines"]),
+        ("Documentation Requirements", row["doc_reqs"]),
+        ("Associated Information", row["associated_info"]),
+    ]
+    parts = []
+    for label, html in sections:
+        text = strip_html(html)
+        if text:
+            parts.append(f"== {label} ==\n{text}")
+    return "\n\n".join(parts)
+
+
 def normalize() -> tuple[int, int]:
     """Map raw CMS tables onto `policies` and `policy_codes`.
 
-    Run `python -m priorauth.cli inspect` first and read the real schema.
-
-    What you are looking for in the raw tables:
-      * the LCD record table — an id, a title, effective/retired dates, and a long
-        HTML field holding "Coverage Indications, Limitations, and/or Medical
-        Necessity". That HTML field goes through strip_html() into coverage_text.
-      * the HCPCS/CPT association table — policy id → procedure code
-      * the ICD-10 tables — usually *two*, one covered and one non-covered. The
-        non-covered one sets covered=False. Don't merge them.
-      * the contractor/jurisdiction table — policy id → MAC jurisdiction → states
-      * the NCD table, which has a different shape from LCDs. Handle it separately;
-        NCDs are national so jurisdiction is None.
+    Real schema notes (differs from the generic description in the project docs):
+      * LCDs don't have one HTML coverage blob — it's split across `indication`,
+        `diagnoses_support(_dont_support)`, `coding_guidelines`, `doc_reqs`,
+        `associated_info`. See `_coverage_text()`.
+      * CPT/HCPCS and ICD-10 code tables live on *Articles*, not LCDs (except DME
+        LCDs, which keep a direct `lcd_x_hcpc_code` table). Articles link back to
+        their LCD via `article_related_documents.r_lcd_id`. Articles with no
+        linked LCD carry no policy to attach codes to and are skipped.
+      * MAC jurisdiction code comes from lcd_id -> lcd_x_contractor -> contractor
+        -> dmerc_rgn -> dmerc_region_lookup.mac_description (e.g. "J-A").
+      * States come from lcd_x_primary_jurisdiction -> state_lookup.
+      * NCDs (raw_ncd_trkg) have a different shape entirely: no code tables in
+        this download, jurisdiction is always None (national), and coverage text
+        is `itm_srvc_desc` + `indctn_lmtn`.
 
     Returns (n_policies, n_codes).
     """
-    raise NotImplementedError(
-        "See the project docs Step 1.3. Run `cli inspect` first, then implement "
-        "against the real column names — do not guess them."
+    with db.connect() as conn:
+        if "raw_lcd" not in db.table_names(conn):
+            raise RuntimeError("No raw tables found. Run `cli ingest` first.")
+
+        db.init_db()
+
+        state_abbrev = {
+            r["state_id"]: r["state_abbrev"]
+            for r in conn.execute("SELECT state_id, state_abbrev FROM raw_state_lookup")
+        }
+        mac_by_region = {
+            r["region_id"]: r["mac_description"]
+            for r in conn.execute("SELECT region_id, mac_description FROM raw_dmerc_region_lookup")
+        }
+        mac_by_contractor = {
+            r["contractor_id"]: mac_by_region.get(r["dmerc_rgn"])
+            for r in conn.execute("SELECT contractor_id, dmerc_rgn FROM raw_contractor")
+        }
+
+        lcd_states: dict[str, set[str]] = {}
+        for r in conn.execute("SELECT lcd_id, state_id FROM raw_lcd_x_primary_jurisdiction"):
+            abbrev = state_abbrev.get(r["state_id"])
+            if abbrev:
+                lcd_states.setdefault(r["lcd_id"], set()).add(abbrev)
+
+        lcd_jurisdictions: dict[str, set[str]] = {}
+        for r in conn.execute("SELECT lcd_id, contractor_id FROM raw_lcd_x_contractor"):
+            mac = mac_by_contractor.get(r["contractor_id"])
+            if mac:
+                lcd_jurisdictions.setdefault(r["lcd_id"], set()).add(mac)
+
+        article_to_lcds: dict[str, set[str]] = {}
+        skipped_articles_no_lcd = 0
+        seen_articles = set()
+        for r in conn.execute(
+            "SELECT article_id, r_lcd_id FROM raw_article_related_documents WHERE r_lcd_id IS NOT NULL AND r_lcd_id != ''"
+        ):
+            article_to_lcds.setdefault(r["article_id"], set()).add(r["r_lcd_id"])
+        for r in conn.execute("SELECT DISTINCT article_id FROM raw_article"):
+            seen_articles.add(r["article_id"])
+        skipped_articles_no_lcd = len(seen_articles - article_to_lcds.keys())
+
+        n_policies = 0
+        n_skipped_short = 0
+        codes: list[tuple[str, str, str, int]] = []
+
+        for row in conn.execute("SELECT * FROM raw_lcd"):
+            lcd_id = row["lcd_id"]
+            policy_id = f"L{lcd_id}"
+            coverage_text = _coverage_text(row)
+            if len(coverage_text.strip()) < 100:
+                n_skipped_short += 1
+                continue
+
+            jurisdictions = lcd_jurisdictions.get(lcd_id, set())
+            db.upsert_policy(
+                conn,
+                {
+                    "policy_id": policy_id,
+                    "policy_type": "LCD",
+                    "title": row["title"],
+                    "jurisdiction": "; ".join(sorted(jurisdictions)) or None,
+                    "states": sorted(lcd_states.get(lcd_id, set())),
+                    "effective_date": _date(row["rev_eff_date"] or row["orig_det_eff_date"]),
+                    "retired_date": _date(row["date_retired"]),
+                    "coverage_text": coverage_text,
+                    "source_url": None,
+                },
+            )
+            n_policies += 1
+
+            for r in conn.execute(
+                "SELECT hcpc_code_id FROM raw_lcd_x_hcpc_code WHERE lcd_id = ?", (lcd_id,)
+            ):
+                if r["hcpc_code_id"]:
+                    codes.append((policy_id, r["hcpc_code_id"], "HCPCS", 1))
+
+        for article_id, lcd_ids in article_to_lcds.items():
+            policy_ids = [f"L{lid}" for lid in lcd_ids]
+            for r in conn.execute(
+                "SELECT hcpc_code_id FROM raw_article_x_hcpc_code WHERE article_id = ?", (article_id,)
+            ):
+                if r["hcpc_code_id"]:
+                    for pid in policy_ids:
+                        codes.append((pid, r["hcpc_code_id"], "HCPCS", 1))
+            for r in conn.execute(
+                "SELECT icd10_code_id FROM raw_article_x_icd10_covered WHERE article_id = ?", (article_id,)
+            ):
+                if r["icd10_code_id"]:
+                    for pid in policy_ids:
+                        codes.append((pid, r["icd10_code_id"], "ICD10", 1))
+            for r in conn.execute(
+                "SELECT icd10_code_id FROM raw_article_x_icd10_noncovered WHERE article_id = ?", (article_id,)
+            ):
+                if r["icd10_code_id"]:
+                    for pid in policy_ids:
+                        codes.append((pid, r["icd10_code_id"], "ICD10", 0))
+
+        for row in conn.execute("SELECT * FROM raw_ncd_trkg"):
+            sect = row["ncd_mnl_sect"]
+            if not sect:
+                continue
+            policy_id = f"NCD-{sect}"
+            coverage_text = "\n\n".join(
+                strip_html(t) for t in (row["itm_srvc_desc"], row["indctn_lmtn"]) if strip_html(t)
+            )
+            if len(coverage_text.strip()) < 100:
+                n_skipped_short += 1
+                continue
+
+            db.upsert_policy(
+                conn,
+                {
+                    "policy_id": policy_id,
+                    "policy_type": "NCD",
+                    "title": row["ncd_mnl_sect_title"],
+                    "jurisdiction": None,
+                    "states": [],
+                    "effective_date": _date(row["ncd_efctv_dt"]),
+                    "retired_date": _date(row["ncd_trmntn_dt"]),
+                    "coverage_text": coverage_text,
+                    "source_url": None,
+                },
+            )
+            n_policies += 1
+
+        conn.executemany(
+            """
+            INSERT OR IGNORE INTO policy_codes (policy_id, code, code_system, covered)
+            VALUES (?, ?, ?, ?)
+            """,
+            codes,
+        )
+        n_codes = len(codes)
+
+    print(
+        f"Skipped {n_skipped_short} policies with <100 chars of coverage text; "
+        f"{skipped_articles_no_lcd} articles had no linked LCD and were not used for codes."
     )
+    return n_policies, n_codes
 
 
 def policy_stats() -> dict[str, int]:
