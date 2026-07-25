@@ -148,9 +148,10 @@ def retrieve(
 
     if query_text:
         hits = semantic_search(query_text, top_k=top_k)
-        return {
-            "method": "semantic",
-            "results": [{"policy_id": pid, "score": score} for pid, score in hits],
-        }
+        results = []
+        for pid, score in hits:
+            p = db.get_policy(pid)
+            results.append({"policy_id": pid, "score": score, "title": p["title"] if p else ""})
+        return {"method": "semantic", "results": results}
 
     return {"method": "none", "results": []}

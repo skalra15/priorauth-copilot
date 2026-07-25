@@ -252,5 +252,69 @@ def eval_extraction_cmd(
             )
 
 
+@app.command()
+def embed(model: str = typer.Option(config.EMBEDDING_MODEL, help="sentence-transformers model")) -> None:
+    """Build the local semantic-search index over policy coverage_text."""
+    n = retrieve.build_index(model)
+    console.print(f"[green]✓[/green] embedded {n:,} policies -> {config.INDEX_DIR}")
+
+
+@app.command("retrieve")
+def retrieve_cmd(
+    cpt: str = typer.Option(None, help="CPT/HCPCS code"),
+    icd10: str = typer.Option(None, help="ICD-10 code"),
+    state: str = typer.Option(None, help="2-letter state abbreviation"),
+    query: str = typer.Option(None, "--query", help="Free-text query for semantic fallback"),
+    top_k: int = typer.Option(5),
+) -> None:
+    """Look up candidate policies for a code/state, falling back to semantic search."""
+    result = retrieve.retrieve(cpt=cpt, icd10=icd10, state=state, query_text=query, top_k=top_k)
+    console.print(f"method: [bold]{result['method']}[/bold]")
+    table = Table("policy_id", "score", "title")
+    for r in result["results"]:
+        table.add_row(r["policy_id"], f"{r['score']:.3f}", r.get("title", ""))
+    console.print(table)
+
+
+@app.command("eval-retrieval")
+def eval_retrieval_cmd(
+    queries_path: Path = typer.Option(config.GOLDEN_DIR / "retrieval_queries.json"),
+) -> None:
+    """: recall@1/@5 for the deterministic path, and the semantic path for
+    comparison (title-as-query proxy — see the project docs )."""
+    if not queries_path.exists():
+        console.print(f"[red]No query set at {queries_path}[/red]")
+        raise typer.Exit(1)
+    queries = json.loads(queries_path.read_text())
+
+    det_r1 = det_r5 = sem_r1 = sem_r5 = 0
+    for q in queries:
+        det_ids = [r["policy_id"] for r in retrieve.lookup_by_code(q["code"], q["code_system"], q["state"])]
+        det_r1 += det_ids[:1] == [q["expected_policy_id"]]
+        det_r5 += q["expected_policy_id"] in det_ids[:5]
+
+        sem_ids = [pid for pid, _ in retrieve.semantic_search(q["expected_title"], top_k=5)]
+        sem_r1 += sem_ids[:1] == [q["expected_policy_id"]]
+        sem_r5 += q["expected_policy_id"] in sem_ids[:5]
+
+    n = len(queries)
+    table = Table("path", "recall@1", "recall@5")
+    table.add_row("deterministic (code+state)", f"{det_r1/n:.2f}", f"{det_r5/n:.2f}")
+    table.add_row("semantic (title as query)", f"{sem_r1/n:.2f}", f"{sem_r5/n:.2f}")
+    console.print(table)
+
+    det_recall_5 = det_r5 / n
+    if det_recall_5 > 0.90:
+        console.print(f"[green]✓ [/green] (deterministic recall@5 = {det_recall_5:.2f})")
+    else:
+        console.print(f"[red][/red] (deterministic recall@5 = {det_recall_5:.2f}, need > 0.90)")
+
+    if det_r1 / n > sem_r1 / n:
+        console.print(
+            "[dim]The boring path wins: deterministic code lookup beats the embedding "
+            "fallback here.[/dim]"
+        )
+
+
 if __name__ == "__main__":
     app()
