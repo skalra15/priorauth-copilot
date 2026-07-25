@@ -1,6 +1,65 @@
 {
   "policy_id": "L38303",
   "_title": "MolDX: Prostate Cancer Genomic Classifier Assay for Men with Localized Disease",
-  "criteria": [],
-  "notes": null
+  "criteria": [
+    {
+      "id": "k1",
+      "text": "Test intended to identify localized prostate cancer patients with >=10yr life expectancy who are good active-surveillance candidates per NCCN guidelines",
+      "type": "informational",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "The test is considered reasonable and necessary to help identify men with localized Prostate Cancer and a life expectancy of at least 10 years who are good candidates for active surveillance according to the most recent National Comprehensive Cancer Network (NCCN) guidelines."
+    },
+    {
+      "id": "k2",
+      "text": "Decipher covered for men with localized/biochemically recurrent prostate adenocarcinoma (no metastasis) with life expectancy >=10 years who are candidates for one of the listed treatment-transition scenarios",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "With localized or biochemically recurrent adenocarcinoma of the prostate (i.e. no clinical evidence of metastasis) who have a life expectancy of greater than or equal to 10 years if they are a candidate for and are considering (or being considered for) at least one of the following:"
+    },
+    {
+      "id": "k3",
+      "text": "Patient is a candidate for/considering at least one of the listed treatment-transition scenarios",
+      "type": "required",
+      "logic": "one_of",
+      "sub_conditions": [
+        "Conservative management and yet would be eligible for definitive therapy (radical prostatectomy (RP), radiation or brachytherapy)",
+        "Radiation therapy and yet would be eligible for the addition of a brachytherapy boost",
+        "Radiation therapy and yet would be eligible for the addition of short-term androgen deprivation therapy(ADT)",
+        "Radiation therapy with short-term ADT yet would be eligible for the use of long term ADT",
+        "Radiation with standard ADT yet would be eligible for systemic therapy intensification using next generation androgen signaling inhibitors or chemotherapy",
+        "Observation post-prostatectomy yet would be eligible for the addition of post-operative adjuvant radiotherapy",
+        "Salvage radiotherapy post-prostatectomy yet would be eligible for the addition of ADT."
+      ],
+      "temporal": null,
+      "source_span": "if they are a candidate for and are considering (or being considered for) at least one of the following:"
+    },
+    {
+      "id": "k4",
+      "text": "All of the following additional criteria must also be met for coverage",
+      "type": "required",
+      "logic": "all_of",
+      "sub_conditions": [
+        "The assay is performed on formalin-fixed paraffin embedded (FFPE) prostate biopsy tissue with at least 0.5 mm of linear tumor diameter or FFPE tissue from a prostate resection specimen",
+        "Result will be used to determine treatment according to established practice guidelines",
+        "Patient has not received pelvic radiation or ADT prior to the biopsy or prostate resection specimen",
+        "Patient is monitored for disease progression according to established standard of care"
+      ],
+      "temporal": null,
+      "source_span": "The following criteria must also be met for coverage:"
+    },
+    {
+      "id": "k5",
+      "text": "Other genomic tests with equivalent analytical/clinical validity are also reasonable and necessary for the same indications, subject to MolDX technical assessment",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "Other genomic tests that demonstrate an equivalent analytical validity and clinical validity will be considered reasonable and necessary for the same indications."
+    }
+  ],
+  "notes": "k2 and k3 both anchor overlapping parts of the same long sentence (disease-state gate vs. the one_of treatment-transition list within it) -- a deliberate split, not a duplicate."
 }

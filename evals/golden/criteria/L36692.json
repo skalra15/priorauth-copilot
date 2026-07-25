@@ -1,6 +1,114 @@
 {
   "policy_id": "L36692",
   "_title": "Vitamin D Assay Testing",
-  "criteria": [],
-  "notes": null
+  "criteria": [
+    {
+      "id": "i1",
+      "text": "25-OH Vitamin D measurement indicated for patients with one of the listed conditions",
+      "type": "required",
+      "logic": "one_of",
+      "sub_conditions": [
+        "chronic kidney disease stage III or greater",
+        "cirrhosis",
+        "hypocalcemia",
+        "hypercalcemia",
+        "hypercalciuria",
+        "hypervitaminosis D",
+        "parathyroid disorders",
+        "malabsorption states",
+        "obstructive jaundice",
+        "osteomalacia",
+        "osteosclerosis/petrosis",
+        "rickets",
+        "vitamin D deficiency on replacement therapy related to a condition listed above"
+      ],
+      "temporal": null,
+      "source_span": "Measurement of 25-OH Vitamin D level is indicated for patients with:"
+    },
+    {
+      "id": "i1b",
+      "text": "For osteoporosis, one of the following must also apply",
+      "type": "required",
+      "logic": "one_of",
+      "sub_conditions": [
+        "T score on DEXA scan <-2.5",
+        "History of fragility fractures",
+        "FRAX > 3% 10-year probability of hip fracture or 20% 10-year probability of other major osteoporotic fracture",
+        "FRAX > 3% (any fracture) with T-score <-1.5",
+        "Initiating bisphosphanate therapy"
+      ],
+      "temporal": null,
+      "source_span": "osteoporosis if"
+    },
+    {
+      "id": "i2",
+      "text": "1,25-OH Vitamin D measurement indicated for patients with one of the listed conditions",
+      "type": "required",
+      "logic": "one_of",
+      "sub_conditions": [
+        "unexplained hypercalcemia (suspected granulomatous disease or lymphoma)",
+        "unexplained hypercalciuria (suspected granulomatous disease or lymphoma)",
+        "suspected genetic childhood rickets",
+        "suspected tumor-induced osteomalacia",
+        "nephrolithiasis or hypercalciuria"
+      ],
+      "temporal": null,
+      "source_span": "Measurement of 1, 25-OH Vitamin D level is indicated for patients with:"
+    },
+    {
+      "id": "i3",
+      "text": "Testing may not be used for routine or other screening",
+      "type": "exclusion",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "Testing may not be used for routine or other screening."
+    },
+    {
+      "id": "i4",
+      "text": "Documentation must justify the test(s) chosen for a particular disease entity",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "Documentation must justify the test(s) chosen for a particular disease entity."
+    },
+    {
+      "id": "i5",
+      "text": "Component sources of 25-OH vitamin D (stored D, diet-derived D) should not be billed separately",
+      "type": "exclusion",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "Various component sources of 25-OH vitamin D, such as stored D or diet-derived D, should not be billed separately."
+    },
+    {
+      "id": "i6",
+      "text": "Once a beneficiary is shown vitamin D deficient, further testing is medically necessary only to ensure adequate replacement has been accomplished",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "Once a beneficiary has been shown to be vitamin D deficient, further testing may be medically necessary only to ensure adequate replacement has been accomplished."
+    },
+    {
+      "id": "i7",
+      "text": "If level is 20-50 ng/ml and patient is clinically stable, repeat testing is often unnecessary; if performed, documentation must indicate the necessity",
+      "type": "exclusion",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "If Vitamin D level is between 20 and 50 ng/ml and patient is clinically stable, repeat testing is often unnecessary; if performed, documentation most clearly indicate the necessity of the test."
+    },
+    {
+      "id": "i8",
+      "text": "If level is <20 ng/ml or >60 ng/ml, a subsequent level may be reimbursed until level is within normal range",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "If level <20 ng/ml or > 60 ng/ml, a subsequent level(s) may be reimbursed until the level is within the normal range."
+    }
+  ],
+  "notes": "i7 quotes the source's own typo ('documentation most clearly indicate' -- should read 'must') verbatim, since source_span has to match character-for-character."
 }

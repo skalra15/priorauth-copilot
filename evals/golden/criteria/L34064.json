@@ -1,6 +1,65 @@
 {
   "policy_id": "L34064",
   "_title": "Panretinal (Scatter) Laser Photocoagulation",
-  "criteria": [],
-  "notes": null
+  "criteria": [
+    {
+      "id": "e1",
+      "text": "PRP indicated for proliferative/pre-proliferative diabetic retinopathy, severe diabetic macular edema with pre-proliferative retinopathy, or other proliferative retinopathies",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "Panretinal laser photocoagulation is indicated for the treatment or management of patients with proliferative or pre-proliferative diabetic retinopathy and patients with severe levels of diabetic macular edema associated with pre-proliferative retinopathy, and other proliferative retinopathies."
+    },
+    {
+      "id": "e2",
+      "text": "Treatment is withheld until the risk of visual loss outweighs the risks/side effects of treatment",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "treatment is withheld until the risk of visual loss outweighs the risks and side effects of the treatment"
+    },
+    {
+      "id": "e3",
+      "text": "Medicare coverage limited to management of proliferative or pre-proliferative retinopathies",
+      "type": "exclusion",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "Medicare coverage of panretinal laser photocoagulation using a laser or xenon arc is limited to management of proliferative or pre-proliferative retinopathies."
+    },
+    {
+      "id": "e4",
+      "text": "Payment made only once during the global period of the initial procedure; subsequent sessions included in that allowance",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "Payment may be made only once during the global period of the initial procedure. Reimbursement for subsequent sessions in the postoperative period of the initial procedure is included in the allowance of the initial procedure."
+    },
+    {
+      "id": "e5",
+      "text": "Reimbursement not allowed to non-physician practitioners for performance of this procedure",
+      "type": "exclusion",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "reimbursement will not be allowed to non-physician practitioners for performance of the procedure addressed in this policy"
+    },
+    {
+      "id": "e6",
+      "text": "Medical record must contain documentation fully supporting medical necessity",
+      "type": "required",
+      "logic": "all_of",
+      "sub_conditions": [
+        "relevant medical history",
+        "physical examination",
+        "results of pertinent diagnostic tests or procedures"
+      ],
+      "temporal": null,
+      "source_span": "The patient's medical record must contain documentation that fully supports the medical necessity for services included within this LCD."
+    }
+  ],
+  "notes": "Jurisdictional claims-routing note and limitation-of-liability/refund boilerplate omitted as administrative, not testable coverage conditions."
 }

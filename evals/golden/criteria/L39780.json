@@ -1,6 +1,45 @@
 {
   "policy_id": "L39780",
   "_title": "Lower Esophageal Magnetic Sphincter Augmentation",
-  "criteria": [],
-  "notes": null
+  "criteria": [
+    {
+      "id": "m1",
+      "text": "MSA is medically reasonable/necessary when all listed conditions are met",
+      "type": "required",
+      "logic": "all_of",
+      "sub_conditions": [
+        "Patient is diagnosed with gastroesophageal reflux disease (GERD) defined by abnormal pH testing in which acid exposure time (AET) is greater than 6%1",
+        "Patient has undergone appropriate endoscopic and esophageal manometric evaluation to rule out extragastrointestinal etiology of symptoms",
+        "Patient has chronic GERD symptoms despite maximum medical therapy for the treatment of reflux defined as maximum (or maximum tolerated) dose of proton pump inhibitors (PPI) for at least 6 months1",
+        "Implantation of the device is performed by a surgeon with experience in laparoscopic anti-reflux procedures and has received product specific training"
+      ],
+      "temporal": "maximum tolerated PPI dose for at least 6 months",
+      "source_span": "Lower esophageal magnetic sphincter augmentation (MSA) is considered medically reasonable and necessary when all the following conditions are met:"
+    },
+    {
+      "id": "m2",
+      "text": "Coverage is excluded (safety/efficacy not established) for any of the listed conditions",
+      "type": "exclusion",
+      "logic": "one_of",
+      "sub_conditions": [
+        "Patients with suspected or known allergies to titanium, stainless steel, nickel, or ferrous materials",
+        "Patients with electrical implants such as pacemakers and defibrillators, or other metallic, abdominal implants",
+        "Unrepaired hiatal hernia >3 cm or a paraesophageal hernia",
+        "Barrett\u2019s Esophagus or esophagitis Los Angeles (LA) class C or D",
+        "Scleroderma",
+        "Suspected or confirmed esophageal or gastric cancer",
+        "Prior esophageal or gastric surgery or endoscopic intervention",
+        "Distal esophageal motility less than 35mmHg peristaltic amplitude on wet swallows or <70% (propulsive) peristaltic sequences or a known motility disorder such as achalasia, nutcracker esophagus, and diffuse esophageal spasm or hypertensive lower esophageal sphincter (LES)",
+        "Symptoms of dysphagia more than once per week within the last 3 months",
+        "Esophageal stricture or gross esophageal anatomic abnormalities (Schatzki\u2019s ring, obstructive lesions, etc.)",
+        "Esophageal or gastric varices",
+        "Lactating, pregnant or plan to become pregnant",
+        "Morbid obesity (body mass index (BMI) >35)",
+        "Age < 21"
+      ],
+      "temporal": null,
+      "source_span": "Because safety and efficacy has not been established, coverage is excluded for the following:"
+    }
+  ],
+  "notes": "'Definitions: The LA Classification of GERD' section omitted as reference material (defines grades A-D referenced inline in m2), not itself a testable criterion."
 }

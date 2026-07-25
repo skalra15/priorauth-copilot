@@ -1,6 +1,43 @@
 {
   "policy_id": "NCD-20.8.1",
   "_title": "Cardiac Pacemaker Evaluation Services",
-  "criteria": [],
-  "notes": null
+  "criteria": [
+    {
+      "id": "o1",
+      "text": "A dual-chamber unit programmed/reprogrammed for ventricular-only pacing should be treated as a single-chamber pacemaker for screening guidelines",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "a dual-chamber unit, when programmed or reprogrammed for ventricular pacing, should be treated as a single-chamber pacemaker in applying screening guidelines."
+    },
+    {
+      "id": "o2",
+      "text": "Monitoring frequency is determined by the patient's physician based on the patient's condition and circumstances",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "The decision as to how often any patient\u2019s pacemaker should be monitored is the responsibility of the patient\u2019s physician who is best able to take into account the condition and circumstances of the individual patient."
+    },
+    {
+      "id": "o3",
+      "text": "When monitoring is done by an entity other than the patient's physician, a physician's prescription for monitoring is required and must be renewed at least annually",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": "at least annually",
+      "source_span": "the physician\u2019s prescription for monitoring is required and should be periodically renewed (at least annually) to assure that the frequency of monitoring is proper for the patient."
+    },
+    {
+      "id": "o4",
+      "text": "Guidelines are limited to lithium battery-powered pacemakers; mercury-zinc units are no longer manufactured",
+      "type": "informational",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "These new guidelines are limited to lithium battery-powered pacemakers, because mercury-zinc battery-powered pacemakers are no longer being manufactured and virtually all have been replaced by lithium units."
+    }
+  ],
+  "notes": "This NCD is mostly administrative guidance to MACs on monitoring-frequency norms rather than patient-facing eligibility criteria -- thinner on testable required/exclusion criteria than the LCDs in this set, which is itself a useful data point on corpus diversity."
 }

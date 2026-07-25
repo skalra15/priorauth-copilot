@@ -1,6 +1,83 @@
 {
   "policy_id": "L38777",
   "_title": "Colon Capsule Endoscopy (CCE)",
-  "criteria": [],
-  "notes": null
+  "criteria": [
+    {
+      "id": "l1",
+      "text": "CCE medically necessary for diagnostic/surveillance purposes when either Primary or Secondary procedure criteria are met",
+      "type": "required",
+      "logic": "one_of",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "For diagnostic and/or surveillance purposes, Colon capsule endoscopy (CCE) is medically necessary when EITHER of the following criteria are met:"
+    },
+    {
+      "id": "l2",
+      "text": "Primary procedure: patient has major risks for Optical Colonoscopy or moderate sedation, per evaluation by a qualified provider, and one of the listed test/finding criteria is met",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "Primary procedure in patients with major risks for Optical Colonoscopy (OC) or moderate sedation as indicated from an evaluation of the patient by a board certified or board eligible gastroenterologist, a surgeon trained in endoscopy, or a physician with equivalent endoscopic training and EITHER of the following criteria are met2:"
+    },
+    {
+      "id": "l3",
+      "text": "For the primary-procedure pathway, one of the following must be met",
+      "type": "required",
+      "logic": "one_of",
+      "sub_conditions": [
+        "Fecal Occult Blood Test (FOBT) positive (guaiac or immunochemical)",
+        "Multitarget Stool DNA (sDNA) Test positive",
+        "Blood-based biomarker colorectal cancer screening test (CRC) positive",
+        "Other evidence of lower GI bleeding in hemodynamically stable patients"
+      ],
+      "temporal": null,
+      "source_span": "EITHER of the following criteria are met2:"
+    },
+    {
+      "id": "l4",
+      "text": "Secondary procedure: for detection/surveillance of colon polyps if the diagnostic OC was incomplete, or when an incomplete diagnostic OC was performed for one of the listed test/finding criteria",
+      "type": "required",
+      "logic": "one_of",
+      "sub_conditions": [
+        "For the detection or surveillance of colon polyp(s) if the diagnostic OC was incomplete",
+        "When an incomplete diagnostic OC was performed for either:"
+      ],
+      "temporal": null,
+      "source_span": "Secondary procedure:"
+    },
+    {
+      "id": "l5",
+      "text": "Not medically reasonable or necessary in the presence of any of the listed conditions",
+      "type": "exclusion",
+      "logic": "one_of",
+      "sub_conditions": [
+        "Patients with known or suspected gastrointestinal obstruction, stricture, or fistula",
+        "Patients with a cardiac pacemaker or another implanted electro-medical device emits a radiofrequency or other interfering signal.",
+        "Patients with swallowing disorder(s)",
+        "Patients with a known contraindication or allergy to any medication or preparation agent used before or during the procedure"
+      ],
+      "temporal": null,
+      "source_span": "The following are considered not medically reasonable and necessary:"
+    },
+    {
+      "id": "l6",
+      "text": "May not be performed in conjunction with CT Colonography (CTC)",
+      "type": "exclusion",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "May not be performed in conjunction with CT Colonography (CTC)"
+    },
+    {
+      "id": "l7",
+      "text": "CCE is not a Medicare benefit for colorectal cancer screening, regardless of family history or other risk factors",
+      "type": "exclusion",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "CCE is not a Medicare Benefit for colorectal cancer screening, regardless of family history or other risk factors for the development of colonic disease."
+    }
+  ],
+  "notes": "l3's FOBT/sDNA/CRC/bleeding list is repeated near-verbatim for both the Primary (l3) and Secondary (l4) pathways in the source; l4's sub_conditions intentionally don't re-duplicate the full list, just the top-level branch structure, to avoid double-counting near-identical criteria across the two pathways. General 'must meet all indications/limitations/payment rules' boilerplate omitted as before."
 }

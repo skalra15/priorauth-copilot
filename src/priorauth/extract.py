@@ -129,64 +129,79 @@ def _overlap(a: str, b: str) -> float:
     return max(jaccard, containment)
 
 
-def _criterion_text(c: Criterion) -> str:
-    return " ".join([c.source_span, *c.sub_conditions])
+def _atoms(criteria: list[Criterion]) -> list[tuple[int, str]]:
+    """Expand criteria into atomic testable facts, each tagged with its parent
+    criterion's index.
+
+    Two independent extractions of the same policy routinely disagree on where
+    a "criterion" boundary sits: one bundles a list of exclusions under a
+    single parent with sub_conditions, the other gives each item its own
+    top-level criterion. Matching whole Criterion objects 1:1 fails hard in
+    that case — a bundled gold criterion can only ever match ONE of N
+    equivalent unbundled predicted ones, making the other N-1 register as
+    false positives even though every one of them is real, grounded content.
+    Atomizing both sides to the same granularity before matching (one atom per
+    sub_condition when present, else the whole source_span as one atom) fixes
+    this regardless of which side bundles."""
+    atoms = []
+    for i, c in enumerate(criteria):
+        for text in (c.sub_conditions if c.sub_conditions else [c.source_span]):
+            atoms.append((i, text))
+    return atoms
 
 
-def _pair_score(g: Criterion, p: Criterion) -> float:
-    """Best of two comparisons: source_span alone, and source_span+sub_conditions.
-
-    Neither is strictly better: comparing full text catches cases where both
-    sides break a criterion into the same sub-conditions but anchor source_span
-    differently (see the earlier documentation-requirements example); comparing
-    source_span alone catches the opposite case, where only one side chose to
-    itemize sub_conditions and the other left everything in prose — appending
-    that extra text would drag an otherwise-clear match below threshold."""
-    return max(_overlap(g.source_span, p.source_span), _overlap(_criterion_text(g), _criterion_text(p)))
-
-
-def match_criteria(
+def match_atoms(
     gold: list[Criterion], predicted: list[Criterion], threshold: float = MATCH_THRESHOLD
-) -> tuple[list[tuple[int, int]], list[int], list[int]]:
-    """Greedy one-to-one match — see `_overlap` and `_pair_score` for why this
-    isn't exact string equality or plain Jaccard on source_span alone.
+) -> tuple[list[tuple[int, int]], list[int], list[int], list[tuple[int, str]], list[tuple[int, str]]]:
+    """Greedy one-to-one match on atomic facts (see `_atoms`).
 
-    Returns (matched (gold_idx, pred_idx) pairs, unmatched gold indices, unmatched
-    predicted indices).
+    Returns (matched (gold_atom_pos, pred_atom_pos) pairs, unmatched gold atom
+    positions, unmatched pred atom positions, gold_atoms, pred_atoms) — positions
+    index into the returned atom lists, not the original criteria lists.
     """
-    candidates = sorted(
+    gold_atoms = _atoms(gold)
+    pred_atoms = _atoms(predicted)
+    scored = sorted(
         (
-            (_pair_score(g, p), gi, pi)
-            for gi, g in enumerate(gold)
-            for pi, p in enumerate(predicted)
+            (_overlap(g_text, p_text), gpos, ppos)
+            for gpos, (_, g_text) in enumerate(gold_atoms)
+            for ppos, (_, p_text) in enumerate(pred_atoms)
         ),
         reverse=True,
     )
-    matched_g: set[int] = set()
-    matched_p: set[int] = set()
+    used_gold: set[int] = set()
+    used_pred: set[int] = set()
     matches: list[tuple[int, int]] = []
-    for score, gi, pi in candidates:
-        if score < threshold or gi in matched_g or pi in matched_p:
+    for score, gpos, ppos in scored:
+        if score < threshold or gpos in used_gold or ppos in used_pred:
             continue
-        matched_g.add(gi)
-        matched_p.add(pi)
-        matches.append((gi, pi))
-    unmatched_gold = [i for i in range(len(gold)) if i not in matched_g]
-    unmatched_pred = [i for i in range(len(predicted)) if i not in matched_p]
-    return matches, unmatched_gold, unmatched_pred
+        used_gold.add(gpos)
+        used_pred.add(ppos)
+        matches.append((gpos, ppos))
+    unmatched_gold = [i for i in range(len(gold_atoms)) if i not in used_gold]
+    unmatched_pred = [i for i in range(len(pred_atoms)) if i not in used_pred]
+    return matches, unmatched_gold, unmatched_pred, gold_atoms, pred_atoms
 
 
 def score_extraction(gold: ExtractedCriteria, predicted: ExtractedCriteria) -> dict:
     """Precision/recall of one extraction against its hand-labeled gold, plus the
-    grounding (hallucination) check on the predicted spans."""
-    matches, unmatched_gold, unmatched_pred = match_criteria(gold.criteria, predicted.criteria)
-    n_gold, n_pred = len(gold.criteria), len(predicted.criteria)
+    grounding (hallucination) check on the predicted spans.
+
+    Scored on atomic facts, not top-level criteria (see `_atoms`/`match_atoms`) --
+    "how many criteria" is itself a labeling choice that gold and predicted
+    routinely disagree on (bundled vs. one-per-item), and scoring at that level
+    would mostly measure which convention was used, not extraction quality.
+    """
+    matches, unmatched_gold, unmatched_pred, gold_atoms, pred_atoms = match_atoms(
+        gold.criteria, predicted.criteria
+    )
+    n_gold, n_pred = len(gold_atoms), len(pred_atoms)
     return {
         "n_gold": n_gold,
         "n_predicted": n_pred,
         "n_matched": len(matches),
         "precision": len(matches) / n_pred if n_pred else 0.0,
         "recall": len(matches) / n_gold if n_gold else 0.0,
-        "missed_gold": [gold.criteria[i].text for i in unmatched_gold],
-        "spurious_predicted": [predicted.criteria[i].text for i in unmatched_pred],
+        "missed_gold": [gold_atoms[i][1] for i in unmatched_gold],
+        "spurious_predicted": [pred_atoms[i][1] for i in unmatched_pred],
     }

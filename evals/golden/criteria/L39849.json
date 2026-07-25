@@ -1,6 +1,115 @@
 {
   "policy_id": "L39849",
   "_title": "Opioid Treatment Programs",
-  "criteria": [],
+  "criteria": [
+    {
+      "id": "n1",
+      "text": "OTP treatment reasonable/necessary when all listed requirements are met",
+      "type": "required",
+      "logic": "all_of",
+      "sub_conditions": [
+        "diagnosed with OUD using the Diagnostic and Statistical Manual for Mental Disorders",
+        "voluntarily chooses maintenance treatment",
+        "is currently addicted to an opioid drug"
+      ],
+      "temporal": null,
+      "source_span": "OTP treatment is considered reasonable and necessary for beneficiaries meeting all of the following requirements:"
+    },
+    {
+      "id": "n2",
+      "text": "Initial assessment must address and include all of the listed documentation elements",
+      "type": "required",
+      "logic": "all_of",
+      "sub_conditions": [
+        "Confirmation of the OUD diagnosis",
+        "Complete medical history inclusive of concomitant medical conditions, psychiatric disorders, trauma, infectious disease, and pregnancy",
+        "Physical exam (unless assessment is performed via telehealth)",
+        "Mental health screening for psychiatric disorders",
+        "Laboratory testing to include complete blood count, liver enzyme testing, tuberculosis screening, hepatitis B + C, and HIV.",
+        "Authenticated informed consent inclusive of treatment options discussed, risk/benefit consideration of pharmacotherapy, and the patient\u2019s preferences for therapy.",
+        "Formation of treatment plan with discussion of psychosocial treatment, support, and patient\u2019s preference for these services.",
+        "Assessment of withdrawal potential and the associated plan.",
+        "Assessment of safety including overdose potential, prevention education, and offer of take-home naloxone."
+      ],
+      "temporal": null,
+      "source_span": "To qualify as an initial assessment the following must be addressed and included in the documentation:"
+    },
+    {
+      "id": "n3",
+      "text": "Before initiating pharmacotherapy, beneficiary must undergo an initial assessment upon admission complying with 42 CFR 8.12(f)(2) and (4)",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "Upon admission to the OTP and before initiating pharmacotherapy, the beneficiary must undergo an initial assessment as part of the intake activities that complies with 42 CFR 8.12 (f)(2) and (4)."
+    },
+    {
+      "id": "n4",
+      "text": "Drug-of-abuse testing must be provided per 42 CFR 8.12(f)(6)",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "Testing for drugs of abuse must be provided in accordance with 42 CFR 8.12(f)(6)."
+    },
+    {
+      "id": "n5",
+      "text": "Use of other addictive drugs should not be a reason to withhold or suspend OUD treatment",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "The use of other addictive drugs of abuse should not be a reason to withhold or suspend OUD treatment."
+    },
+    {
+      "id": "n6",
+      "text": "Periodic assessments (per 42 CFR 8.12(f)(4)) must include documentation of all the listed elements",
+      "type": "required",
+      "logic": "all_of",
+      "sub_conditions": [
+        "Evaluation of treatment progress and appropriate adjustments in therapy",
+        "Review of drug abuse testing and assessment of compliance",
+        "Review of psychosocial needs and plan to address unmet needs (if any)",
+        "Documentation that substantiates necessity for a periodic visit"
+      ],
+      "temporal": null,
+      "source_span": "Periodic assessments are required in accordance with 42 CFR 8.12(f)(4). Periodic assessments must include documentation of the following:"
+    },
+    {
+      "id": "n7",
+      "text": "Care must be provided by one or a combination of the listed provider types, as part of a certified OTP per 42 CFR 8.11",
+      "type": "required",
+      "logic": "one_of",
+      "sub_conditions": [
+        "Physicians (MD/DO)",
+        "Clinical psychologists",
+        "Licensed Clinical Social Workers",
+        "Nurse practitioners",
+        "Clinical Nurse Specialists",
+        "Physician Assistants",
+        "Other providers of mental health services licensed or otherwise authorized by the state in which they practice (e.g., licensed professional counselors, licensed clinical alcohol and drug counselors, licensed marriage and family therapists, licensed clinical alcohol and drug counselors, certified peer specialists)"
+      ],
+      "temporal": null,
+      "source_span": "Care must be provided by one or a combination of the following providers and take place as part of a certified opioid treatment program as delineated in 42 CFR 8.11:"
+    },
+    {
+      "id": "n8",
+      "text": "There is no limitation to the duration of treatment",
+      "type": "informational",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "There is no limitation to the duration of treatment."
+    },
+    {
+      "id": "n9",
+      "text": "All coverage criteria must be clearly documented in the patient's medical record and made available to the A/B MAC upon request",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "All coverage criteria must be clearly documented in the patient\u2019s medical record and made available to the A/B MAC upon request."
+    }
+  ],
   "notes": null
 }

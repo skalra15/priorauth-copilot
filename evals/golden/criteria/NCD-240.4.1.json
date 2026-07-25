@@ -1,6 +1,52 @@
 {
   "policy_id": "NCD-240.4.1",
   "_title": "Sleep Testing for Obstructive Sleep Apnea (OSA)",
-  "criteria": [],
+  "criteria": [
+    {
+      "id": "p1",
+      "text": "Type I PSG covered to diagnose OSA in beneficiaries with clinical signs/symptoms of OSA if performed attended in a sleep lab facility",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "Type I PSG is covered when used to aid the diagnosis of OSA in beneficiaries who have clinical signs and symptoms indicative of OSA if performed attended in a sleep lab facility."
+    },
+    {
+      "id": "p2",
+      "text": "Type II or III sleep testing devices covered to diagnose OSA in beneficiaries with clinical signs/symptoms if performed unattended (in/out of sleep lab) or attended in a sleep lab",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "Type II or Type III sleep testing devices are covered when used to aid the diagnosis of OSA in beneficiaries who have clinical signs and symptoms indicative of OSA if performed unattended in or out of a sleep lab facility or attended in a sleep lab facility."
+    },
+    {
+      "id": "p3",
+      "text": "Type IV devices measuring 3+ channels (one being airflow) covered to diagnose OSA in beneficiaries with signs/symptoms if performed unattended or attended in a sleep lab",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "Type IV sleep testing devices measuring three or more channels, one of which is airflow, are covered when used to aid the diagnosis of OSA in beneficiaries who have signs and symptoms indicative of OSA if performed unattended in or out of a sleep lab facility or attended in a sleep lab facility."
+    },
+    {
+      "id": "p4",
+      "text": "Devices measuring 3+ channels including actigraphy, oximetry, and peripheral arterial tone covered under the same conditions",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "Sleep testing devices measuring three or more channels that include actigraphy, oximetry, and peripheral arterial tone, are covered when used to aid the diagnosis of OSA in beneficiaries who have signs and symptoms indicative of OSA if performed unattended in or out of a sleep lab facility or attended in a sleep lab facility."
+    },
+    {
+      "id": "p5",
+      "text": "Other diagnostic sleep tests (other than the types above) are not sufficient for CPAP coverage and are not covered",
+      "type": "exclusion",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "other diagnostic sleep tests for the diagnosis of OSA, other than those noted above for prescribing CPAP, are not sufficient for the coverage of CPAP and are not covered."
+    }
+  ],
   "notes": null
 }

@@ -1,6 +1,145 @@
 {
   "policy_id": "NCD-270.1",
   "_title": "Electrical Stimulation (ES) and Electromagnetic Therapy for the Treatment of Wounds",
-  "criteria": [],
-  "notes": null
+  "criteria": [
+    {
+      "id": "q1",
+      "text": "Covered only for one of the four listed chronic ulcer types",
+      "type": "required",
+      "logic": "one_of",
+      "sub_conditions": [
+        "chronic Stage III or Stage IV pressure ulcers",
+        "arterial ulcers",
+        "diabetic ulcers",
+        "venous stasis ulcers"
+      ],
+      "temporal": null,
+      "source_span": "will only be covered for chronic Stage III or Stage IV pressure ulcers, arterial ulcers, diabetic ulcers, and venous stasis ulcers."
+    },
+    {
+      "id": "q1b",
+      "text": "Chronic ulcers are defined as ulcers that have not healed within 30 days of occurrence",
+      "type": "informational",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": "30 days of occurrence",
+      "source_span": "Chronic ulcers are defined as ulcers that have not healed within 30 days of occurrence."
+    },
+    {
+      "id": "q2",
+      "text": "Covered only after appropriate standard wound therapy has been tried for at least 30 days with no measurable signs of improved healing",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": "at least 30 days",
+      "source_span": "ES or electromagnetic therapy will be covered only after appropriate standard wound therapy has been tried for at least 30 days and there are no measurable signs of improved healing."
+    },
+    {
+      "id": "q_measurable",
+      "text": "Measurable signs of improved healing include decrease in wound size, exudates, and necrotic tissue",
+      "type": "informational",
+      "logic": "all_of",
+      "sub_conditions": [
+        "a decrease in wound size (either surface area or volume)",
+        "decrease in amount of exudates",
+        "decrease in amount of necrotic tissue"
+      ],
+      "temporal": null,
+      "source_span": "Measurable signs of improved healing include: a decrease in wound size (either surface area or volume), decrease in amount of exudates, and decrease in amount of necrotic tissue."
+    },
+    {
+      "id": "q3",
+      "text": "Standard wound care includes nutritional optimization, debridement, moist granulation bed maintenance, and infection treatment",
+      "type": "informational",
+      "logic": "all_of",
+      "sub_conditions": [
+        "optimization of nutritional status",
+        "debridement by any means to remove devitalized tissue",
+        "maintenance of a clean, moist bed of granulation tissue with appropriate moist dressings",
+        "necessary treatment to resolve any infection that may be present"
+      ],
+      "temporal": null,
+      "source_span": "Standard wound care includes: optimization of nutritional status, debridement by any means to remove devitalized tissue, maintenance of a clean, moist bed of granulation tissue with appropriate moist dressings, and necessary treatment to resolve any infection that may be present."
+    },
+    {
+      "id": "q4",
+      "text": "Therapy must be discontinued when the wound demonstrates 100% epithelialized wound bed",
+      "type": "exclusion",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "ES or electromagnetic therapy must be discontinued when the wound demonstrates 100% epitheliliazed wound bed."
+    },
+    {
+      "id": "q5",
+      "text": "Services can only be covered when performed by a physician, physical therapist, or incident to a physician service",
+      "type": "required",
+      "logic": "one_of",
+      "sub_conditions": [
+        "a physician",
+        "physical therapist",
+        "incident to a physician service"
+      ],
+      "temporal": null,
+      "source_span": "ES and electromagnetic therapy services can only be covered when performed by a physician, physical therapist, or incident to a physician service."
+    },
+    {
+      "id": "q6",
+      "text": "If used, wounds must be evaluated at least monthly by the treating physician",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": "at least monthly",
+      "source_span": "If ES or electromagnetic therapy is being used, wounds must be evaluated at least monthly by the treating physician."
+    },
+    {
+      "id": "q7",
+      "text": "The practitioner must evaluate the wound and contact the treating physician if the wound worsens",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "the practitioner must evaluate the wound and contact the treating physician if the wound worsens."
+    },
+    {
+      "id": "q8",
+      "text": "Will not be covered as an initial treatment modality",
+      "type": "exclusion",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "ES and electromagnetic therapy will not be covered as an initial treatment modality."
+    },
+    {
+      "id": "q9",
+      "text": "Continued treatment is not covered if measurable signs of healing are not demonstrated within any 30-day treatment period",
+      "type": "exclusion",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": "within any 30-day period of treatment",
+      "source_span": "Continued treatment with ES or electromagnetic therapy is not covered if measurable signs of healing have not been demonstrated within any 30-day period of treatment."
+    },
+    {
+      "id": "q10",
+      "text": "Unsupervised use will not be covered as not medically reasonable and necessary",
+      "type": "exclusion",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "Unsupervised use of ES or electromagnetic therapy for wound therapy will not be covered, as this use has not been found to be medically reasonable and necessary."
+    },
+    {
+      "id": "q11",
+      "text": "Medicare allows either one covered ES therapy or one covered electromagnetic therapy for wound treatment, not both",
+      "type": "required",
+      "logic": "one_of",
+      "sub_conditions": [
+        "one covered ES therapy",
+        "one covered electromagnetic therapy"
+      ],
+      "temporal": null,
+      "source_span": "This means Medicare will allow either one covered ES therapy or one covered electromagnetic therapy for the treatment of wounds."
+    }
+  ],
+  "notes": "q4 quotes the source's own typo ('epitheliliazed') verbatim for exact grounding."
 }

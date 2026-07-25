@@ -1,6 +1,39 @@
 {
   "policy_id": "L37729",
   "_title": "Magnetic-Resonance-Guided Focused Ultrasound Surgery (MRgFUS) for Essential Tremor and Tremor Dominant Parkinson's Disease",
-  "criteria": [],
+  "criteria": [
+    {
+      "id": "j1",
+      "text": "MRgFUS unilateral thalamotomy is medically reasonable/necessary when all 4 criteria are met",
+      "type": "required",
+      "logic": "all_of",
+      "sub_conditions": [
+        "medication refractory ET (defined as refractory to at least two trials of medical therapy, including at least one first-line agent)",
+        "moderate to severe postural or intention tremor of the dominant hand or another nationally accepted clinical measure of tremor severity",
+        "disabling ET (defined by a score of \u22652 on any of the eight items in the disability subsection of the CRST or another nationally accepted clinical measure of tremor severity)",
+        "not a candidate for DBS (e.g., advanced age, anticoagulant therapy, surgical comorbidities, or has failed Deep Brain Stimulation (DBS), but has no retained cranial implants)"
+      ],
+      "temporal": null,
+      "source_span": "MRgFUS unilateral thalamotomy is considered medically reasonable and necessary in patients with all four of the following criteria:"
+    },
+    {
+      "id": "j2",
+      "text": "Not covered when any of the following is present",
+      "type": "exclusion",
+      "logic": "one_of",
+      "sub_conditions": [
+        "Treatment of head or voice tremor",
+        "Bilateral thalamotomy",
+        "An advanced neurodegenerative condition",
+        "Unstable cardiac disease",
+        "Depression sufficiently severe to compromise beneficiary\u2019s ability to provide informed consent and limit likely clinical benefit of the treatment",
+        "Severe cognitive impairment (such as may be defined by a score of <24 on the Mini\u2013Mental State Examination)",
+        "A skull density ratio (SDR) (the ratio of cortical to cancellous bone) <0.40",
+        "MRI contraindicated"
+      ],
+      "temporal": null,
+      "source_span": "Limitations (not covered):"
+    }
+  ],
   "notes": null
 }

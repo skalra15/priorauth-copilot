@@ -1,6 +1,46 @@
 {
   "policy_id": "NCD-290.2",
   "_title": "Home Health Nurses' Visits to Patients Requiring Heparin Injection",
-  "criteria": [],
+  "criteria": [
+    {
+      "id": "r1",
+      "text": "Payment for home health nurse teaching visits when physician-prescribed for a homebound patient meeting one of the listed conditions",
+      "type": "required",
+      "logic": "one_of",
+      "sub_conditions": [
+        "Is pregnant and requires anticoagulant therapy",
+        "Requires treatment for deep venous thrombosis or pulmonary emboli or for another condition requiring anticoagulation and documentation justifies that the patient cannot tolerate warfarin."
+      ],
+      "temporal": null,
+      "source_span": "Medicare payment may be made for several visits by the home health nurse to teach the patient or the caring person to give subcutaneous injections of low dose heparin if it is prescribed by a physician for a homebound patient who:"
+    },
+    {
+      "id": "r2",
+      "text": "If patient/caregiver cannot administer the injection, daily nursing visits (7 days/week) for up to 6 months are reimbursed (pregnancy may extend beyond 6 months if reasonable/necessary)",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": "up to 6 months; pregnancy may extend beyond if reasonable and necessary",
+      "source_span": "If the patient or caring person is unable to administer the injection, nursing visits to give the injections on a daily basis, 7 days a week, for a period of up to 6 months (in the case of pregnancy, visits may be made for a period beyond 6 months if reasonable and necessary) would be reimbursed by Medicare."
+    },
+    {
+      "id": "r3",
+      "text": "Coverage after 6 months requires the prescribing physician to justify and document the need for extended treatment",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": "after 6 months of treatment",
+      "source_span": "Coverage for these services after 6 months of treatment would be provided only if the prescribing physician can justify and document the need for such an extended course of treatment."
+    },
+    {
+      "id": "r4",
+      "text": "Documentation of need beyond 6 months is not required for pregnant patients who meet the homebound criteria",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "Documentation of need for heparin injections beyond 6 months would not be required for pregnant patients who meet the homebound criteria."
+    }
+  ],
   "notes": null
 }

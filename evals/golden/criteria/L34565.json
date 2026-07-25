@@ -1,6 +1,49 @@
 {
   "policy_id": "L34565",
   "_title": "Home Health-Surface Electrical Stimulation in the Treatment of Dysphagia",
-  "criteria": [],
-  "notes": null
+  "criteria": [
+    {
+      "id": "f1",
+      "text": "Surface electrical stimulation for dysphagia is not covered -- insufficient scientific/clinical evidence of reasonableness and necessity",
+      "type": "exclusion",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "There is insufficient scientific or clinical evidence to consider this device as reasonable and necessary for the treatment of dysphagia within the meaning of \u00a71862(a)(1)(A) of the Social Security Act (SSA)and will not be covered by this A/B HHH Medicare Administrative Contractor (MAC)."
+    },
+    {
+      "id": "f2",
+      "text": "For HH patients to be eligible, all of the following must be documented for certification/recertification",
+      "type": "required",
+      "logic": "all_of",
+      "sub_conditions": [
+        "Patient is under physician care.",
+        "Homebound status-with documentation of confinement to home in medical records.",
+        "Established plan of care-must be signed and dated by the certifying physician.",
+        "Face-to-face-no more than 90 days prior or 30 days after start of HH care.",
+        "Skilled need services must be medically necessary, and documentation of the skilled need should be in the patient's medical records."
+      ],
+      "temporal": null,
+      "source_span": "In order for Home Health (HH) patients to be eligible to receive services under the Medicare HH benefit the following must be documented for certification/recertification:"
+    },
+    {
+      "id": "f3",
+      "text": "Recertifications needed at least every 60 days when there is a need for continuing home care",
+      "type": "required",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": "at least every 60 days",
+      "source_span": "Recertifications are needed at least every 60 days when there is a need for continuing home care."
+    },
+    {
+      "id": "f4",
+      "text": "If certification requirements are not met, subsequent episodes requiring recertification will not be covered even if recertification requirements are met",
+      "type": "exclusion",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "If the requirements for certification are not met, claims for subsequent episodes of care (which require a recertification) will not be covered, even if the requirements for recertifications are met."
+    }
+  ],
+  "notes": "f1 is the real headline (blanket denial); f2-f4 are generic Home Health benefit eligibility rules that also happen to apply to this policy."
 }

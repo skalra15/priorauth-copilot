@@ -1,6 +1,52 @@
 {
   "policy_id": "L35222",
   "_title": "Nerve Blocks for Peripheral Neuropathy",
-  "criteria": [],
-  "notes": null
+  "criteria": [
+    {
+      "id": "g1",
+      "text": "Nerve blocks/injections for multiple neuropathies or peripheral neuropathies from underlying systemic disease are not medically necessary; systemic medication management is indicated instead",
+      "type": "exclusion",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "The use of nerve blocks or injections for the treatment of multiple neuropathies or peripheral neuropathies caused by underlying systemic diseases is not considered medically necessary. Medical management using systemic medications is clinically indicated for the treatment of these conditions."
+    },
+    {
+      "id": "g2",
+      "text": "Nerve blocks with/without electrostimulation, or electrostimulation alone, for these conditions are not medically reasonable and necessary",
+      "type": "exclusion",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "The use of nerve blocks with or without the use of electrostimulation, and the use of electrostimulation alone for the treatment of multiple neuropathies or peripheral neuropathies caused by underlying systemic diseases is not considered medically reasonable and necessary."
+    },
+    {
+      "id": "g3",
+      "text": "These procedures are considered investigational and not eligible for coverage",
+      "type": "exclusion",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "These procedures are considered investigational and are not eligible for coverage for the treatment of neuropathies or peripheral neuropathies caused by underlying systemic diseases."
+    },
+    {
+      "id": "g4",
+      "text": "Ultrasound guidance with these non-covered injections is also not medically necessary and results in denial",
+      "type": "exclusion",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "The use of ultrasound guidance in conjunction with these non -covered injections is also considered not medically necessary and will result in denial."
+    },
+    {
+      "id": "g5",
+      "text": "Multiple-injections-per-day, multiple-days-per-week treatment protocols for these conditions are not medically necessary",
+      "type": "exclusion",
+      "logic": "single",
+      "sub_conditions": [],
+      "temporal": null,
+      "source_span": "Treatment protocols utilizing multiple injections per day on multiple days per week for the treatment of multiple neuropathies or peripheral neuropathies caused by underlying systemic diseases are not considered medically necessary."
+    }
+  ],
+  "notes": "Entire policy is a blanket exclusion for this specific etiology (peripheral neuropathy from underlying systemic disease) -- no required criteria at all, which is itself a useful contrast case against the mostly-required-criteria policies elsewhere in this golden set."
 }

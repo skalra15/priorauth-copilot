@@ -1,6 +1,51 @@
 {
   "policy_id": "L36000",
   "_title": "Percutaneous minimally invasive fusion/stabilization of the sacroiliac joint for the treatment of back pain",
-  "criteria": [],
-  "notes": null
+  "criteria": [
+    {
+      "id": "h1",
+      "text": "Percutaneous SIJ fusion is indicated for SIJ pain in patients who meet all 7 listed criteria",
+      "type": "required",
+      "logic": "all_of",
+      "sub_conditions": [
+        "Have undergone and failed a minimum 6 months of intensive non-operative treatment that must include medication optimization, activity modification, and active physical therapy",
+        "Patient\u2019s report of non-radiating, unilateral pain that is caudal to the lumbar spine (L5 vertebrae), localized over the posterior SIJ, and consistent with SIJ pain",
+        "Localized tenderness with palpation of the posterior SIJ in the absence of tenderness of similar severity elsewhere (e.g. greater trochanter, lumbar spine, coccyx) and other obvious sources for their pain do not exist",
+        "Positive response to the thigh thrust test OR compression test AND 2 of the following additional provocative tests: Gaenslen\u2019s test, Distraction test, Patrick\u2019s sign",
+        "Absence of generalized pain behavior (e.g. somatoform disorder) or generalized pain disorders (e.g. fibromyalgia)",
+        "Imaging (plain radiographs and a CT or MRI) of the SI joint that excludes the presence of destructive lesions (e.g. tumor, infection) or inflammatory arthropathy that would not be properly addressed by percutaneous SIJ fusion",
+        "At least 75% reduction of pain for the expected duration of the anesthetic used following an image-guided, contrast-enhanced SIJ injection on 2 separate occasions"
+      ],
+      "temporal": "minimum 6 months of intensive non-operative treatment prior to consideration",
+      "source_span": "Percutaneous minimally invasive fusion/stabilization of the sacroiliac joint (SIJ) for the treatment of back pain is indicated for the treatment of SIJ pain for patients with low back/buttock pain who meet all of the following criteria:"
+    },
+    {
+      "id": "h1b",
+      "text": "Diagnostic imaging must also rule out ipsilateral hip osteoarthritis and lumbar spine neural compression/degenerative condition",
+      "type": "required",
+      "logic": "all_of",
+      "sub_conditions": [
+        "Imaging of the ipsilateral hip (plain radiographs) to rule out osteoarthritis",
+        "Imaging of the lumbar spine (CT or MRI) to rule out neural compression or other degenerative condition that can be causing low back or buttock pain"
+      ],
+      "temporal": null,
+      "source_span": "Imaging of the ipsilateral hip (plain radiographs) to rule out osteoarthritis;"
+    },
+    {
+      "id": "h2",
+      "text": "Percutaneous SIJ fusion is not indicated in the presence of any of the listed conditions",
+      "type": "exclusion",
+      "logic": "one_of",
+      "sub_conditions": [
+        "Systemic arthropathy such as ankylosing spondylitis or rheumatoid arthritis",
+        "Generalized pain behavior (e.g. somatoform disorder) or generalized pain disorder (e.g. fibromyalgia)",
+        "Infection, tumor, or fracture",
+        "Acute, traumatic instability of the SIJ",
+        "Neural compression as seen on an MRI or CT that correlates with the patient\u2019s symptoms or other more likely source for their pain"
+      ],
+      "temporal": null,
+      "source_span": "Percutaneous SIJ fusion for SIJ pain is not indicated in the presence of:"
+    }
+  ],
+  "notes": "Criterion d has genuinely nested boolean logic (X OR Y) AND (2-of-3 Z) that the one-level logic/sub_conditions schema can't fully represent -- captured as one verbatim sub_condition string rather than force-fitting a deeper structure. Split the imaging requirement (f) into h1 (SI joint imaging, folded into the main all_of) and h1b (hip + spine imaging) since the source itself further itemizes it -- both are part of the same all_of gate as h1."
 }

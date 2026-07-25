@@ -15,6 +15,7 @@ import time
 from typing import Type, TypeVar
 
 import anthropic
+import pydantic
 from pydantic import BaseModel
 
 from . import config, db
@@ -62,7 +63,7 @@ def structured(
     *,
     system: str = "",
     model: str | None = None,
-    max_tokens: int = 8000,
+    max_tokens: int = 16000,
     temperature: float | None = None,
 ) -> tuple[T, LLMResponse]:
     """Call Claude and get back a validated instance of `schema`.
@@ -105,9 +106,27 @@ def structured(
     )
     latency = time.perf_counter() - started
 
+    if msg.stop_reason == "max_tokens":
+        raise RuntimeError(
+            f"Response truncated at max_tokens={max_tokens} ({msg.usage.output_tokens} "
+            f"output tokens) before the tool call completed. Raise max_tokens rather than "
+            f"treat this as a bad extraction — the failure is a token budget, not the model."
+        )
+
     block = next(b for b in msg.content if b.type == "tool_use")
     payload = block.input
-    parsed = schema.model_validate(payload)
+    try:
+        parsed = schema.model_validate(payload)
+    except pydantic.ValidationError:
+        # Rare tool-use quirk: the model occasionally wraps the whole answer in a
+        # single spurious key (seen as both "parameters" and "parameter name")
+        # instead of emitting the schema's fields at the top level. Unwrap once if
+        # that shape matches, then let a genuine validation error propagate normally
+        # — this targets the wrapper, not tolerance for actually-wrong content.
+        if isinstance(payload, dict) and len(payload) == 1:
+            (inner,) = payload.values()
+            payload = inner
+        parsed = schema.model_validate(payload)
 
     if config.CACHE_ENABLED:
         with db.connect() as conn:

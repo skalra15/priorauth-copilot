@@ -149,6 +149,7 @@ def eval_extraction_cmd(
     all_spans: list[str | None] = []
     all_sources: list[str] = []
     n_unlabeled = 0
+    failed: list[tuple[str, str]] = []
 
     for path in files:
         raw = json.loads(path.read_text())
@@ -163,7 +164,14 @@ def eval_extraction_cmd(
             continue
 
         gold = ExtractedCriteria.model_validate({k: v for k, v in raw.items() if not k.startswith("_")})
-        predicted, _ = extract.extract_criteria(policy_id, p["title"], p["coverage_text"], model=model)
+        try:
+            predicted, _ = extract.extract_criteria(policy_id, p["title"], p["coverage_text"], model=model)
+        except Exception as exc:
+            # Visible in the report, not swallowed — a malformed extraction is a
+            # real data point (see the project docs: failures should show up in the eval).
+            failed.append((policy_id, str(exc)))
+            table.add_row(policy_id, str(len(gold.criteria)), "FAILED", "-", "-", "-", "-")
+            continue
 
         result = extract.score_extraction(gold, predicted)
         total_gold += result["n_gold"]
@@ -189,6 +197,11 @@ def eval_extraction_cmd(
 
     if n_unlabeled:
         console.print(f"[yellow]{n_unlabeled} golden file(s) still empty — not scored.[/yellow]")
+
+    if failed:
+        console.print(f"[red]{len(failed)} extraction(s) failed and were excluded from the totals below:[/red]")
+        for policy_id, msg in failed:
+            console.print(f"  [red]{policy_id}:[/red] {msg}")
 
     if total_pred == 0:
         console.print("[yellow]Nothing scored yet — label at least one golden file.[/yellow]")
