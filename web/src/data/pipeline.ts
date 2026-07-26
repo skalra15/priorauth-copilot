@@ -9,7 +9,7 @@ export const PIPELINE_STAGES: PipelineStage[] = [
     step: "01",
     title: "Retrieve",
     description:
-      "Deterministic CPT/ICD-10 + state lookup against 1,800+ CMS LCDs and NCDs, with a local semantic fallback -- no hosted vector DB.",
+      "Deterministic CPT/ICD-10 + state lookup against 1,301 CMS LCDs and NCDs, with a local semantic fallback -- no hosted vector DB.",
   },
   {
     step: "02",
