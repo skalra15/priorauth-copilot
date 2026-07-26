@@ -9,7 +9,7 @@ import typer
 from rich.console import Console
 from rich.table import Table
 
-from . import appeal, check, config, db, extract, ingest, retrieve, synth, verify
+from . import appeal, check, config, db, evalrun, extract, ingest, retrieve, synth, verify
 from .schemas import CoverageDecision, ExtractedCriteria
 
 app = typer.Typer(add_completion=False, help="PriorAuth Copilot")
@@ -496,6 +496,55 @@ def eval_checker_cmd(
         console.print("[green]✓ [/green]")
     else:
         console.print("[yellow]not clearly passed — review the numbers above[/yellow]")
+
+
+@app.command()
+def eval(
+    full: bool = typer.Option(False, "--full", help="Run extraction + retrieval + checking together"),
+    sweep: bool = typer.Option(False, "--sweep", help="Run across all of config.SWEEP_MODELS instead of one"),
+    model: str = typer.Option(config.MODEL, help="Model to use (ignored if --sweep)"),
+    report: Path = typer.Option(None, help="Write JSON results here, e.g. evals/results/20260725.json"),
+) -> None:
+    """one reproducible eval run. The published number, not an ad-hoc one."""
+    if not full:
+        console.print("Only --full is implemented — runs extraction, retrieval, and checking together.")
+        raise typer.Exit(1)
+
+    models = config.SWEEP_MODELS if sweep else [model]
+    table = Table(
+        "model", "extr. P", "extr. R", "halluc.", "recall@1", "recall@5",
+        "verdict acc", "abstain", "cost", "mean latency",
+    )
+    all_results = []
+
+    for m in models:
+        console.print(f"[dim]Running eval for {m}...[/dim]")
+        result, extra = evalrun.run_full_eval(m)
+        all_results.append({**result.model_dump(), **extra})
+        table.add_row(
+            m,
+            f"{result.extraction_precision:.2f}" if result.extraction_precision is not None else "-",
+            f"{result.extraction_recall:.2f}" if result.extraction_recall is not None else "-",
+            f"{result.hallucinated_span_rate:.1%}" if result.hallucinated_span_rate is not None else "-",
+            f"{result.retrieval_recall_at_1:.2f}" if result.retrieval_recall_at_1 is not None else "-",
+            f"{result.retrieval_recall_at_5:.2f}" if result.retrieval_recall_at_5 is not None else "-",
+            f"{result.verdict_accuracy:.1%}" if result.verdict_accuracy is not None else "-",
+            f"{result.abstention_rate:.1%}" if result.abstention_rate is not None else "-",
+            f"${result.total_cost_usd:.3f}" if result.total_cost_usd is not None else "-",
+            f"{result.mean_latency_s:.1f}s" if result.mean_latency_s is not None else "-",
+        )
+
+    console.print(table)
+    console.print(
+        "\n[dim]Cost/latency reflect only fresh (non-cached) calls made during this run -- "
+        "a cache hit didn't cost anything now, even though its original token counts are "
+        "still on file.[/dim]"
+    )
+
+    if report:
+        report.parent.mkdir(parents=True, exist_ok=True)
+        report.write_text(json.dumps(all_results, indent=2) + "\n")
+        console.print(f"\n[green]✓[/green] wrote report to {report}")
 
 
 if __name__ == "__main__":
