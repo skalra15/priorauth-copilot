@@ -373,15 +373,20 @@ def synthesize_notes_cmd(
             continue
         predicted, _ = extract.extract_criteria(pid, p["title"], p["coverage_text"], model=model)
         testable_ids = [c.id for c in predicted.criteria if c.type.value in ("required", "exclusion")]
+        required_ids = [c.id for c in predicted.criteria if c.type.value == "required"]
         if not testable_ids:
             console.print(f"[yellow]{pid}: no testable criteria, skipping[/yellow]")
             continue
 
         rnd = random.Random(hash(pid) & 0xFFFFFFFF)
+        # ambiguous_one only targets required criteria: check.py's own design (correctly)
+        # treats silence about a named-test exclusion as not_met, not insufficient_evidence
+        # -- an "ambiguous exclusion" test would be asking the checker to contradict a
+        # deliberate, correct design choice, not testing a real weakness.
         variants: list[tuple[str, str | None]] = [
             ("meets_all", None),
             ("fails_one", rnd.choice(testable_ids)),
-            ("ambiguous_one", rnd.choice(testable_ids)),
+            ("ambiguous_one", rnd.choice(required_ids or testable_ids)),
         ]
 
         for variant, target in variants:
@@ -458,6 +463,13 @@ def eval_checker_cmd(
             except RuntimeError as exc:
                 n_appeal_failed += 1
                 console.print(f"[red]{pid}/{raw['variant']}: appeal citation failure — {exc}[/red]")
+            except Exception as exc:
+                # A malformed LLM response (see llm.structured's bounded retry) is a
+                # real, reportable data point -- same principle as eval-extraction's
+                # per-policy try/except. One bad appeal draft shouldn't crash the
+                # other 29 cases' worth of results.
+                n_appeal_failed += 1
+                console.print(f"[red]{pid}/{raw['variant']}: appeal draft error — {exc}[/red]")
 
     console.print(table)
 

@@ -1,26 +1,26 @@
 {
   "policy_id": "L34565",
   "variant": "fails_one",
-  "target_criterion_id": "c3",
-  "note_text": "Home Health Certification / Skilled Nursing Visit Note\n\nPatient: 71-year-old male with history of ischemic stroke (6 weeks ago) complicated by moderate oropharyngeal dysphagia confirmed on modified barium swallow study, now referred for home health services including surface electrical stimulation therapy for dysphagia.\n\nPhysician of record: Dr. R. Alvarez, attending neurologist, continues to oversee the patient's care and has signed and dated a comprehensive plan of care outlining skilled nursing and speech-language pathology visits, including the electrical stimulation protocol targeting swallowing musculature.\n\nFace-to-face encounter: Patient was evaluated in the outpatient neurology clinic 3 weeks prior to the start of home health services; findings of persistent dysphagia and functional decline were documented at that visit, supporting the need for skilled home care.\n\nFunctional status: Patient reports that he has returned to driving himself to his part-time volunteer job three days a week and is independently grocery shopping and attending his grandson's soccer games on weekends. He states he feels \"back to normal\" in terms of mobility and endurance, and ambulates in the community without a cane or assistive device. No mention is made of any physician-imposed restriction on leaving the home, and the patient does not describe requiring assistance or a taxing effort to leave home for these activities.\n\nSkilled need: Speech-language pathologist has documented ongoing need for skilled swallowing therapy with surface electrical stimulation given persistent aspiration risk on thin liquids, with clear rationale for continued skilled intervention recorded in the chart including specific electrode placement, stimulation parameters, and swallow maneuvers trained during the visit.\n\nRecertification: Plan of care will be reviewed and recertified by Dr. Alvarez at the 60-day mark if continued skilled services are indicated.\n\nDocumentation: All clinical notes, evaluations, and physician orders related to this episode of care are legibly recorded, maintained in the electronic medical record, and available for MAC review upon request.\n\nPlan: Continue biweekly SLP visits with e-stim protocol per plan of care; monitor swallow function and aspiration risk; reassess need for continued skilled services at next physician visit.",
+  "target_criterion_id": "c8",
+  "note_text": "HOME HEALTH SKILLED NURSING / SPEECH THERAPY VISIT NOTE\n\nPatient: 78-year-old female with history of ischemic stroke (right MCA, 4 months ago) complicated by moderate oropharyngeal dysphagia, on thickened liquids and mechanical soft diet. Referred for home health services including skilled speech-language pathology for dysphagia management with surface electrical stimulation as an adjunct to swallowing exercises.\n\nPhysician of record: Dr. R. Alvarez, Internal Medicine, is following patient closely and directing the plan of care. Face-to-face encounter was completed by Dr. Alvarez 12 days prior to start of home health care, documenting continued dysphagia, aspiration risk, and need for skilled therapy in the home setting.\n\nHomebound status: Patient requires assistance of two persons and a rolling walker to ambulate short distances within the home; leaving the home requires considerable and taxing effort and is limited to medical appointments accompanied by family. Confinement to home is clearly documented in the intake assessment and nursing notes.\n\nPlan of care: Established plan of care was signed and dated by Dr. Alvarez at start of care, outlining frequency and duration of SLP visits (3x/week for 4 weeks), goals for improved swallow safety, and inclusion of neuromuscular electrical stimulation to the anterior neck musculature as an adjunct to traditional dysphagia exercises.\n\nToday's visit: SLP performed skilled swallow evaluation and applied surface electrical stimulation electrodes to the submental and infrahyoid region per plan of care, in conjunction with effortful swallow exercises and Mendelsohn maneuver training. Patient tolerated treatment well, mild improvement noted in hyolaryngeal excursion on palpation. Skilled intervention is necessary given complexity of dysphagia management, risk of aspiration pneumonia, and need for professional judgment in electrode placement and stimulation parameters, all clearly documented in the chart.\n\nThe initial certification period began 8 weeks ago. Chart review today shows the physician's recertification of the home health plan of care was completed and signed on day 75 of the certification period, beyond the 60-day interval required for continuing home care. No recertification documentation exists for days 61-74; the agency continued to provide skilled visits during this gap based on the original plan alone. This delay was noted during today's chart audit and flagged for follow-up with the physician's office; however, as of today's visit no recertification had yet been signed within the required 60-day window.\n\nAll documentation, including evaluation notes, treatment logs, and physician communications, remains legible and stored in the patient's electronic medical record, available for MAC review upon request.\n\nPlan: Continue skilled SLP visits, obtain corrected recertification from physician's office, reassess swallow function next visit.",
   "addressed_required_ids": [
     "c2",
+    "c3",
     "c4",
     "c5",
     "c6",
-    "c8",
     "c9"
   ],
   "triggered_exclusion_ids": [],
   "expected_verdicts": {
     "c1": "not_met",
     "c2": "met",
-    "c3": "not_met",
+    "c3": "met",
     "c4": "met",
     "c5": "met",
     "c6": "met",
     "c7": "not_met",
-    "c8": "met",
+    "c8": "not_met",
     "c9": "met"
   }
 }

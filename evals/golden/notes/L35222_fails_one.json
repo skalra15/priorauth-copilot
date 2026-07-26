@@ -1,17 +1,18 @@
 {
   "policy_id": "L35222",
   "variant": "fails_one",
-  "target_criterion_id": "c1",
-  "note_text": "CLINIC NOTE - PAIN MANAGEMENT\n\nChief Complaint: Bilateral foot and lower leg burning pain in a patient with known diabetic peripheral neuropathy.\n\nHistory of Present Illness: The patient is a 64-year-old with a 12-year history of type 2 diabetes mellitus complicated by symmetric distal sensorimotor peripheral neuropathy, presenting with progressively worsening burning, tingling pain in both feet and distal lower legs, worse at night, with associated allodynia to light touch. HbA1c is 8.4%. The patient has tried gabapentin, duloxetine, and topical lidocaine patches with only partial relief and is requesting further intervention for pain control.\n\nPast Medical History: Type 2 diabetes mellitus with diabetic peripheral neuropathy, hypertension, hyperlipidemia.\n\nExam: Symmetric stocking-distribution decreased sensation to light touch, vibration, and pinprick bilaterally to mid-shin. Diminished ankle reflexes bilaterally. No focal motor deficit. Skin intact, no ulceration.\n\nAssessment: Diabetic peripheral neuropathy (polyneuropathy secondary to underlying systemic diabetes mellitus) with inadequate pain control on oral neuropathic agents.\n\nPlan: Given the patient's ongoing severe symptoms despite optimized oral pharmacotherapy, discussed proceeding with bilateral peripheral nerve blocks (tibial and common peroneal) for symptomatic relief of the diabetic peripheral neuropathy pain. Risks, benefits, and alternatives discussed. Will schedule nerve block procedure. Continue current oral regimen and diabetes management with endocrinology. Follow up in 2 weeks post-procedure to assess response.",
+  "target_criterion_id": "c5",
+  "note_text": "CHIEF COMPLAINT: Bilateral lower extremity burning pain, worsening x 6 months.\n\nHISTORY OF PRESENT ILLNESS: 64-year-old male with a 12-year history of type 2 diabetes mellitus, complicated by documented distal symmetric sensorimotor polyneuropathy confirmed on prior EMG/NCS (reduced sural and peroneal amplitudes, mild slowing of conduction velocities). Patient reports diffuse burning, tingling, and allodynia involving both feet and lower legs in a stocking distribution, consistent with his known diabetic peripheral neuropathy. He has failed adequate trials of gabapentin, duloxetine, and topical lidocaine with only marginal relief. Pain is rated 7/10, worse at night, interfering with sleep and ambulation.\n\nPAST MEDICAL HISTORY: Type 2 diabetes mellitus with peripheral neuropathy and retinopathy, hypertension, hyperlipidemia.\n\nPHYSICAL EXAM: Decreased vibratory sense and light touch sensation bilaterally to the mid-shin, absent ankle reflexes bilaterally, no focal motor deficit. Skin intact, no ulceration. Peripheral pulses palpable.\n\nASSESSMENT: Painful diabetic peripheral polyneuropathy, bilateral, refractory to oral pharmacologic therapy.\n\nPLAN: Given the diffuse, systemic-disease-related nature of his polyneuropathy, discussed with the patient that he was recently referred to our pain clinic where a series of bilateral sciatic and peroneal nerve blocks were performed as an aggressive symptom-control protocol. Per clinic scheduling, this consisted of two separate nerve block injection sessions per day (morning and afternoon) on three days each week for two consecutive weeks, in an attempt to achieve more rapid and durable analgesia. The patient tolerated the injections without immediate complication, though sustained benefit beyond 24-48 hours after each session was minimal. Will continue to optimize glycemic control and oral neuropathic pain regimen. Discussed limitations of repeated nerve block protocols for this indication and plan to reassess necessity of continuing this frequency at next visit.",
   "addressed_required_ids": [],
   "triggered_exclusion_ids": [
-    "c1"
+    "c1",
+    "c5"
   ],
   "expected_verdicts": {
     "c1": "met",
     "c2": "not_met",
     "c3": "not_met",
     "c4": "not_met",
-    "c5": "not_met"
+    "c5": "met"
   }
 }

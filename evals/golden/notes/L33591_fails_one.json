@@ -1,15 +1,19 @@
 {
   "policy_id": "L33591",
   "variant": "fails_one",
-  "target_criterion_id": "c1",
-  "note_text": "Patient presents to clinic requesting \"a full allergy panel\" after seeing an advertisement online for comprehensive allergen testing. Patient denies any specific symptoms such as rhinitis, urticaria, wheezing, or anaphylaxis. No history of asthma, eczema, or prior allergic reactions to foods, drugs, or environmental exposures. Review of systems is entirely negative for respiratory, dermatologic, or GI complaints. Physical exam was not performed at this visit; patient was seen briefly at the front desk and vitals were not obtained. No documentation of nasal mucosa, skin, or lung exam findings.\n\nGiven patient's request, ordered RAST panel for multiple environmental antigens (tree pollen, grass, mold, dust mite, cat/dog dander) and food antigens (egg, milk, peanut, soy) simultaneously to \"screen for anything he might be allergic to.\" No specific clinical indication or exposure history was elicited to justify selection of these particular antigens; testing was ordered purely at patient's request without a preceding history and physical to identify suspected triggers.\n\nPlan: Await RAST results, will discuss further management once results are back. Follow up in 2 weeks.",
-  "addressed_required_ids": [],
-  "triggered_exclusion_ids": [],
+  "target_criterion_id": "c4",
+  "note_text": "CHIEF COMPLAINT: Chronic sinus congestion and intermittent hives, evaluate for allergic triggers.\n\nHISTORY OF PRESENT ILLNESS: This is a 34-year-old woman with a history of seasonal rhinitis who presents with worsening nasal congestion, sneezing, and episodic urticaria over the past three months. She reports symptoms are worse outdoors in the spring and after being around cats. She denies any GI symptoms suggestive of food allergy. She has not tried any antihistamines with significant relief.\n\nPAST MEDICAL HISTORY: Seasonal allergic rhinitis diagnosed in childhood, mild intermittent asthma.\n\nMEDICATIONS: Loratadine PRN, albuterol PRN.\n\nPHYSICAL EXAMINATION:\nGeneral: Alert, no acute distress.\nHEENT: Pale, boggy nasal turbinates bilaterally with clear rhinorrhea. Oropharynx clear. No lymphadenopathy.\nSkin: Scattered faint urticarial wheals on forearms, resolving.\nLungs: Clear to auscultation bilaterally, no wheeze at this visit.\nCardiac: Regular rate and rhythm.\n\nASSESSMENT: Based on the history and physical examination findings consistent with IgE-mediated allergic rhinitis and urticaria with likely environmental and animal dander triggers, in vitro allergen-specific IgE testing (RAST) is indicated to identify specific sensitivities to tree pollen, grass, and cat dander given her history of difficulty controlling symptoms with standard therapy.\n\nPLAN:\n1. Order RAST panel for common environmental allergens (tree pollen mix, grass mix, cat epithelium, dust mite) based on today's clinical findings.\n2. In addition, given the patient's ongoing symptoms and desire for a broader allergy workup, she also requested testing to assess overall immune response to her suspected allergens via an indirect IgG ELISA antibody panel, which was ordered today as part of the same visit.\n3. Continue antihistamine, consider intranasal corticosteroid.\n4. Follow-up in 4 weeks to review results and discuss avoidance strategies and possible immunotherapy referral.\n\nDiscussed with patient that some ordered testing methodologies may not be covered by insurance; she elected to proceed with self-pay understanding for the IgG ELISA component.",
+  "addressed_required_ids": [
+    "c1"
+  ],
+  "triggered_exclusion_ids": [
+    "c4"
+  ],
   "expected_verdicts": {
-    "c1": "not_met",
+    "c1": "met",
     "c2": "not_met",
     "c3": "not_met",
-    "c4": "not_met",
+    "c4": "met",
     "c5": "not_met",
     "c6": "not_met"
   }

@@ -1,16 +1,16 @@
 {
   "policy_id": "L33922",
   "variant": "fails_one",
-  "target_criterion_id": "c3",
-  "note_text": "Patient is a 74-year-old ambulatory male with type 2 diabetes mellitus presenting to podiatry clinic for routine nail care. He reports increasing pain over the great toenails bilaterally, worse when wearing shoes, and difficulty walking distances greater than one block due to discomfort.\n\nOn exam: bilateral hallux toenails show marked yellow-brown discoloration, onycholysis, and significant subungual debris with thickening of the nail plate (>3mm). Mild erythema of the adjacent periungual skin on the right great toe consistent with secondary infection. No ulceration noted. Pedal pulses palpable, monofilament sensation diminished distally.\n\nAssessment: Onychomycosis, bilateral great toenails, with marked thickening and dystrophy causing pain and limitation of ambulation, complicated by mild secondary periungual infection.\n\nPlan: Discussed treatment options with patient including oral terbinafine and topical antifungal lacquer. Patient declined any antifungal medication at this time, stating he \"doesn't like taking extra pills\" and prefers to just have the nails trimmed periodically. No medical contraindication to antifungal therapy was identified (LFTs at baseline within normal limits, no drug interactions noted on current medication list). Proceeded with mechanical debridement of nails #1 and #2 today using nail nippers and burr to reduce thickness and remove subungual debris, improving pain with ambulation. Discussed risks of foregoing antifungal treatment and recommended reconsideration at next visit. Follow-up in 9-10 weeks for repeat debridement given diabetic foot care needs.",
+  "target_criterion_id": "c2",
+  "note_text": "CHIEF COMPLAINT: Routine follow-up for toenail fungus.\n\nHISTORY OF PRESENT ILLNESS: Patient is a 68-year-old ambulatory male with a longstanding history of onychomycosis of bilateral great toenails, present for routine follow-up. He reports the nails have been discolored for several years but denies any pain, denies difficulty walking, and denies any redness, swelling, or drainage around the nails. He is able to walk his usual 2 miles daily without any foot discomfort and has no complaints referable to his feet other than the cosmetic appearance of the nails. No history of diabetes, peripheral vascular disease, or immunosuppression.\n\nPAST MEDICAL HISTORY: Hypertension, hyperlipidemia.\n\nMEDICATIONS: Lisinopril, atorvastatin.\n\nPHYSICAL EXAM:\nVitals stable.\nFeet: Bilateral great toenails with yellow-brown discoloration, mild subungual debris, and moderate thickening of the nail plate consistent with onychomycosis. Mild onycholysis noted at the distal nail edge. No periungual erythema, no warmth, no purulent drainage. Skin surrounding nails intact, no maceration or fissuring. Sensation intact to light touch, pulses 2+ bilaterally. Gait normal, no limping or altered weight-bearing observed. Patient ambulates independently without assistive device.\n\nASSESSMENT: Onychomycosis of bilateral great toenails, clinically evident by discoloration, thickening, and subungual debris. Patient remains asymptomatic from a functional standpoint - no pain, no gait disturbance, and no secondary infection identified.\n\nPLAN: Discussed topical antifungal therapy (ciclopirox lacquer) as first-line treatment given absence of contraindication to antifungal use. Since the patient is not experiencing any limitation of ambulation, pain, or secondary infection related to the nail thickening, formal nail debridement is not indicated at this time on medical necessity grounds. Will continue to monitor; instructed patient to return if he develops pain, difficulty walking, or signs of infection around the nails. Follow-up in 6 months or sooner as needed.",
   "addressed_required_ids": [
     "c1",
-    "c2"
+    "c3"
   ],
   "triggered_exclusion_ids": [],
   "expected_verdicts": {
     "c1": "met",
-    "c2": "met",
-    "c3": "not_met"
+    "c2": "not_met",
+    "c3": "met"
   }
 }

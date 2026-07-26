@@ -1,25 +1,26 @@
 {
   "policy_id": "L34565",
   "variant": "ambiguous_one",
-  "target_criterion_id": "c4",
-  "note_text": "Home Health Nursing/Speech-Language Pathology Visit Note\n\nPatient: 78-year-old male with history of ischemic CVA (right MCA territory) six weeks ago, complicated by moderate oropharyngeal dysphagia confirmed on modified barium swallow study, now residing at home with his daughter as primary caregiver.\n\nPatient remains under the active care of his primary care physician, Dr. R. Alvarez, who continues to monitor his neurologic recovery and swallowing status via home health visits and periodic office follow-up.\n\nHomebound status: Patient requires the assistance of one person and a rolling walker to ambulate even short distances within the home; he becomes markedly fatigued and short of breath after mobilizing more than 10-15 feet. He has not left the home except for two medical appointments transported by wheelchair van since discharge from inpatient rehab. Leaving home requires considerable and taxing effort, consistent with homebound criteria, and this is documented in the chart at each visit.\n\nFace-to-face encounter: Patient was evaluated in person by Dr. Alvarez on the date home health services were initiated for confirmation of ongoing skilled need, well within the required window relative to start of care.\n\nSkilled need: Speech-language pathologist visiting today assessed swallow function and administered surface neuromuscular electrical stimulation (NMES) to the suprahyoid and infrahyoid musculature as part of an ongoing dysphagia rehabilitation program, given persistent difficulty with pharyngeal transit and residue noted on prior instrumental swallow evaluation. Patient tolerated stimulation well at therapeutic intensity without adverse effects. Skilled SLP intervention remains medically necessary given the complexity of the neurogenic dysphagia and risk of aspiration, and this is documented in today's visit note along with objective measures of swallow function (timed water swallow test, oral intake diet level).\n\nRecertification: Home health episode remains within the initial 60-day certification period; no recertification is due at this time, though ongoing need for skilled services is anticipated and will be reassessed accordingly.\n\nDocumentation: All findings above are recorded legibly in the patient's electronic medical record and will be available to the A/B MAC upon request, including therapy progress notes and physician communication logs.\n\nPlan: Continue skilled SLP visits 3x/week for continued swallow rehabilitation including surface e-stim as adjunct to exercise-based therapy; reassess swallow function in 2 weeks; caregiver education reinforced on aspiration precautions and modified diet texture.",
+  "target_criterion_id": "c9",
+  "note_text": "HOME HEALTH SKILLED NURSING / SPEECH THERAPY VISIT NOTE\n\nPatient: 78-year-old male with history of ischemic stroke (right MCA distribution, 3 months ago) resulting in moderate oropharyngeal dysphagia, confirmed by modified barium swallow study showing delayed pharyngeal transit and mild aspiration with thin liquids.\n\nPhysician oversight: Patient remains under the care of his attending neurologist, Dr. R. Alvarez, who continues to monitor his post-stroke recovery and swallowing status via monthly office and home health visits.\n\nHomebound status: Patient requires maximal assistance and a wheelchair for any ambulation outside the home due to residual left hemiparesis and poor endurance. He is unable to leave home without considerable and taxing effort, and does so only for medical appointments. This has been documented in the home health intake assessment and subsequent visit notes.\n\nPlan of care: A home health plan of care was established, signed and dated by Dr. Alvarez on 09/02, outlining skilled speech therapy services including swallow rehabilitation exercises and surface electrical stimulation (NMES) to the anterior neck musculature to improve pharyngeal swallow function, three times weekly for four weeks.\n\nFace-to-face encounter: Dr. Alvarez saw the patient in the office on 08/20, ten days prior to the start of home health services on 08/30, and documented the ongoing dysphagia, aspiration risk, and need for skilled therapy services in the clinical record.\n\nSkilled need: The speech-language pathologist is providing skilled, medically necessary treatment for the patient's dysphagia given his aspiration risk, inability to safely progress diet without therapeutic intervention, and need for professional judgment in adjusting the electrical stimulation parameters and swallow exercise regimen based on his evolving neurological status. Today's session included electrode placement over the suprahyoid muscle group, stimulation at 20 Hz for effortful swallow facilitation, and caregiver education on aspiration precautions. Patient tolerated treatment well with no adverse effects noted.\n\nRecertification: Given the anticipated need for ongoing skilled dysphagia therapy beyond the initial 60-day episode, recertification will be scheduled and coordinated with the certifying physician prior to the end of the current episode.\n\nPlan: Continue skilled SLP visits per plan of care; reassess swallow function in 2 weeks with repeat clinical bedside evaluation.\n",
   "addressed_required_ids": [
     "c2",
     "c3",
+    "c4",
     "c5",
     "c6",
-    "c9"
+    "c8"
   ],
   "triggered_exclusion_ids": [],
   "expected_verdicts": {
     "c1": "not_met",
     "c2": "met",
     "c3": "met",
-    "c4": "insufficient_evidence",
+    "c4": "met",
     "c5": "met",
     "c6": "met",
     "c7": "not_met",
-    "c8": "insufficient_evidence",
-    "c9": "met"
+    "c8": "met",
+    "c9": "insufficient_evidence"
   }
 }

@@ -1,8 +1,8 @@
 {
   "policy_id": "L39849",
   "variant": "ambiguous_one",
-  "target_criterion_id": "c24",
-  "note_text": "Opioid Treatment Program \u2013 Initial Intake Assessment\n\nPatient: 34-year-old male presenting for evaluation of ongoing opioid use, self-referred after increasing difficulty controlling use of illicit fentanyl over the past 8 months.\n\nHistory: Patient reports daily IV use of fentanyl, with escalating tolerance and multiple unsuccessful attempts to cut back on his own. He endorses withdrawal symptoms (myalgias, GI upset, anxiety) when he goes more than 8-10 hours without using. Meets DSM-5 criteria for opioid use disorder, severe, confirmed on structured clinical interview (tolerance, withdrawal, unsuccessful cutting down, craving, continued use despite social/occupational consequences). Patient states he understands methadone maintenance is a long-term commitment and voluntarily elects to enroll in daily dosing rather than pursue detoxification alone; he was counseled on alternatives including buprenorphine office-based treatment and residential rehab but prefers OTP-based methadone maintenance given his prior relapses after short-term detox.\n\nMedical history reviewed: no significant cardiac history, denies chronic pain conditions. Psychiatric history notable for generalized anxiety, untreated. No history of trauma disclosed at this visit. Hepatitis and HIV risk factors discussed given IV use. Not currently pregnant (confirmed by urine hCG, negative).\n\nPhysical exam: Vitals stable, afebrile. Track marks noted bilateral antecubital fossae. No acute distress, pupils reactive, mucous membranes intact. Cardiopulmonary exam unremarkable. No signs of active infection at injection sites.\n\nMental health screening: PHQ-9 score 6 (mild), GAD-7 score 11 (moderate); no acute suicidal ideation.\n\nLabs: CBC and LFTs sent this visit; hepatitis B/C serologies and HIV test drawn; PPD placed for TB screening, to be read in 48-72 hours.\n\nInformed consent obtained and signed, discussing methadone risks (QT prolongation, sedation, respiratory depression), benefits, and alternative treatment options; patient's preference for methadone documented.\n\nTreatment plan: initiate methadone induction per protocol, weekly counseling sessions offered and accepted, referral to on-site psychosocial support group discussed with patient expressing interest.\n\nWithdrawal assessment: COWS score 14 (moderate withdrawal); plan for supervised methadone induction starting at 30mg with close monitoring per protocol.\n\nSafety/overdose: discussed high overdose risk given IV fentanyl use and reduced tolerance risk during induction; naloxone education provided and take-home naloxone kit dispensed today.\n\nPlan: Begin methadone maintenance therapy today per OTP physician order. Follow up in 24 hours for dose reassessment.",
+  "target_criterion_id": "c8",
+  "note_text": "OPIOID TREATMENT PROGRAM - INITIAL INTAKE ASSESSMENT\n\nPatient: 34-year-old male presenting voluntarily for admission to the opioid treatment program requesting maintenance therapy for opioid use disorder. Patient reports he has been using intravenous heroin daily for approximately 3 years, with escalating tolerance and unsuccessful attempts to quit on his own. He states he understands this is a chronic condition requiring ongoing treatment and is choosing to enroll in maintenance treatment of his own accord, having researched options and discussed with family.\n\nDiagnosis: Meets DSM-5 criteria for opioid use disorder, severe, confirmed on interview - tolerance, withdrawal, unsuccessful efforts to cut down, continued use despite social/interpersonal problems, craving, and time spent obtaining/using the substance. Currently opioid-dependent, last use this morning per patient report, mild rhinorrhea and yawning noted on exam consistent with early withdrawal.\n\nMedical history: No significant cardiac, pulmonary, or renal disease. Denies chronic pain conditions. Hepatitis C diagnosed 2 years ago, not currently treated. Denies pregnancy (male). No history of tuberculosis exposure reported. History of a motor vehicle accident 5 years ago with subsequent opioid prescription that preceded escalation to heroin use - reports lingering anxiety related to the accident.\n\nPhysical exam: Vitals stable, BP 128/82, HR 92, afebrile. Track marks noted bilateral antecubital fossae, healed. Mild diaphoresis, pupils normal size, no acute distress. Abdomen soft, nontender. No peripheral edema.\n\nLabs: CBC, LFTs, TB screening (QuantiFERON), Hepatitis B/C panel, and HIV testing ordered today; hepatitis C confirmed positive from prior outside records reviewed and on file.\n\nInformed consent: Reviewed methadone and buprenorphine treatment options in detail including risks (respiratory depression, QT prolongation, diversion risk) and benefits (reduction in illicit use, overdose risk, criminal activity). Patient signed informed consent form; expressed preference for methadone based on prior experience with buprenorphine causing precipitated withdrawal.\n\nTreatment plan: Discussed availability of individual counseling, group therapy, and case management for housing/employment support. Patient interested in weekly individual counseling to start.\n\nWithdrawal assessment: COWS score 8 (mild withdrawal). Plan for methadone induction starting at 30mg with reassessment in 2-4 hours per protocol, titration per program physician orders.\n\nSafety assessment: Discussed overdose risk given reduced tolerance during induction period, warning signs of overdose reviewed with patient and his partner who accompanied him. Naloxone kit offered and dispensed today; patient and partner trained on use.\n\nCare provided by program physician and licensed addiction counselor at certified OTP.\n\nPlan: Begin methadone induction per above, follow up tomorrow for reassessment, drug testing per program protocol obtained today.",
   "addressed_required_ids": [
     "c1",
     "c2",
@@ -11,12 +11,13 @@
     "c5",
     "c6",
     "c7",
-    "c8",
     "c9",
     "c10",
     "c11",
     "c12",
-    "c13"
+    "c13",
+    "c22",
+    "c24"
   ],
   "triggered_exclusion_ids": [],
   "expected_verdicts": {
@@ -27,7 +28,7 @@
     "c5": "met",
     "c6": "met",
     "c7": "met",
-    "c8": "met",
+    "c8": "insufficient_evidence",
     "c9": "met",
     "c10": "met",
     "c11": "met",
@@ -39,7 +40,7 @@
     "c19": "insufficient_evidence",
     "c20": "insufficient_evidence",
     "c21": "insufficient_evidence",
-    "c22": "insufficient_evidence",
-    "c24": "insufficient_evidence"
+    "c22": "met",
+    "c24": "met"
   }
 }

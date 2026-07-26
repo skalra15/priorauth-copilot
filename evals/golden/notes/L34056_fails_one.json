@@ -1,21 +1,22 @@
 {
   "policy_id": "L34056",
   "variant": "fails_one",
-  "target_criterion_id": "c1",
-  "note_text": "Patient is a 58-year-old woman referred by her primary care physician directly for urodynamic testing based on a phone call describing \"leaking with coughing and urgency for several months.\" No prior office visit with this urology practice has occurred; patient was scheduled straight into the urodynamics suite today without an intake history and physical having been performed, and no urinalysis has been obtained.\n\nOn arrival, the technician confirms patient identity and reviews consent for the study. Patient reports she has had urinary leakage with laughing and sneezing, plus a sense of urgency and occasional urge incontinence, ongoing for approximately 6 months, and that she voids about 10-12 times a day. Beyond this brief verbal report obtained by the tech at check-in, no formal history was taken by a physician or advanced practice provider, no physical/pelvic exam was documented, and no urine sample was collected or analyzed prior to proceeding.\n\nMultichannel urodynamic study performed: uroflowmetry, filling cystometry with intra-abdominal pressure monitoring, and pressure-flow voiding study. Study demonstrates involuntary detrusor contractions at 220 mL with associated urgency, and stress leak point pressure of 68 cm H2O with Valsalva. No obstruction pattern noted. Bladder capacity 410 mL.\n\nImpression: Mixed urinary incontinence with detrusor overactivity and stress component. Plan: counsel patient on pelvic floor physical therapy and consider anticholinergic trial; results will be reviewed with the referring physician. Note: initial baseline history/physical exam and urinalysis with microscopy were not performed prior to this urodynamic study, as testing was scheduled directly from the referral without an antecedent clinic visit.",
+  "target_criterion_id": "c5",
+  "note_text": "CC: Urinary frequency, urgency, and intermittent urinary retention x 4 months.\n\nHPI: 68-year-old male presents with a 4-month history of urinary urgency, weak stream, and sensation of incomplete emptying. He denies dysuria or hematuria. Symptoms have progressively worsened, now with occasional urge incontinence episodes.\n\nPast evaluation: Prior to today's testing, patient underwent a complete history and physical exam. Digital rectal exam revealed a moderately enlarged, smooth prostate. Urinalysis with microscopy performed last week was unremarkable - no pyuria, no bacteriuria, no hematuria. Urine culture was negative, so no antibiotic treatment was needed prior to proceeding with testing.\n\nAssessment: Voiding dysfunction of unclear etiology - differential includes bladder outlet obstruction from BPH versus detrusor overactivity versus underlying neurogenic component. Given the ambiguity, testing is needed to clarify diagnosis and guide treatment planning (medication vs surgical intervention).\n\nPlan: Rather than selecting the specific studies indicated to answer the clinical question, our lab protocol was followed and the patient underwent our standard comprehensive urodynamic battery: uroflowmetry, cystometrogram, pressure-flow study, EMG, video urodynamics, and post-void residual measurement, all performed today as part of our routine full battery applied to every patient referred for voiding dysfunction evaluation, regardless of the specific clinical question being asked.\n\nResults: Uroflow showed maximal flow rate 8 mL/s with prolonged voiding time. Pressure-flow study demonstrated elevated detrusor pressure with reduced flow, consistent with bladder outlet obstruction. EMG showed no evidence of dyssynergia. Video urodynamics did not add additional diagnostic information beyond the pressure-flow study but was performed as part of the standard protocol.\n\nPlan: Findings support bladder outlet obstruction likely secondary to BPH. Will discuss options including medical therapy with alpha-blocker versus referral for surgical evaluation (TURP) with patient at follow-up visit.",
   "addressed_required_ids": [
+    "c1",
+    "c2",
     "c3",
-    "c5",
     "c6",
     "c7"
   ],
   "triggered_exclusion_ids": [],
   "expected_verdicts": {
-    "c1": "not_met",
-    "c2": "insufficient_evidence",
+    "c1": "met",
+    "c2": "met",
     "c3": "met",
     "c4": "insufficient_evidence",
-    "c5": "met",
+    "c5": "not_met",
     "c6": "met",
     "c7": "met",
     "c8": "not_met",

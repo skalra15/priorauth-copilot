@@ -1,24 +1,24 @@
 {
   "policy_id": "L38303",
   "variant": "ambiguous_one",
-  "target_criterion_id": "c2",
-  "note_text": "64-year-old male referred to urology clinic after routine PSA screening returned elevated at 7.8 ng/mL. Transrectal ultrasound-guided prostate biopsy performed, 12-core sampling. Pathology reveals Gleason 3+4=7 adenocarcinoma involving 3 of 12 cores, with the dominant core showing 0.9 mm linear tumor extent. No prior pelvic radiation therapy or androgen deprivation therapy administered before biopsy. Digital rectal exam notes no palpable extraprostatic extension. Bone scan and pelvic CT obtained given intermediate-risk features; both negative for metastatic disease.\n\nPatient is currently weighing active surveillance versus definitive local therapy (radical prostatectomy vs. external beam radiation) and is quite anxious about overtreatment given his otherwise good health. Given the intermediate-risk classification and the ambiguity in risk stratification based on grade group alone, FFPE biopsy tissue (block confirmed to contain >0.5 mm linear tumor) was sent for genomic classifier testing (Decipher) to further inform the treatment decision per NCCN guideline-concordant use. Once results are available, they will be incorporated into the shared decision-making discussion regarding surveillance intensity versus intervention. Plan for follow-up PSA and repeat biopsy per active surveillance protocol if that pathway is chosen, or referral to radiation oncology/surgery if definitive treatment is pursued.\n\nPatient counseled on the plan, agreeable to proceeding with testing and follow-up as outlined. Will monitor with serial PSA every 3 months and repeat imaging as clinically indicated.",
+  "target_criterion_id": "c7",
+  "note_text": "Urology Clinic Note\n\nCC: Newly diagnosed prostate cancer, discuss active surveillance vs. definitive treatment\n\nHPI: Mr. is a 62-year-old man with no significant comorbidities, referred after an elevated PSA of 6.1 ng/mL prompted a 12-core transrectal ultrasound-guided prostate biopsy. Pathology revealed adenocarcinoma of the prostate, Gleason 3+4 (Grade Group 2), involving 15% of one core with 6 mm of linear tumor length in FFPE tissue. Bone scan and pelvic CT obtained given intermediate-risk features show no evidence of metastatic disease. He has not received any pelvic radiation therapy or androgen deprivation therapy prior to this biopsy. He is otherwise healthy, runs 3 miles several times a week, and has an estimated life expectancy well over 10 years given his age and excellent overall health.\n\nAssessment/Plan: Intermediate-risk, clinically localized prostate adenocarcinoma. Given the intermediate risk category and his desire to potentially avoid overtreatment, we discussed obtaining a genomic classifier assay on the FFPE biopsy tissue (which has adequate 6 mm linear tumor content) to help further risk-stratify and guide the choice between active surveillance and definitive treatment (radical prostatectomy vs. radiation therapy) in accordance with NCCN risk-stratification guidelines. He is an appropriate candidate for and is actively considering both active surveillance and definitive local therapy, and states he would change his decision based on the assay result. Genomic classifier testing was sent to the reference laboratory today. Result will be reviewed with the patient at follow-up to help finalize the treatment decision per current guideline-based algorithms.\n\nPlan: \n- Send FFPE biopsy tissue for genomic classifier assay\n- Return in 2-3 weeks to review results and finalize treatment decision\n- Continue PSA monitoring in the interim\n",
   "addressed_required_ids": [
     "c1",
+    "c2",
     "c3",
     "c4",
     "c5",
-    "c6",
-    "c7"
+    "c6"
   ],
   "triggered_exclusion_ids": [],
   "expected_verdicts": {
     "c1": "met",
-    "c2": "insufficient_evidence",
+    "c2": "met",
     "c3": "met",
     "c4": "met",
     "c5": "met",
     "c6": "met",
-    "c7": "met"
+    "c7": "insufficient_evidence"
   }
 }

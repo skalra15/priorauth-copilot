@@ -1,21 +1,21 @@
 {
   "policy_id": "L34064",
   "variant": "ambiguous_one",
-  "target_criterion_id": "c1",
-  "note_text": "Ophthalmology Clinic - New Consultation\n\nCC: Referred for laser evaluation, blurry vision OD x 3 months.\n\nHPI: 58-year-old patient with longstanding type 2 diabetes mellitus referred by primary care for ophthalmologic evaluation given deteriorating vision and concern for retinal pathology. Patient reports gradual blurring of vision in the right eye over the past several months, no flashes or floaters currently, no eye pain. Denies prior eye surgery or laser treatment. Blood sugars have been poorly controlled per patient report, last HbA1c pending.\n\nPMH: Type 2 diabetes mellitus (duration ~12 years), hypertension, hyperlipidemia.\nMeds: Metformin, lisinopril, atorvastatin.\nAllergies: NKDA.\n\nExam:\nVA: OD 20/60, OS 20/30 (correction: glasses)\nIOP: OD 16, OS 15 mmHg\nAnterior segment: unremarkable bilaterally, clear corneas, quiet anterior chambers\nPupils: reactive, no APD\nDilated fundus exam: OD reveals scattered dot-blot hemorrhages, some microaneurysms, mild venous caliber changes; disc appears healthy without obvious neovascularization noted on this visit. OS with a few scattered microaneurysms and dot hemorrhages in the posterior pole.\nOCT: mild macular thickening OD, unremarkable OS.\n\nAssessment: Diabetic retinopathy, findings under further characterization. Will obtain fluorescein angiography and wide-field fundus photography for staging prior to finalizing management plan. Patient counseled extensively on importance of glycemic control and follow-up.\n\nPlan:\n- Wide-field fundus photography and FA to be scheduled\n- Follow-up in 4 weeks to review imaging and determine whether laser photocoagulation is indicated\n- Diabetes education reinforced; recommend close coordination with endocrinology for glucose optimization\n- Return sooner if new floaters, flashes, or acute vision changes\n",
+  "target_criterion_id": "c7",
+  "note_text": "Patient is a 61-year-old with a longstanding history of type 2 diabetes mellitus who presents to the retina clinic for follow-up. Dilated fundus exam of the right eye demonstrates extensive neovascularization of the disc and scattered neovascularization elsewhere, with associated pre-proliferative changes including venous beading and multiple cotton wool spots. There is no evidence of vitreous hemorrhage at this time, but the degree of neovascularization is felt to place the patient at significant imminent risk for vision-threatening complications if left untreated.\n\nGiven the severity of the findings and the trajectory of disease progression noted on serial exams over the past several visits, the decision was made to proceed with panretinal photocoagulation of the right eye today rather than continue observation, as the risk of progression to vitreous hemorrhage or tractional retinal detachment now outweighs the risks of laser treatment. The patient was counseled on the procedure, including expected visual side effects such as peripheral field constriction and possible transient decrease in night vision, and provided informed consent.\n\nProcedure: Panretinal (scatter) laser photocoagulation, right eye. Approximately 1400 burns placed in a scatter pattern sparing the macula, using standard settings. Patient tolerated the procedure well without complication. Plan to continue additional sessions as needed and follow up in 4 weeks to assess regression of neovascularization and consider anti-VEGF adjunct therapy if indicated.",
   "addressed_required_ids": [
+    "c1",
     "c2",
-    "c3",
-    "c7"
+    "c3"
   ],
   "triggered_exclusion_ids": [],
   "expected_verdicts": {
-    "c1": "insufficient_evidence",
+    "c1": "met",
     "c2": "met",
     "c3": "met",
     "c4": "not_met",
     "c5": "not_met",
     "c6": "not_met",
-    "c7": "met"
+    "c7": "insufficient_evidence"
   }
 }

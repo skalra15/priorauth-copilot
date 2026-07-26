@@ -1,24 +1,21 @@
 {
   "policy_id": "L34064",
   "variant": "fails_one",
-  "target_criterion_id": "c5",
-  "note_text": "CHIEF COMPLAINT: Follow-up for proliferative diabetic retinopathy, right eye, s/p panretinal photocoagulation.\n\nHISTORY OF PRESENT ILLNESS: 58-year-old male with long-standing type 2 diabetes mellitus, HbA1c 9.1%, presents for scheduled follow-up laser session. He underwent initial panretinal photocoagulation to the right eye 8 days ago for high-risk proliferative diabetic retinopathy with neovascularization of the disc. He reports mild floaters but denies new flashes, curtain-like vision loss, or worsening blurriness. He is currently within the global surgical period of the initial laser procedure.\n\nOCULAR HISTORY: Proliferative diabetic retinopathy OD, moderate nonproliferative diabetic retinopathy OS. No prior vitrectomy.\n\nEXAMINATION:\nVA OD 20/50, OS 20/30 (unchanged from prior visit).\nIOP 16 OD, 15 OS.\nAnterior segment: quiet, no rubeosis.\nDilated fundus exam OD: scattered laser scars in mid and far periphery consistent with recent PRP, residual neovascularization of the disc still visible with reduced but persistent activity, no vitreous hemorrhage.\nOS: dot-blot hemorrhages, no neovascularization at this time, PRP not yet indicated.\n\nASSESSMENT: Persistent neovascularization of the disc, right eye, despite initial panretinal photocoagulation performed 8 days ago. The residual risk of visual loss from ongoing neovascular activity continues to outweigh the risks of additional laser treatment, and further scatter laser is clinically warranted to consolidate treatment.\n\nPLAN: Proceed today with a supplemental panretinal photocoagulation session to the right eye to treat previously untreated peripheral retina and reinforce areas of persistent neovascularization, as this remains within the 90-day global period of the index procedure performed on this eye. Discussed with patient that this session is being billed as part of the global package of the initial procedure rather than as a separate reimbursable service, consistent with payer policy, since it falls within the postoperative period of the initial treatment. Continue close diabetic retinal surveillance; consider anti-VEGF adjunct if neovascularization does not regress by next visit in 2 weeks. Reinforce glycemic control with endocrinology.",
+  "target_criterion_id": "c7",
+  "note_text": "Ophthalmology Clinic - Retina Consult\n\nPatient: 58-year-old with longstanding type 2 diabetes mellitus, presenting for follow-up of diabetic eye disease.\n\nSubjective: Patient reports gradually worsening blurry vision in the right eye over the past several months, denies acute floaters or flashes today. No prior laser treatment.\n\nAssessment: Diabetic retinopathy, high risk proliferative changes noted on prior visits with neovascularization of the disc. Given the elevated risk of vision loss from progression to vitreous hemorrhage or tractional retinal detachment, decision made to proceed with treatment now rather than continue observation, as the risk of continued watching outweighs the risks associated with laser treatment.\n\nPlan: Discussed panretinal photocoagulation with patient, risks and benefits reviewed including risk of decreased night vision and peripheral field constriction. Patient consents to proceed with laser treatment today.\n\nProcedure: Panretinal (scatter) laser photocoagulation performed to the right eye by treating ophthalmologist under topical anesthesia, using standard scatter pattern sparing the macula. Approximately 1200 burns applied over one session. Patient tolerated procedure well without complication.\n\nFollow up scheduled in 4 weeks to assess response and determine need for additional sessions.\n",
   "addressed_required_ids": [
     "c1",
     "c2",
-    "c3",
-    "c7"
+    "c3"
   ],
-  "triggered_exclusion_ids": [
-    "c5"
-  ],
+  "triggered_exclusion_ids": [],
   "expected_verdicts": {
     "c1": "met",
     "c2": "met",
     "c3": "met",
     "c4": "not_met",
-    "c5": "met",
+    "c5": "not_met",
     "c6": "not_met",
-    "c7": "met"
+    "c7": "not_met"
   }
 }

@@ -1,24 +1,21 @@
 {
   "policy_id": "L38303",
   "variant": "fails_one",
-  "target_criterion_id": "c4",
-  "note_text": "Urology Clinic Follow-up Note\n\nPatient: 62-year-old male, referred by primary care for elevated PSA (6.1 ng/mL) found on routine screening.\n\nHistory: No prior history of prostate cancer. No prior pelvic radiation or androgen deprivation therapy. Digital rectal exam notable for a subtle nodule in the right lobe. Patient is otherwise healthy, active, ambulatory, no significant comorbidities. Estimated life expectancy well in excess of 10 years given age and overall good health.\n\nBiopsy: Transrectal ultrasound-guided 12-core prostate biopsy performed two weeks ago. Pathology reveals Gleason 3+4=7 adenocarcinoma involving 2 of 12 cores from the right base and right mid gland. Imaging (bone scan and pelvic CT) negative for metastatic disease. Clinical stage T1c, N0, M0.\n\nAssessment: This is clinically localized prostate adenocarcinoma. Patient is an appropriate candidate for active surveillance versus definitive local therapy (radical prostatectomy vs. radiation), and he is actively weighing these options with his family.\n\nPlan: Given the intermediate-risk features, a genomic classifier assay was ordered to help refine risk stratification and guide the treatment decision per NCCN guideline recommendations. Result will be used, together with clinical/pathologic parameters, to determine whether the patient proceeds with active surveillance or definitive treatment.\n\nTissue submitted for the assay: the pathology lab reviewed the biopsy slides and found that although tumor was identified in two cores, the maximum linear extent of tumor in any single core measured only 0.3 mm, well below the threshold typically required for reliable genomic assay performance. The lab flagged this as a limited-quantity specimen and noted the sample may not meet minimum tissue adequacy standards for the assay; the reference laboratory was informed of this limitation prior to processing.\n\nPatient counseled that if the assay is unable to be validly performed or interpreted due to insufficient tumor tissue, we will proceed with standard risk-stratification tools and repeat discussion of surveillance versus treatment based on clinical and pathologic factors alone.\n\nFollow-up scheduled in 4 weeks to review genomic assay result (if obtainable) and finalize treatment plan. Patient will continue to be monitored per standard of care with serial PSA and surveillance biopsies if active surveillance is ultimately chosen.\n",
+  "target_criterion_id": "c1",
+  "note_text": "67-year-old male presents for discussion of management of newly diagnosed prostate adenocarcinoma. PSA 8.2 ng/mL. Prostate biopsy showed Gleason 4+3=7 adenocarcinoma involving 3 of 12 cores, with maximum linear tumor extent 6 mm in the dominant core. Staging workup including bone scan and pelvic CT/MRI revealed multiple sclerotic lesions in the lumbar spine and pelvis, and enlarged pelvic and retroperitoneal lymph nodes concerning for nodal and osseous metastatic disease. Confirmatory MRI of the spine demonstrates diffuse marrow replacement consistent with metastatic involvement.\n\nPatient is otherwise in good health, ECOG 0, with no significant comorbidities and estimated life expectancy well over 10 years based on age and overall functional status. He has not received any prior pelvic radiation or androgen deprivation therapy; the biopsy tissue described above was obtained prior to any treatment.\n\nGiven the biopsy specimen has adequate tumor volume (>0.5 mm linear extent) in FFPE tissue, we discussed the possibility of sending the specimen for genomic classifier testing to help refine risk stratification and guide decision-making between active surveillance, definitive local therapy, or systemic therapy per current guideline-based treatment pathways. However, given the imaging findings strongly suggestive of metastatic spread to bone and lymph nodes, this case represents metastatic rather than localized or biochemically recurrent disease. We will proceed with confirmatory bone biopsy and initiate systemic therapy per medical oncology; genomic classifier assay is not indicated at this time given documented metastatic disease. Patient will continue to be followed with serial PSA and imaging per standard of care surveillance protocol, and treatment decisions will be individualized in coordination with medical oncology and radiation oncology according to guideline recommendations once metastatic workup is finalized.",
   "addressed_required_ids": [
-    "c1",
     "c2",
-    "c3",
-    "c5",
-    "c6",
-    "c7"
+    "c4",
+    "c6"
   ],
   "triggered_exclusion_ids": [],
   "expected_verdicts": {
-    "c1": "met",
+    "c1": "not_met",
     "c2": "met",
-    "c3": "met",
-    "c4": "not_met",
-    "c5": "met",
+    "c3": "insufficient_evidence",
+    "c4": "met",
+    "c5": "insufficient_evidence",
     "c6": "met",
-    "c7": "met"
+    "c7": "insufficient_evidence"
   }
 }

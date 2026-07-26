@@ -1,14 +1,14 @@
 {
   "policy_id": "L36000",
   "variant": "ambiguous_one",
-  "target_criterion_id": "c6",
-  "note_text": "CHIEF COMPLAINT: Right-sided low back/buttock pain\n\nHISTORY OF PRESENT ILLNESS: This 47-year-old female presents with a 14-month history of right-sided pain localized just below the L5 level, over the posterior sacroiliac region, non-radiating. She denies any preceding trauma. She has undergone a structured trial of conservative care over the past 8 months including scheduled NSAIDs and a trial of duloxetine for pain modulation, a home activity modification program limiting prolonged sitting and asymmetric loading, and 12 weeks of formal physical therapy focused on core stabilization and SI joint-specific exercises. Despite this, she continues to report persistent pain rated 7/10 that limits her ability to work as a retail associate.\n\nPAST MEDICAL HISTORY: Hypertension, controlled. No history of inflammatory disease. No fibromyalgia or somatoform disorder; psychiatric review of systems is negative and she has no diffuse tender points on exam.\n\nPHYSICAL EXAM: Palpation reveals focal tenderness directly over the right posterior SIJ with no comparable tenderness at the greater trochanter, lumbar paraspinals, or coccyx. Lumbar range of motion is full and non-painful. Provocative testing: thigh thrust test positive on the right; Gaenslen's test positive on the right; Patrick's (FABER) sign positive on the right. Distraction test negative. Hip range of motion is full and pain-free bilaterally.\n\nIMAGING: Plain radiographs of the right hip obtained in clinic show no evidence of osteoarthritis or other bony abnormality. MRI of the lumbar spine performed last month shows mild disc desiccation at L4-5 without significant canal or foraminal stenosis and no nerve root impingement correlating with her symptoms.\n\nDIAGNOSTIC INJECTIONS: Patient underwent fluoroscopically guided, contrast-confirmed right SIJ injection with local anesthetic and corticosteroid six weeks ago, with the patient reporting 90% relief of her pain for approximately 6 hours post-procedure, consistent with the expected duration of the anesthetic. A repeat image-guided contrast-enhanced injection performed two weeks later again produced approximately 80% relief for a similar duration.\n\nASSESSMENT: Findings are consistent with right sacroiliac joint dysfunction as the primary pain generator, refractory to prolonged conservative management, confirmed by two concordant diagnostic blocks.\n\nPLAN: Discussed percutaneous minimally invasive SIJ fusion as next step given failure of extensive non-operative care and positive confirmatory injections. Will obtain preoperative labs and schedule procedure. Continue current PT program in the interim.",
+  "target_criterion_id": "c2",
+  "note_text": "Patient is a 52-year-old female referred for evaluation of chronic low back/buttock area discomfort of over 3 years duration. She has completed a thorough conservative treatment course including NSAIDs, gabapentin trial, activity modification with avoidance of prolonged standing, and a structured 7-month course of physical therapy focused on core stabilization and SIJ-specific exercises, all with minimal sustained benefit.\n\nOn exam, there is focal tenderness with direct palpation over the region of the posterior SI joint, reproducible and consistent on repeat exam, without tenderness of similar intensity at the greater trochanter, lumbar paraspinal region, or coccyx. No other clear pain generator identified on exam.\n\nProvocative maneuver testing: Thigh thrust test is positive, reproducing her typical pain. Gaenslen's test and Patrick's (FABER) test are also positive. Compression test was not clearly positive.\n\nPsychiatric review of systems is negative; no evidence of somatoform disorder or diffuse pain amplification. Tender point exam is negative for fibromyalgia; pain is not diffuse.\n\nImaging: Plain radiographs of the pelvis and SI joints show no destructive lesion, erosive change, or fracture. MRI of the SI joints obtained and reviewed shows no evidence of sacroiliitis, tumor, or infection. Plain film of the ipsilateral hip is unremarkable, no osteoarthritic changes. MRI of the lumbar spine was obtained and reviewed by radiology, showing no significant neural compression, disc herniation, or degenerative changes correlating with her symptoms.\n\nShe underwent two separate image-guided, contrast-enhanced diagnostic SIJ injections, performed 3 weeks apart, each of which produced greater than 75% reduction in her pain for the expected duration of the local anesthetic used, confirming the SI joint as the pain source.\n\nGiven the above workup, she is felt to be an appropriate candidate for minimally invasive percutaneous SIJ fusion, and this was discussed in detail with her including risks, benefits, and alternatives.",
   "addressed_required_ids": [
     "c1",
-    "c2",
     "c3",
     "c4",
     "c5",
+    "c6",
     "c7",
     "c8",
     "c9"
@@ -16,11 +16,11 @@
   "triggered_exclusion_ids": [],
   "expected_verdicts": {
     "c1": "met",
-    "c2": "met",
+    "c2": "insufficient_evidence",
     "c3": "met",
     "c4": "met",
     "c5": "met",
-    "c6": "insufficient_evidence",
+    "c6": "met",
     "c7": "met",
     "c8": "met",
     "c9": "met",
