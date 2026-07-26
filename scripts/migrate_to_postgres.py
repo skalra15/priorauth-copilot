@@ -15,6 +15,16 @@ script reads everything from SQLite first (config.DATABASE_URL unset, the
 normal local-dev state), then flips that flag in-process to write to
 Postgres. Two live connections under one global switch would be more
 confusing than this straightforward "read phase, then write phase" split.
+
+The write phase uses psycopg2.extras.execute_values, NOT db.py's
+conn.executemany(). That distinction matters a lot here: psycopg2's
+executemany() does not actually batch anything -- it silently sends one
+INSERT per row, one network round-trip each. For policy_codes (~473K rows)
+that's hours against a remote database. execute_values folds many rows into
+one multi-row INSERT per round-trip, which is the difference between
+minutes and hours for a table this size. db.py's wrapper is fine for the
+app's normal single-row runtime queries; a one-time bulk load like this
+needs the real psycopg2 API directly.
 """
 
 from __future__ import annotations
@@ -27,7 +37,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 from priorauth import config, db  # noqa: E402
 
 TABLES = ["policies", "policy_codes", "code_descriptions", "extracted_criteria", "llm_cache"]
-BATCH_SIZE = 2000
+PAGE_SIZE = 1000
 
 
 def _read_all_rows() -> dict[str, tuple[list[str], list[tuple]]]:
@@ -45,21 +55,29 @@ def _read_all_rows() -> dict[str, tuple[list[str], list[tuple]]]:
 
 
 def _write_all_rows(data: dict[str, tuple[list[str], list[tuple]]], target_url: str) -> None:
+    import psycopg2
+    from psycopg2.extras import execute_values
+
     config.DATABASE_URL = target_url
-    db.init_db()
-    with db.connect() as conn:
+    db.init_db()  # schema only -- cheap, fine to go through the normal wrapper
+
+    pg_conn = psycopg2.connect(target_url)
+    try:
+        cur = pg_conn.cursor()
         for table, (cols, rows) in data.items():
             if not rows:
                 print(f"  {table}: nothing to write")
                 continue
-            placeholders = ", ".join(["?"] * len(cols))
             col_list = ", ".join(f'"{c}"' for c in cols)
-            sql = f'INSERT INTO "{table}" ({col_list}) VALUES ({placeholders}) ON CONFLICT DO NOTHING'
-            for i in range(0, len(rows), BATCH_SIZE):
-                batch = rows[i : i + BATCH_SIZE]
-                conn.executemany(sql, batch)
-                print(f"  {table}: {min(i + BATCH_SIZE, len(rows)):>7,} / {len(rows):,}", end="\r")
+            sql = f'INSERT INTO "{table}" ({col_list}) VALUES %s ON CONFLICT DO NOTHING'
+            for i in range(0, len(rows), PAGE_SIZE * 50):
+                chunk = rows[i : i + PAGE_SIZE * 50]
+                execute_values(cur, sql, chunk, page_size=PAGE_SIZE)
+                pg_conn.commit()
+                print(f"  {table}: {min(i + len(chunk), len(rows)):>7,} / {len(rows):,}", end="\r")
             print(f"  {table}: {len(rows):>7,} / {len(rows):,} written")
+    finally:
+        pg_conn.close()
 
 
 def main() -> None:

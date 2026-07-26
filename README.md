@@ -4,7 +4,7 @@ An open, benchmarked agent that checks whether a clinical case meets Medicare co
 
 Give it a procedure code, a diagnosis code, a state, and a clinical note. It retrieves the governing Local or National Coverage Determination from the CMS Medicare Coverage Database, extracts that policy's prose into structured testable criteria, checks the note against each criterion with an evidence span, and returns a decision plus an appeal draft — every citation a verbatim, programmatically verified quote, never a paraphrase.
 
-**Live demo:** _(add your Vercel URL here once deployment is confirmed)_
+**Live demo:** [priorauth-copilot-zeta.vercel.app](https://priorauth-copilot-zeta.vercel.app)
 
 **Why this exists.** CMS-0057-F went operational on 1 January 2026. Payers must now issue prior authorization decisions in 72 hours (urgent) or 7 days (standard), give specific denial reasons, and — as of 31 March 2026 — publicly report their approval, denial, and appeal-overturn rates. Denial rates across those first disclosures range from under 2% to over 27%. Commercial vendors sell closed-box appeal automation into this gap. There is no open, measured implementation. This is one.
 
