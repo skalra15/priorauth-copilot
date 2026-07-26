@@ -138,7 +138,7 @@ def _run_checker_eval(model: str, notes_dir: Path) -> dict:
         if decision.decision == "likely_deny":
             n_deny += 1
             try:
-                _, appeal_response = appeal.draft_appeal(
+                _, _, _, appeal_response = appeal.draft_appeal(
                     pid, p["title"], p["coverage_text"], predicted.criteria, decision, model=model
                 )
                 n_appeal_ok += 1

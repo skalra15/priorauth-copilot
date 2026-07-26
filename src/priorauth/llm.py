@@ -145,9 +145,14 @@ def structured(
     if config.CACHE_ENABLED:
         with db.connect() as conn:
             conn.execute(
-                """INSERT OR REPLACE INTO llm_cache
+                """INSERT INTO llm_cache
                    (cache_key, model, response, input_tokens, output_tokens)
-                   VALUES (?, ?, ?, ?, ?)""",
+                   VALUES (?, ?, ?, ?, ?)
+                   ON CONFLICT(cache_key) DO UPDATE SET
+                       model=excluded.model,
+                       response=excluded.response,
+                       input_tokens=excluded.input_tokens,
+                       output_tokens=excluded.output_tokens""",
                 (
                     key,
                     model,

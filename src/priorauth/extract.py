@@ -90,8 +90,11 @@ def extract_criteria(
 
     with db.connect() as conn:
         conn.execute(
-            """INSERT OR REPLACE INTO extracted_criteria (policy_id, text_hash, model, payload)
-               VALUES (?, ?, ?, ?)""",
+            """INSERT INTO extracted_criteria (policy_id, text_hash, model, payload)
+               VALUES (?, ?, ?, ?)
+               ON CONFLICT(text_hash, model) DO UPDATE SET
+                   policy_id=excluded.policy_id,
+                   payload=excluded.payload""",
             (policy_id, text_hash, model, parsed.model_dump_json()),
         )
 

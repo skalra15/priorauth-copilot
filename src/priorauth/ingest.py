@@ -131,6 +131,16 @@ def _date(raw: str | None) -> str | None:
     return raw[:10]
 
 
+def _format_hcpcs_description(raw: str) -> str:
+    """CMS's long_description is ALL CAPS ('ALLERGEN SPECIFIC IGE; QUANTITATIVE...').
+    Sentence-casing it is much more readable in the checker UI's code autocomplete
+    than either shouting caps or the cryptic, heavily-abbreviated short_description
+    ('Allg spec ige crude xtrc ea') -- a plain .capitalize() won't perfectly preserve
+    every medical abbreviation's casing (e.g. "ige" instead of "IgE"), but that's a
+    minor cosmetic tradeoff against actually being legible."""
+    return raw.strip().capitalize()
+
+
 def _coverage_text(row: sqlite3.Row) -> str:
     """LCDs split 'Coverage Indications, Limitations, and/or Medical Necessity'
     across several fields instead of one HTML blob. Concatenate the ones that
@@ -227,6 +237,10 @@ def normalize() -> tuple[int, int]:
         n_policies = 0
         n_skipped_short = 0
         codes: list[tuple[str, str, str, int]] = []
+        # (code, code_system) -> description. Dict, not a list, since the same
+        # code recurs across many LCDs/Articles with an identical description --
+        # last-write-wins is fine, these aren't expected to disagree.
+        descriptions: dict[tuple[str, str], str] = {}
 
         for row in conn.execute("SELECT * FROM raw_lcd"):
             lcd_id = row["lcd_id"]
@@ -248,37 +262,51 @@ def normalize() -> tuple[int, int]:
                     "effective_date": _date(row["rev_eff_date"] or row["orig_det_eff_date"]),
                     "retired_date": _date(row["date_retired"]),
                     "coverage_text": coverage_text,
-                    "source_url": None,
+                    "source_url": (
+                        f"https://www.cms.gov/medicare-coverage-database/view/lcd.aspx"
+                        f"?lcdid={lcd_id}&ver={row['lcd_version']}"
+                    ),
                 },
             )
             n_policies += 1
 
             for r in conn.execute(
-                "SELECT hcpc_code_id FROM raw_lcd_x_hcpc_code WHERE lcd_id = ?", (lcd_id,)
+                "SELECT hcpc_code_id, long_description FROM raw_lcd_x_hcpc_code WHERE lcd_id = ?", (lcd_id,)
             ):
                 if r["hcpc_code_id"]:
                     codes.append((policy_id, r["hcpc_code_id"], "HCPCS", 1))
+                    if r["long_description"]:
+                        descriptions[(r["hcpc_code_id"], "HCPCS")] = _format_hcpcs_description(r["long_description"])
 
         for article_id, lcd_ids in article_to_lcds.items():
             policy_ids = [f"L{lid}" for lid in lcd_ids]
             for r in conn.execute(
-                "SELECT hcpc_code_id FROM raw_article_x_hcpc_code WHERE article_id = ?", (article_id,)
+                "SELECT hcpc_code_id, long_description FROM raw_article_x_hcpc_code WHERE article_id = ?",
+                (article_id,),
             ):
                 if r["hcpc_code_id"]:
                     for pid in policy_ids:
                         codes.append((pid, r["hcpc_code_id"], "HCPCS", 1))
+                    if r["long_description"]:
+                        descriptions[(r["hcpc_code_id"], "HCPCS")] = _format_hcpcs_description(r["long_description"])
             for r in conn.execute(
-                "SELECT icd10_code_id FROM raw_article_x_icd10_covered WHERE article_id = ?", (article_id,)
+                "SELECT icd10_code_id, description FROM raw_article_x_icd10_covered WHERE article_id = ?",
+                (article_id,),
             ):
                 if r["icd10_code_id"]:
                     for pid in policy_ids:
                         codes.append((pid, r["icd10_code_id"], "ICD10", 1))
+                    if r["description"]:
+                        descriptions[(r["icd10_code_id"], "ICD10")] = r["description"]
             for r in conn.execute(
-                "SELECT icd10_code_id FROM raw_article_x_icd10_noncovered WHERE article_id = ?", (article_id,)
+                "SELECT icd10_code_id, description FROM raw_article_x_icd10_noncovered WHERE article_id = ?",
+                (article_id,),
             ):
                 if r["icd10_code_id"]:
                     for pid in policy_ids:
                         codes.append((pid, r["icd10_code_id"], "ICD10", 0))
+                    if r["description"]:
+                        descriptions[(r["icd10_code_id"], "ICD10")] = r["description"]
 
         for row in conn.execute("SELECT * FROM raw_ncd_trkg"):
             sect = row["ncd_mnl_sect"]
@@ -303,7 +331,10 @@ def normalize() -> tuple[int, int]:
                     "effective_date": _date(row["ncd_efctv_dt"]),
                     "retired_date": _date(row["ncd_trmntn_dt"]),
                     "coverage_text": coverage_text,
-                    "source_url": None,
+                    "source_url": (
+                        f"https://www.cms.gov/medicare-coverage-database/view/ncd.aspx"
+                        f"?ncdid={row['ncd_id']}&ncdver={row['ncd_vrsn_num']}"
+                    ),
                 },
             )
             n_policies += 1
@@ -316,6 +347,15 @@ def normalize() -> tuple[int, int]:
             codes,
         )
         n_codes = len(codes)
+
+        conn.executemany(
+            """
+            INSERT INTO code_descriptions (code, code_system, description)
+            VALUES (?, ?, ?)
+            ON CONFLICT(code, code_system) DO UPDATE SET description=excluded.description
+            """,
+            [(code, system, desc) for (code, system), desc in descriptions.items()],
+        )
 
     print(
         f"Skipped {n_skipped_short} policies with <100 chars of coverage text; "

@@ -10,7 +10,7 @@ and there's no reason to spend a model call re-deriving something Python can com
 
 from __future__ import annotations
 
-from . import llm
+from . import llm, verify
 from .schemas import Criterion, CriterionChecks, CoverageDecision, CriterionCheck, CriterionType, Verdict
 
 SYSTEM = """You determine whether a clinical note satisfies each coverage criterion for a \
@@ -59,11 +59,25 @@ def _prompt(policy_id: str, criteria: list[Criterion], note_text: str) -> str:
 
 
 def _aggregate(criteria: list[Criterion], checks: list[CriterionCheck]) -> tuple[str, list[str], str]:
-    by_id = {c.criterion_id: c for c in checks}
+    """Deterministic decision + a rationale written to actually explain itself.
+
+    The rule this implements -- any single unmet required criterion or triggered
+    exclusion denies coverage, full stop, regardless of how many other criteria were
+    satisfied -- is not a vote or a score. A policy with 5 satisfied criteria and 1
+    failed one is still denied, because Medicare coverage criteria are conjunctive
+    (all must hold), not a majority test. That's true and correct, but silent about
+    it produces a genuinely confusing UI: someone sees "5 met, 1 not met" and a deny
+    decision and reasonably wonders why the majority didn't win. The rationale string
+    says so explicitly, every time it's the reason, instead of leaving that inference
+    to the reader.
+    """
+    by_id = {c.id: c for c in criteria}
+    by_check = {c.criterion_id: c for c in checks}
     unmet: list[str] = []
     needs_review: list[str] = []
+    satisfied = 0
     for crit in criteria:
-        check = by_id.get(crit.id)
+        check = by_check.get(crit.id)
         if check is None:
             needs_review.append(crit.id)
             continue
@@ -73,16 +87,77 @@ def _aggregate(criteria: list[Criterion], checks: list[CriterionCheck]) -> tuple
             unmet.append(crit.id)
         elif crit.type == CriterionType.EXCLUSION and check.verdict == Verdict.MET:
             unmet.append(crit.id)
+        else:
+            satisfied += 1
+
+    total = len(criteria)
+
+    def _list(ids: list[str]) -> str:
+        return "; ".join(f"\"{by_id[cid].text}\"" for cid in ids)
 
     if unmet:
-        return "likely_deny", unmet, f"{len(unmet)} criterion(s) not satisfied: {', '.join(unmet)}."
-    if needs_review:
-        return (
-            "needs_human_review",
-            unmet,
-            f"{len(needs_review)} criterion(s) have insufficient evidence in the note: {', '.join(needs_review)}.",
+        offset_note = (
+            f" This holds regardless of the other {satisfied} criteria being satisfied -- "
+            f"coverage requires every applicable criterion to hold, not a majority of them."
+            if satisfied
+            else ""
         )
-    return "likely_approve", unmet, "All required criteria met; no exclusions triggered."
+        rationale = (
+            f"Denied: {len(unmet)} of {total} criteria failed -- {_list(unmet)}."
+            f"{offset_note}"
+        )
+        return "likely_deny", unmet, rationale
+
+    if needs_review:
+        rationale = (
+            f"Needs human review: the note has insufficient evidence for {len(needs_review)} "
+            f"of {total} criteria -- {_list(needs_review)}. A person needs to confirm these "
+            f"before a coverage decision can be made; the system does not guess to avoid "
+            f"abstaining."
+        )
+        return "needs_human_review", unmet, rationale
+
+    rationale = (
+        f"Approved: all {total} applicable criteria were satisfied -- every required "
+        f"criterion was met and no exclusion was triggered."
+    )
+    return "likely_approve", unmet, rationale
+
+
+def _verify_evidence(checks: list[CriterionCheck], note_text: str) -> list[CriterionCheck]:
+    """Enforce the grounding rule the module docstring already claims: every
+    evidence_span must be a verbatim substring of the note. This was
+    previously documented but never actually called -- a live check against
+    30 synthetic notes found 3/219 (1.4%) evidence spans were paraphrased or
+    "..."-compressed rather than real verbatim quotes, which is exactly the
+    hallucination this function exists to catch.
+
+    A span that fails grounding is not trustworthy evidence, so the check is
+    downgraded to insufficient_evidence (span dropped) rather than shown to
+    the user as if it were a real quote -- consistent with this project's
+    abstain-rather-than-guess stance, and gentler than raising, since an
+    occasional paraphrase is a model slip on ONE criterion, not the
+    should-never-happen data-corruption case appeal.py's citations guard
+    against (those are re-quoting an already-verified source_span; this is
+    the model quoting fresh from the note for the first time)."""
+    verified = []
+    for c in checks:
+        if c.evidence_span and not verify.span_is_grounded(c.evidence_span, note_text):
+            verified.append(
+                c.model_copy(
+                    update={
+                        "verdict": Verdict.INSUFFICIENT_EVIDENCE,
+                        "evidence_span": None,
+                        "reasoning": (
+                            f"{c.reasoning} [Downgraded: the model's cited evidence span was not "
+                            f"a verbatim match in the note, so it could not be verified.]"
+                        ),
+                    }
+                )
+            )
+        else:
+            verified.append(c)
+    return verified
 
 
 def check_note(
@@ -92,8 +167,9 @@ def check_note(
     prompt = _prompt(policy_id, testable, note_text)
     parsed, response = llm.structured(CriterionChecks, prompt, system=SYSTEM, model=model)
 
-    decision, unmet, rationale = _aggregate(testable, parsed.checks)
+    checks = _verify_evidence(parsed.checks, note_text)
+    decision, unmet, rationale = _aggregate(testable, checks)
     coverage = CoverageDecision(
-        policy_id=policy_id, checks=parsed.checks, decision=decision, unmet_criteria=unmet, rationale=rationale
+        policy_id=policy_id, checks=checks, decision=decision, unmet_criteria=unmet, rationale=rationale
     )
     return coverage, response

@@ -70,6 +70,45 @@ def lookup_by_code(code: str, code_system: str, state: str | None = None) -> lis
     return results
 
 
+def search_codes(code_system: str, query: str, limit: int = 15) -> list[dict]:
+    """Typeahead search for the checker UI's code fields.
+
+    Searches only codes that actually appear in `policy_codes` -- i.e. codes
+    this dataset can actually resolve to a policy -- not the full CPT/ICD-10
+    universe, since suggesting a code we have no coverage data for would be
+    worse than not suggesting anything. Prefix matches on the code itself
+    rank above description-substring matches (someone typing "8600" wants
+    codes starting with 8600, not any code whose description happens to
+    contain "8600" somewhere).
+    """
+    query = query.strip()
+    if not query:
+        return []
+
+    code_prefix = f"{query.upper()}%"
+    desc_substring = f"%{query}%"
+
+    with db.connect() as conn:
+        rows = conn.execute(
+            """
+            SELECT DISTINCT pc.code, cd.description
+            FROM policy_codes pc
+            LEFT JOIN code_descriptions cd
+                ON cd.code = pc.code AND cd.code_system = pc.code_system
+            WHERE pc.code_system = ?
+              AND (pc.code LIKE ? OR cd.description LIKE ?)
+            ORDER BY
+                CASE WHEN pc.code LIKE ? THEN 0 ELSE 1 END,
+                length(pc.code),
+                pc.code
+            LIMIT ?
+            """,
+            (code_system, code_prefix, desc_substring, code_prefix, limit),
+        ).fetchall()
+
+    return [{"code": r["code"], "description": r["description"]} for r in rows]
+
+
 # ---------------------------------------------------------------------------
 # Semantic fallback: local embeddings over coverage_text
 # ---------------------------------------------------------------------------

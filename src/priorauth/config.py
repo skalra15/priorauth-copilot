@@ -24,6 +24,12 @@ ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "")
 MODEL = os.getenv("PRIORAUTH_MODEL", "claude-sonnet-5")
 CACHE_ENABLED = os.getenv("PRIORAUTH_CACHE", "1") == "1"
 
+# Unset (default) -> SQLite at DB_PATH, canonical for local dev/ingest/eval.
+# Set -> Postgres (prod only, e.g. Supabase). See db.py's module docstring --
+# ingest.normalize() never runs against this; it's populated by
+# scripts/migrate_to_postgres.py from the local SQLite file instead.
+DATABASE_URL = os.getenv("DATABASE_URL", "")
+
 # Local, free, no API cost — semantic fallback for retrieval ().
 EMBEDDING_MODEL = os.getenv("PRIORAUTH_EMBEDDING_MODEL", "all-MiniLM-L6-v2")
 

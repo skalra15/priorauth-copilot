@@ -37,6 +37,20 @@ class AppealDraft(BaseModel):
     closing: str = Field(description="A short closing paragraph for the letter")
 
 
+class AppealSection(BaseModel):
+    """One unmet criterion's appeal content, structured -- not flattened into
+    prose. The frontend renders this with real typographic hierarchy (distinct
+    labeled sub-sections) instead of a wall of prefixed sentences; the
+    flattened `text` returned alongside this is for copy-to-clipboard /
+    plain-text submission use, not for on-screen display."""
+
+    criterion_id: str
+    criterion_text: str
+    policy_citation: str
+    why_not_met: str
+    what_would_resolve: str
+
+
 def _prompt(title: str, criteria_by_id: dict[str, Criterion], checks_by_id: dict[str, CriterionCheck], unmet: list[str]) -> str:
     lines = [f"Policy: {title}", "", "Criteria that were not met:"]
     for cid in unmet:
@@ -55,7 +69,13 @@ def draft_appeal(
     criteria: list[Criterion],
     decision: CoverageDecision,
     model: str | None = None,
-) -> tuple[str, llm.LLMResponse]:
+) -> tuple[str, list[AppealSection], str, llm.LLMResponse]:
+    """Returns (flattened letter text, structured sections, closing paragraph, response).
+
+    The flattened text is a ready-to-submit plain-text letter (used for copy-to-clipboard
+    and non-UI consumers like the eval harness); `sections` carries the same content
+    structured for on-screen rendering with real typographic hierarchy.
+    """
     if decision.decision != "likely_deny" or not decision.unmet_criteria:
         raise ValueError("draft_appeal only runs on likely_deny decisions with unmet criteria")
 
@@ -67,19 +87,22 @@ def draft_appeal(
     points_by_id = {p.criterion_id: p for p in parsed.points}
 
     unverifiable = []
-    body = [f"RE: Prior Authorization Appeal — {policy_id} ({title})", ""]
+    sections: list[AppealSection] = []
     for cid in decision.unmet_criteria:
         crit = criteria_by_id[cid]
         if not verify.span_is_grounded(crit.source_span, coverage_text):
             unverifiable.append(cid)
             continue
         point = points_by_id.get(cid)
-        body.append(f'Criterion: {crit.text}')
-        body.append(f'Policy language ({policy_id}): "{crit.source_span}"')
-        if point:
-            body.append(f"Why this was not met: {point.explanation}")
-            body.append(f"What would resolve this: {point.what_would_satisfy}")
-        body.append("")
+        sections.append(
+            AppealSection(
+                criterion_id=cid,
+                criterion_text=crit.text,
+                policy_citation=crit.source_span,
+                why_not_met=point.explanation if point else "",
+                what_would_resolve=point.what_would_satisfy if point else "",
+            )
+        )
 
     if unverifiable:
         raise RuntimeError(
@@ -88,5 +111,13 @@ def draft_appeal(
             f"treat it as a data-integrity bug, not something to paper over."
         )
 
+    body = [f"RE: Prior Authorization Appeal — {policy_id} ({title})", ""]
+    for s in sections:
+        body.append(f"Criterion: {s.criterion_text}")
+        body.append(f'Policy language ({policy_id}): "{s.policy_citation}"')
+        body.append(f"Why this was not met: {s.why_not_met}")
+        body.append(f"What would resolve this: {s.what_would_resolve}")
+        body.append("")
     body.append(parsed.closing)
-    return "\n".join(body), response
+
+    return "\n".join(body), sections, parsed.closing, response
