@@ -23,11 +23,12 @@ from . import config, db
 T = TypeVar("T", bound=BaseModel)
 
 # Per-million-token prices, used for the cost table.
-# Verify against current console pricing before publishing numbers.
+# Sonnet 5 carries an intro rate ($2/$10) through 2026-08-31; base rate ($3/$15)
+# applies after that -- revisit this entry once the intro window closes.
 PRICING_USD_PER_MTOK: dict[str, tuple[float, float]] = {
     "claude-haiku-4-5-20251001": (1.00, 5.00),
-    "claude-sonnet-5": (3.00, 15.00),
-    "claude-opus-5": (15.00, 75.00),
+    "claude-sonnet-5": (2.00, 10.00),
+    "claude-opus-5": (5.00, 25.00),
 }
 
 _client: anthropic.Anthropic | None = None

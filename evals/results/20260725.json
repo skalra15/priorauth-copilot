@@ -1,7 +1,7 @@
 [
   {
     "model": "claude-haiku-4-5-20251001",
-    "n_cases": 49,
+    "n_cases": 65,
     "extraction_precision": 0.7981072555205048,
     "extraction_recall": 0.9405204460966543,
     "hallucinated_span_rate": 0.0847457627118644,
@@ -11,7 +11,7 @@
     "abstention_rate": 0.12790697674418605,
     "correct_abstention_rate": 0.4722222222222222,
     "mean_latency_s": null,
-    "total_cost_usd": 0.0,
+    "total_cost_usd": 0.3026,
     "cache_hit_rate": 1.0,
     "n_appeal_ok": 16,
     "n_appeal_failed": 1,
@@ -19,7 +19,7 @@
   },
   {
     "model": "claude-sonnet-5",
-    "n_cases": 49,
+    "n_cases": 63,
     "extraction_precision": 0.8814814814814815,
     "extraction_recall": 0.8847583643122676,
     "hallucinated_span_rate": 0.0,
@@ -29,7 +29,7 @@
     "abstention_rate": 0.13178294573643412,
     "correct_abstention_rate": 0.6388888888888888,
     "mean_latency_s": null,
-    "total_cost_usd": 0.0,
+    "total_cost_usd": 0.6762,
     "cache_hit_rate": 1.0,
     "n_appeal_ok": 14,
     "n_appeal_failed": 0,
@@ -37,7 +37,7 @@
   },
   {
     "model": "claude-opus-5",
-    "n_cases": 49,
+    "n_cases": 64,
     "extraction_precision": 0.6753246753246753,
     "extraction_recall": 0.966542750929368,
     "hallucinated_span_rate": 0.0,
@@ -47,7 +47,7 @@
     "abstention_rate": 0.08139534883720931,
     "correct_abstention_rate": 0.4444444444444444,
     "mean_latency_s": null,
-    "total_cost_usd": 0.0,
+    "total_cost_usd": 1.9608,
     "cache_hit_rate": 1.0,
     "n_appeal_ok": 15,
     "n_appeal_failed": 0,

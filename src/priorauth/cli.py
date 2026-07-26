@@ -536,9 +536,10 @@ def eval(
 
     console.print(table)
     console.print(
-        "\n[dim]Cost/latency reflect only fresh (non-cached) calls made during this run -- "
-        "a cache hit didn't cost anything now, even though its original token counts are "
-        "still on file.[/dim]"
+        "\n[dim]Cost is the price to reproduce this sweep from scratch (all calls, cache "
+        "hits included, priced from their stored token counts). Latency is averaged over "
+        "fresh calls only, since a cached call's near-zero latency isn't a real system "
+        "property -- it shows '-' when a model's entire sweep was served from cache.[/dim]"
     )
 
     if report:

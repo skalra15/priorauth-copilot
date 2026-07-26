@@ -4,10 +4,15 @@ Everything before this phase produced ad-hoc numbers from separate commands. Thi
 them into one EvalResult per model, so the model sweep ('s actual differentiator)
 is an apples-to-apples comparison, not three different people's idea of "ran the eval."
 
-Cost and latency are tracked only over fresh (non-cached) LLM calls -- a cache hit didn't
-cost anything in THIS run, and including its original token counts would overstate what
-running this eval sweep actually costs. Cache hit rate is reported separately so that's
-not hidden either.
+Cost is computed from every call's stored token counts, cache hit or not -- it represents
+the cost to reproduce this eval sweep from scratch, a fixed property of the sweep rather
+than an artifact of which calls happened to already be cached when the report was
+generated. (An earlier version only summed fresh-call cost; rerunning a fully-cached sweep
+then reported $0.00 for every model, which was accurate for "cost of this rerun" but
+misleading as a headline number and inconsistent with the same sweep's first, live run.)
+Latency stays averaged over fresh calls only, since a cache hit's near-zero latency isn't
+a real system property -- it's reported as None when a model's entire sweep was served from
+cache. Cache hit rate is reported separately so neither of these is hidden.
 """
 
 from __future__ import annotations
@@ -43,10 +48,10 @@ def _run_extraction_eval(model: str, golden_dir: Path) -> dict:
             continue
 
         n_calls += 1
+        cost += response.cost_usd(model)
         if response.cached:
             n_cached += 1
         else:
-            cost += response.cost_usd(model)
             latencies.append(response.latency_s)
 
         result = extract.score_extraction(gold, predicted)
@@ -110,10 +115,10 @@ def _run_checker_eval(model: str, notes_dir: Path) -> dict:
             continue
 
         n_calls += 1
+        cost += response.cost_usd(model)
         if response.cached:
             n_cached += 1
         else:
-            cost += response.cost_usd(model)
             latencies.append(response.latency_s)
 
         checks_by_id = {c.criterion_id: c for c in decision.checks}
@@ -133,8 +138,16 @@ def _run_checker_eval(model: str, notes_dir: Path) -> dict:
         if decision.decision == "likely_deny":
             n_deny += 1
             try:
-                appeal.draft_appeal(pid, p["title"], p["coverage_text"], predicted.criteria, decision, model=model)
+                _, appeal_response = appeal.draft_appeal(
+                    pid, p["title"], p["coverage_text"], predicted.criteria, decision, model=model
+                )
                 n_appeal_ok += 1
+                n_calls += 1
+                cost += appeal_response.cost_usd(model)
+                if appeal_response.cached:
+                    n_cached += 1
+                else:
+                    latencies.append(appeal_response.latency_s)
             except Exception:
                 n_appeal_failed += 1
 
