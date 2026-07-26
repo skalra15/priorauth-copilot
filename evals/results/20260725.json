@@ -1,9 +1,27 @@
 [
   {
+    "model": "claude-haiku-4-5-20251001",
+    "n_cases": 49,
+    "extraction_precision": 0.7981072555205048,
+    "extraction_recall": 0.9405204460966543,
+    "hallucinated_span_rate": 0.0847457627118644,
+    "retrieval_recall_at_1": 0.72,
+    "retrieval_recall_at_5": 1.0,
+    "verdict_accuracy": 0.7054263565891473,
+    "abstention_rate": 0.12790697674418605,
+    "correct_abstention_rate": 0.4722222222222222,
+    "mean_latency_s": null,
+    "total_cost_usd": 0.0,
+    "cache_hit_rate": 1.0,
+    "n_appeal_ok": 16,
+    "n_appeal_failed": 1,
+    "n_deny_cases": 17
+  },
+  {
     "model": "claude-sonnet-5",
     "n_cases": 49,
-    "extraction_precision": 0.8591065292096219,
-    "extraction_recall": 0.8802816901408451,
+    "extraction_precision": 0.8814814814814815,
+    "extraction_recall": 0.8847583643122676,
     "hallucinated_span_rate": 0.0,
     "retrieval_recall_at_1": 0.72,
     "retrieval_recall_at_5": 1.0,
@@ -16,5 +34,23 @@
     "n_appeal_ok": 14,
     "n_appeal_failed": 0,
     "n_deny_cases": 14
+  },
+  {
+    "model": "claude-opus-5",
+    "n_cases": 49,
+    "extraction_precision": 0.6753246753246753,
+    "extraction_recall": 0.966542750929368,
+    "hallucinated_span_rate": 0.0,
+    "retrieval_recall_at_1": 0.72,
+    "retrieval_recall_at_5": 1.0,
+    "verdict_accuracy": 0.6744186046511628,
+    "abstention_rate": 0.08139534883720931,
+    "correct_abstention_rate": 0.4444444444444444,
+    "mean_latency_s": null,
+    "total_cost_usd": 0.0,
+    "cache_hit_rate": 1.0,
+    "n_appeal_ok": 15,
+    "n_appeal_failed": 0,
+    "n_deny_cases": 15
   }
 ]

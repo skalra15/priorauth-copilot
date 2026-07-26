@@ -12,7 +12,7 @@ import hashlib
 import json
 
 from . import config, db, llm, verify
-from .schemas import Criterion, ExtractedCriteria
+from .schemas import Criterion, CriterionType, ExtractedCriteria
 
 SYSTEM = """You extract structured coverage criteria from Medicare coverage \
 policy prose (LCDs and NCDs) for a prior-authorization assistant.
@@ -142,9 +142,23 @@ def _atoms(criteria: list[Criterion]) -> list[tuple[int, str]]:
     false positives even though every one of them is real, grounded content.
     Atomizing both sides to the same granularity before matching (one atom per
     sub_condition when present, else the whole source_span as one atom) fixes
-    this regardless of which side bundles."""
+    this regardless of which side bundles.
+
+    Filtered to required/exclusion only, matching check.py's own `_testable()`
+    filter -- informational criteria are never used downstream (they don't
+    drive a coverage decision), and models vary widely in whether they bother
+    extracting purely descriptive/definitional sentences as their own
+    criterion. Scoring precision on that difference measures a stylistic
+    choice, not whether the correctness-critical content was extracted right
+    -- found while comparing models in the Haiku and Opus both
+    extract background-definition sentences as 'informational' criteria that
+    Sonnet and this project's own gold labels don't bother with, which
+    inflated their apparent false-positive rate for a reason that had nothing
+    to do with actual extraction quality."""
     atoms = []
     for i, c in enumerate(criteria):
+        if c.type not in (CriterionType.REQUIRED, CriterionType.EXCLUSION):
+            continue
         for text in (c.sub_conditions if c.sub_conditions else [c.source_span]):
             atoms.append((i, text))
     return atoms
