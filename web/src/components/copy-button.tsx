@@ -21,7 +21,7 @@ function fallbackCopy(text: string): boolean {
   return ok;
 }
 
-export function CopyButton({ text }: { text: string }) {
+export function CopyButton({ text, label = "Copy" }: { text: string; label?: string }) {
   const [status, setStatus] = useState<"idle" | "copied" | "failed">("idle");
 
   async function handleCopy() {
@@ -63,7 +63,7 @@ export function CopyButton({ text }: { text: string }) {
       {status === "idle" && (
         <>
           <Copy className="h-3.5 w-3.5" aria-hidden="true" />
-          Copy
+          {label}
         </>
       )}
     </button>

@@ -131,6 +131,17 @@ body {
   white-space: pre-wrap;
 }
 
+/* Deliberate focus-visible ring for links/buttons -- form inputs already get
+   their own ring via .input:focus above; this covers everything else
+   (nav links, CTAs, example presets, toggles) so keyboard focus is never
+   left to whatever the browser's default outline happens to be. */
+a:focus-visible,
+button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-cta) 35%, transparent);
+  border-radius: 8px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Loader2, AlertTriangle } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { checkNote, ApiError, type CheckResponse } from "@/lib/api";
@@ -13,6 +14,9 @@ import { MatchedPolicyCard } from "@/components/matched-policy-card";
 import { ResultSummary } from "@/components/result-summary";
 import { DecisionHeadline } from "@/components/decision-headline";
 import { SectionHeading } from "@/components/section-heading";
+import { CopyButton } from "@/components/copy-button";
+
+const MAX_NOTE_CHARS = 6000;
 
 const US_STATES = [
   "", "AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA",
@@ -22,10 +26,21 @@ const US_STATES = [
 ];
 
 export default function CheckerPage() {
-  const [cpt, setCpt] = useState("");
-  const [icd10, setIcd10] = useState("");
-  const [state, setState] = useState("");
-  const [noteText, setNoteText] = useState("");
+  return (
+    <Suspense fallback={null}>
+      <CheckerForm />
+    </Suspense>
+  );
+}
+
+function CheckerForm() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const [cpt, setCpt] = useState(() => searchParams.get("cpt") ?? "");
+  const [icd10, setIcd10] = useState(() => searchParams.get("icd10") ?? "");
+  const [state, setState] = useState(() => searchParams.get("state") ?? "");
+  const [noteText, setNoteText] = useState(() => searchParams.get("note") ?? "");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<CheckResponse | null>(null);
@@ -45,28 +60,66 @@ export default function CheckerPage() {
     setError(null);
   }
 
+  async function runCheck(input: { cpt: string; icd10: string; state: string; noteText: string }) {
+    setLoading(true);
+    setError(null);
+    setResult(null);
+    try {
+      const res = await checkNote({
+        cpt: input.cpt.trim() || undefined,
+        icd10: input.icd10.trim() || undefined,
+        state: input.state.trim() || undefined,
+        note_text: input.noteText,
+      });
+      setResult(res);
+
+      // Shareable permalink -- only ever written after a real, user-initiated
+      // submit (never on mount, never automatically), since this becomes part
+      // of the page's URL and browser history. router.replace, not push, so
+      // re-submitting the same form doesn't pile up back-button entries.
+      const params = new URLSearchParams();
+      if (input.cpt.trim()) params.set("cpt", input.cpt.trim());
+      if (input.icd10.trim()) params.set("icd10", input.icd10.trim());
+      if (input.state.trim()) params.set("state", input.state.trim());
+      params.set("note", input.noteText);
+      router.replace(`/checker?${params.toString()}`, { scroll: false });
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : "Something went wrong on our end. Please try again in a moment.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  // Auto-run once on mount if the page was opened from a shared permalink
+  // (i.e. it already has cpt/icd10 + note in the URL). Intentionally only
+  // reads the URL that was already there on load -- doesn't re-trigger on
+  // every keystroke, since searchParams isn't in the dependency array here
+  // by design.
+  useEffect(() => {
+    async function autoRunFromPermalink() {
+      const initialCpt = searchParams.get("cpt") ?? "";
+      const initialIcd10 = searchParams.get("icd10") ?? "";
+      const initialState = searchParams.get("state") ?? "";
+      const initialNote = searchParams.get("note") ?? "";
+      if (initialNote.trim() && (initialCpt.trim() || initialIcd10.trim())) {
+        await runCheck({ cpt: initialCpt, icd10: initialIcd10, state: initialState, noteText: initialNote });
+      }
+    }
+    autoRunFromPermalink();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!noteText.trim() || (!cpt.trim() && !icd10.trim())) {
       setError("Provide at least one code (CPT or ICD-10) and a clinical note.");
       return;
     }
-    setLoading(true);
-    setError(null);
-    setResult(null);
-    try {
-      const res = await checkNote({
-        cpt: cpt.trim() || undefined,
-        icd10: icd10.trim() || undefined,
-        state: state.trim() || undefined,
-        note_text: noteText,
-      });
-      setResult(res);
-    } catch (err) {
-      setError(err instanceof ApiError ? err.message : "Something went wrong. Is the API running?");
-    } finally {
-      setLoading(false);
+    if (noteText.length > MAX_NOTE_CHARS) {
+      setError(`Clinical note is too long (${noteText.length.toLocaleString()} / ${MAX_NOTE_CHARS.toLocaleString()} characters). Please shorten it.`);
+      return;
     }
+    await runCheck({ cpt, icd10, state, noteText });
   }
 
   return (
@@ -139,18 +192,32 @@ export default function CheckerPage() {
           </div>
         </div>
 
-        <div>
-          <label htmlFor="note" className="mb-1.5 block text-sm font-bold text-text">
-            Clinical note
-          </label>
+        <div className="scroll-mt-24">
+          <div className="mb-1.5 flex items-baseline justify-between">
+            <label htmlFor="note" className="block text-sm font-bold text-text">
+              Clinical note
+            </label>
+            <span
+              className={`font-mono text-xs ${
+                noteText.length > MAX_NOTE_CHARS ? "text-deny" : "text-text-muted"
+              }`}
+            >
+              {noteText.length.toLocaleString()} / {MAX_NOTE_CHARS.toLocaleString()}
+            </span>
+          </div>
           <textarea
             id="note"
             className="input w-full font-mono text-sm"
             rows={10}
+            maxLength={MAX_NOTE_CHARS}
             value={noteText}
             onChange={(e) => setNoteText(e.target.value)}
             placeholder="Paste or write a clinical note..."
           />
+          <p className="mt-1.5 text-xs text-text-muted">
+            This is a research demo. Please don&apos;t enter real patient
+            information -- use a synthetic or de-identified note.
+          </p>
         </div>
 
         {error && (
@@ -177,13 +244,16 @@ export default function CheckerPage() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-10 space-y-6"
+            className="mt-10 scroll-mt-24 space-y-6"
           >
-            <DecisionHeadline decision={result.decision.decision} />
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <DecisionHeadline decision={result.decision.decision} />
+              <CopyButton text={typeof window !== "undefined" ? window.location.href : ""} label="Copy link to this result" />
+            </div>
 
             <MatchedPolicyCard policy={result.policy} />
 
-            <div>
+            <div className="scroll-mt-24">
               <h3 className="mb-4 font-heading text-xl font-bold text-text">
                 Criteria evaluated
               </h3>

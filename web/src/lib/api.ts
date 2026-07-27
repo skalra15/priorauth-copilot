@@ -74,12 +74,31 @@ export class ApiError extends Error {
   }
 }
 
+// Extraction + checking (and sometimes appeal drafting) means multiple real
+// Claude calls per request -- generous, but bounded, so a hung backend or a
+// cold Render instance fails with a clear message instead of an indefinite
+// spinner.
+const CHECK_TIMEOUT_MS = 45_000;
+
 export async function checkNote(req: CheckRequest): Promise<CheckResponse> {
-  const res = await fetch(`${API_BASE}/api/check`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(req),
-  });
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), CHECK_TIMEOUT_MS);
+  let res: Response;
+  try {
+    res = await fetch(`${API_BASE}/api/check`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(req),
+      signal: controller.signal,
+    });
+  } catch (err) {
+    if (err instanceof DOMException && err.name === "AbortError") {
+      throw new ApiError(408, "This is taking longer than expected. Please try again in a moment.");
+    }
+    throw err;
+  } finally {
+    clearTimeout(timeout);
+  }
   if (!res.ok) {
     const body = await res.json().catch(() => null);
     throw new ApiError(res.status, body?.detail ?? `Request failed (${res.status})`);

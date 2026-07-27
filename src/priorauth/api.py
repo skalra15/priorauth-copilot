@@ -12,15 +12,26 @@ from __future__ import annotations
 
 from typing import Literal
 
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.errors import RateLimitExceeded
+from slowapi.util import get_remote_address
 
 from . import appeal, check, config, db, extract, retrieve
 from .appeal import AppealSection
 from .schemas import Criterion, CoverageDecision
 
 app = FastAPI(title="PriorAuth Copilot API")
+
+# In-memory, per-process rate limiting -- this API makes real, paid Claude
+# calls with no auth and CORS open to any origin, so it needs a floor against
+# casual abuse even though it's a single-instance deployment with no shared
+# limiter state across processes.
+limiter = Limiter(key_func=get_remote_address)
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 app.add_middleware(
     CORSMiddleware,
@@ -29,12 +40,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+MAX_NOTE_CHARS = 6000
+
 
 class CheckRequest(BaseModel):
     cpt: str | None = None
     icd10: str | None = None
     state: str | None = None
-    note_text: str
+    note_text: str = Field(max_length=MAX_NOTE_CHARS)
 
 
 class PolicySummary(BaseModel):
@@ -66,7 +79,9 @@ def health() -> dict:
 
 
 @app.get("/api/codes", response_model=list[CodeSuggestion])
+@limiter.limit("60/minute")
 def codes_endpoint(
+    request: Request,
     system: Literal["HCPCS", "ICD10"],
     q: str = Query("", max_length=64),
     limit: int = Query(15, ge=1, le=50),
@@ -75,7 +90,8 @@ def codes_endpoint(
 
 
 @app.post("/api/check", response_model=CheckResponse)
-def check_endpoint(req: CheckRequest) -> CheckResponse:
+@limiter.limit("20/minute")
+def check_endpoint(request: Request, req: CheckRequest) -> CheckResponse:
     if not req.cpt and not req.icd10:
         raise HTTPException(400, "Provide at least one of cpt or icd10")
 
@@ -83,13 +99,15 @@ def check_endpoint(req: CheckRequest) -> CheckResponse:
     if not retrieval["results"]:
         raise HTTPException(
             404,
-            f"No matching policy found for cpt={req.cpt!r} icd10={req.icd10!r} state={req.state!r}",
+            "We couldn't find a Medicare policy covering that code combination "
+            "in our current dataset (1,301 policies). Try a different code, "
+            "or see the full code list on GitHub.",
         )
 
     policy_id = retrieval["results"][0]["policy_id"]
     p = db.get_policy(policy_id)
     if not p:
-        raise HTTPException(404, f"Policy {policy_id} was retrieved but not found in the database")
+        raise HTTPException(404, "Something went wrong looking up that policy. Please try again.")
 
     predicted, _ = extract.extract_criteria(policy_id, p["title"], p["coverage_text"], model=config.MODEL)
     decision, _ = check.check_note(policy_id, predicted.criteria, req.note_text, model=config.MODEL)

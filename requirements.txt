@@ -15,6 +15,7 @@ numpy>=1.26
 fastapi>=0.111
 uvicorn>=0.30
 psycopg2-binary>=2.9   # Postgres driver, prod-only (DATABASE_URL) -- see db.py
+slowapi>=0.1.9         # per-IP rate limiting on the public check/codes endpoints
 
 # dev
 pytest>=8.2

@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <div className="mx-auto max-w-5xl px-4 pb-24">
       {/* Hero */}
-      <section className="flex flex-col items-start gap-7 pb-24 pt-40 sm:pt-48">
+      <section className="flex flex-col items-start gap-7 pb-24 pt-28 sm:pt-48">
         <Reveal>
           <h1 className="max-w-3xl font-heading text-5xl font-semibold leading-[1.05] tracking-tight text-text sm:text-6xl md:text-7xl">
             Check coverage against Medicare policy.{" "}
@@ -21,11 +21,13 @@ export default function Home() {
             PriorAuth Copilot reads a clinical note, checks it against the exact
             LCD/NCD criteria that apply, and drafts a citation-backed appeal on
             denial -- every citation is a verbatim, programmatically verified
-            quote from the policy. Never a hallucinated one.*
+            quote from the policy, checked against the source text, not taken
+            on faith.*
           </p>
           <p className="mt-3 max-w-xl text-xs text-text-muted/70">
-            *Built in response to CMS-0057-F&apos;s prior-authorization
-            transparency requirements.
+            *Measured at a 0% hallucination rate on Sonnet and Opus, 8.5% on
+            Haiku, on the golden eval set below. Built in response to
+            CMS-0057-F&apos;s prior-authorization transparency requirements.
           </p>
         </Reveal>
         <Reveal delay={0.16}>
