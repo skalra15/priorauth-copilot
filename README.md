@@ -8,7 +8,7 @@ Give it a procedure code, a diagnosis code, a state, and a clinical note. It ret
 
 **Why this exists.** CMS-0057-F went operational on 1 January 2026. Payers must now issue prior authorization decisions in 72 hours (urgent) or 7 days (standard), give specific denial reasons, and — as of 31 March 2026 — publicly report their approval, denial, and appeal-overturn rates. Denial rates across those first disclosures range from under 2% to over 27%. Commercial vendors sell closed-box appeal automation into this gap. There is no open, measured implementation. This is one.
 
-**Why the eval matters more than the demo.** Building a RAG pipeline over coverage policies is a weekend. Knowing whether it is *right* — and publishing the rate at which it invents citations — is the actual work. Every metric below is reported on a hand-labeled golden set, including the failure modes.
+**Why the eval matters more than the demo.** Building a RAG pipeline over coverage policies is a weekend. Knowing whether it is *right* — and publishing the rate at which it invents citations — is the actual work. Every metric below is reported against a golden set labeled to a rubric defined up front, including the failure modes.
 
 ---
 
@@ -27,7 +27,7 @@ Give it a procedure code, a diagnosis code, a state, and a clinical note. It ret
 
 ## Results
 
-Full model sweep against the golden set — 20 hand-labeled policies for extraction, 50 combined-query + 30 NCD-only retrieval queries, 30 synthetic notes (10 policies × 3 variants: meets all / fails one / ambiguous one) for the checker and appeal drafter. Reproduce with `python -m priorauth.cli eval --full --sweep`.
+Full model sweep against the golden set — 20 labeled policies for extraction, 50 combined-query + 30 NCD-only retrieval queries, 30 synthetic notes (10 policies × 3 variants: meets all / fails one / ambiguous one) for the checker and appeal drafter. Reproduce with `python -m priorauth.cli eval --full --sweep`.
 
 | Model | Extraction P / R | Hallucination rate | Retrieval R@1 / R@5 | Verdict accuracy | Correct abstention | Cost (full sweep) |
 |---|---|---|---|---|---|---|
