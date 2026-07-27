@@ -1,20 +1,20 @@
 # PriorAuth Copilot
 
-An open, benchmarked agent that checks whether a clinical case meets Medicare coverage criteria — and drafts a citation-backed appeal when it doesn't.
+An open, benchmarked agent that checks whether a clinical case meets Medicare coverage criteria and drafts a citation-backed appeal when it doesn't.
 
-Give it a procedure code, a diagnosis code, a state, and a clinical note. It retrieves the governing Local or National Coverage Determination from the CMS Medicare Coverage Database, extracts that policy's prose into structured testable criteria, checks the note against each criterion with an evidence span, and returns a decision plus an appeal draft — every citation a verbatim, programmatically verified quote, never a paraphrase.
+Give it a procedure code, a diagnosis code, a state, and a clinical note. It retrieves the governing Local or National Coverage Determination from the CMS Medicare Coverage Database, extracts that policy's prose into structured testable criteria, checks the note against each criterion with an evidence span, and returns a decision plus an appeal draft. Every citation is a verbatim, programmatically verified quote, never a paraphrase.
 
 **Live demo:** [priorauth-copilot-zeta.vercel.app](https://priorauth-copilot-zeta.vercel.app)
 
-**Why this exists.** CMS-0057-F went operational on 1 January 2026. Payers must now issue prior authorization decisions in 72 hours (urgent) or 7 days (standard), give specific denial reasons, and — as of 31 March 2026 — publicly report their approval, denial, and appeal-overturn rates. Denial rates across those first disclosures range from under 2% to over 27%. Commercial vendors sell closed-box appeal automation into this gap. There is no open, measured implementation. This is one.
+**Why this exists.** CMS-0057-F went operational on 1 January 2026. Payers must now issue prior authorization decisions in 72 hours for urgent requests or 7 days for standard ones, give specific denial reasons, and starting 31 March 2026 publicly report their approval, denial, and appeal-overturn rates. Denial rates across those first disclosures range from under 2% to over 27%. Commercial vendors sell closed-box appeal automation into this gap, but there's no open, measured implementation of it. This project is one.
 
-**Why the eval matters more than the demo.** Building a RAG pipeline over coverage policies is a weekend. Knowing whether it is *right* — and publishing the rate at which it invents citations — is the actual work. Every metric below is reported against a golden set labeled to a rubric defined up front, including the failure modes.
+**Why the eval matters more than the demo.** Building a retrieval pipeline over coverage policies is a weekend of work. Knowing whether it's actually right, and publishing the rate at which it invents citations, is the real work. Every metric below is reported against a golden set labeled to a rubric defined up front, including the failure modes.
 
 ---
 
 ## Results
 
-Full model sweep against the golden set — 20 labeled policies for extraction, 50 combined-query + 30 NCD-only retrieval queries, 30 synthetic notes (10 policies × 3 variants: meets all / fails one / ambiguous one) for the checker and appeal drafter. Reproduce with `python -m priorauth.cli eval --full --sweep`.
+Full model sweep against the golden set: 20 labeled policies for extraction, 50 combined-query plus 30 NCD-only retrieval queries, and 30 synthetic notes (10 policies × 3 variants: meets all / fails one / ambiguous one) for the checker and appeal drafter. Reproduce with `python -m priorauth.cli eval --full --sweep`.
 
 | Model | Extraction P / R | Hallucination rate | Retrieval R@1 / R@5 | Verdict accuracy | Correct abstention | Cost (full sweep) |
 |---|---|---|---|---|---|---|
@@ -22,9 +22,9 @@ Full model sweep against the golden set — 20 labeled policies for extraction, 
 | Claude Sonnet 5 | 88.1% / 88.5% | **0.0%** | 72.0% / 100.0% | 86.8% | 63.9% | $0.68 |
 | Claude Opus 5 | 67.5% / 96.7% | **0.0%** | 72.0% / 100.0% | 67.4% | 44.4% | $1.96 |
 
-**Hallucination rate is the headline number**: the fraction of extracted policy citations that are not a verbatim substring of the source policy text, checked programmatically (`verify.span_is_grounded`), never eyeballed. Sonnet and Opus hit zero on this golden set; Haiku doesn't. The same grounding check runs on note-evidence citations in the checker stage — a live check during development found 3 of 219 evidence spans were paraphrased rather than verbatim, and the system now downgrades those to an explicit abstention instead of showing a fabricated quote.
+**Hallucination rate is the headline number**: the fraction of extracted policy citations that are not a verbatim substring of the source policy text, checked programmatically (`verify.span_is_grounded`), never eyeballed. Sonnet and Opus hit zero on this golden set. Haiku doesn't. The same grounding check runs on note-evidence citations in the checker stage. A check during development found 3 of 219 evidence spans were paraphrased rather than verbatim, and the system now downgrades those to an explicit abstention instead of showing a fabricated quote.
 
-Note the counterintuitive extraction row: Opus has the highest recall but the lowest precision. That's not Opus being sloppy — it and Haiku both extract background/definitional sentences as their own criteria more readily than Sonnet does, which inflates apparent false positives on a metric that scores extraction structure, not extraction correctness. Investigating exactly *why* a number looks wrong before reporting it is the actual discipline this project is trying to demonstrate.
+Note the counterintuitive extraction row: Opus has the highest recall but the lowest precision. This isn't because Opus is sloppy. Opus and Haiku both extract background and definitional sentences as their own criteria more readily than Sonnet does, which inflates apparent false positives on a metric that scores extraction structure rather than extraction correctness. Investigating why a number looks wrong before reporting it is the actual discipline this project is trying to demonstrate.
 
 ## Quickstart
 
@@ -77,7 +77,7 @@ CPT/HCPCS + ICD-10 + state + clinical note
    └────────┬────────┘
             ▼
    ┌─────────────────┐
-   │ Decide          │  approve / deny / needs human review —
+   │ Decide          │  approve / deny / needs human review,
    │                 │  aggregated deterministically in code, not by the model
    └────────┬────────┘
             ▼
@@ -94,22 +94,22 @@ CPT/HCPCS + ICD-10 + state + clinical note
 
 ## Data sources
 
-- **CMS Medicare Coverage Database** — bulk LCD, NCD, and Article downloads (CSV, with data dictionaries). 1,301 active policies ingested (947 LCDs, 354 NCDs) after filtering out policies with insufficient coverage text. Requires accepting ADA/AMA/NUBC license terms at download time.
-- Clinical notes are LLM-synthesized against the actual retrieved policy criteria, with the generating model self-reporting which criteria its own note addresses — used as ground truth for the checker eval, not assumed independently. Synthetic throughout; no real PHI touches this repo, ever.
+- **CMS Medicare Coverage Database**: bulk LCD, NCD, and Article downloads (CSV, with data dictionaries). 1,301 active policies ingested (947 LCDs, 354 NCDs) after filtering out policies with insufficient coverage text. Requires accepting ADA/AMA/NUBC license terms at download time.
+- Clinical notes are LLM-synthesized against the actual retrieved policy criteria, with the generating model self-reporting which criteria its own note addresses. That self-report is used as ground truth for the checker eval, not assumed independently. Synthetic throughout, no real patient data touches this repo.
 
 ## Honest limitations
 
 - **Nested boolean logic, temporal qualifiers, and exclusions phrased as coverage** ("not covered unless...") are the hardest extraction cases, and where most of the extraction error concentrates.
-- **Retrieval recall@1 is 72%**, not 100% — deterministic code+state lookup doesn't always rank the correct policy first when a code is shared across many policies; recall@5 is 100% on this query set, so the correct policy is essentially always *found*, just not always ranked first.
-- **Correct-abstention rate is 44–64%**, not near 100% — the checker's `insufficient_evidence` verdict doesn't perfectly align with the cases that actually warrant abstention. This is disclosed, not hidden, because abstaining correctly is arguably the most safety-relevant metric here and it's the least solved.
-- **Synthetic clinical notes, not real ones.** Ground truth comes from the note-generating model's own self-report, not an independent clinician review. This measures internal consistency, not real-world clinical accuracy.
+- **Retrieval recall@1 is 72%, not 100%.** Deterministic code and state lookup doesn't always rank the correct policy first when a code is shared across many policies. Recall@5 is 100% on this query set, so the correct policy is essentially always found, just not always ranked first.
+- **Correct-abstention rate is 44 to 64%, not near 100%.** The checker's `insufficient_evidence` verdict doesn't perfectly align with the cases that actually warrant abstention. That's disclosed here rather than left out, since abstaining correctly is arguably the most safety-relevant metric in this project, and it's the one solved the least.
+- **The clinical notes are synthetic, not real patient notes.** Ground truth comes from the note-generating model's own self-report rather than an independent clinician review, so this measures internal consistency more than real-world clinical accuracy.
 - **Medicare only.** Commercial payer policies have different structures and aren't covered by this pipeline as built.
-- **No clinician in the loop.** This is a research/portfolio artifact, not a validated clinical tool — see the disclaimer below.
+- **No clinician in the loop.** This is a research and portfolio artifact, not a validated clinical tool. See the disclaimer below.
 
 ## Disclaimer
 
-Research and portfolio project. Not a medical device, not clinical decision support, not for use in real coverage or care decisions.
+This is a research and portfolio project. It is not a medical device or clinical decision support tool, and it isn't intended for real coverage or care decisions.
 
 ## License
 
-MIT for the code (see `LICENSE`). CMS coverage data is subject to its own license terms — see `data/raw/README_LICENSE.md` after download. Do not commit the raw CMS files.
+MIT for the code (see `LICENSE`). CMS coverage data is subject to its own license terms, see `data/raw/README_LICENSE.md` after download. Do not commit the raw CMS files.
