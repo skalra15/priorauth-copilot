@@ -6,9 +6,9 @@ Give it a procedure code, a diagnosis code, a state, and a clinical note. It ret
 
 **Live demo:** [priorauth-copilot-zeta.vercel.app](https://priorauth-copilot-zeta.vercel.app)
 
-**Why this exists.** CMS-0057-F went operational on 1 January 2026. Payers must now issue prior authorization decisions in 72 hours for urgent requests or 7 days for standard ones, give specific denial reasons, and starting 31 March 2026 publicly report their approval, denial, and appeal-overturn rates. Denial rates across those first disclosures range from under 2% to over 27%. Commercial vendors sell closed-box appeal automation into this gap, but there's no open, measured implementation of it. This project is one.
+**Why this exists.** CMS-0057-F went operational on 1 January 2026. Payers must now issue prior authorization decisions in 72 hours for urgent requests or 7 days for standard ones, give specific denial reasons, and starting 31 March 2026 publicly report their approval, denial, and appeal-overturn rates. Denial rates across those first disclosures range from under 2% to over 27%. Commercial vendors sell closed-box appeal automation into this gap. This project is an open, measured alternative.
 
-**Why the eval matters more than the demo.** Building a retrieval pipeline over coverage policies is a weekend of work. Knowing whether it's actually right, and publishing the rate at which it invents citations, is the real work. Every metric below is reported against a golden set labeled to a rubric defined up front, including the failure modes.
+**Why the eval matters.** Every metric below is measured against a golden set labeled to a rubric defined up front, including the failure modes, not just the cases where extraction and retrieval succeeded. That includes the rate at which the pipeline invents citations, reported directly instead of glossed over.
 
 ---
 
@@ -24,7 +24,7 @@ Full model sweep against the golden set: 20 labeled policies for extraction, 50 
 
 **Hallucination rate is the headline number**: the fraction of extracted policy citations that are not a verbatim substring of the source policy text, checked programmatically (`verify.span_is_grounded`), never eyeballed. Sonnet and Opus hit zero on this golden set. Haiku doesn't. The same grounding check runs on note-evidence citations in the checker stage. A check during development found 3 of 219 evidence spans were paraphrased rather than verbatim, and the system now downgrades those to an explicit abstention instead of showing a fabricated quote.
 
-Note the counterintuitive extraction row: Opus has the highest recall but the lowest precision. This isn't because Opus is sloppy. Opus and Haiku both extract background and definitional sentences as their own criteria more readily than Sonnet does, which inflates apparent false positives on a metric that scores extraction structure rather than extraction correctness. Investigating why a number looks wrong before reporting it is the actual discipline this project is trying to demonstrate.
+One thing worth explaining in the extraction row: Opus has the highest recall but the lowest precision, which looks backward at first. Opus and Haiku both extract background and definitional sentences as their own criteria more readily than Sonnet does, which inflates apparent false positives on a metric that scores extraction structure rather than extraction correctness.
 
 ## Quickstart
 
@@ -101,7 +101,7 @@ CPT/HCPCS + ICD-10 + state + clinical note
 
 - **Nested boolean logic, temporal qualifiers, and exclusions phrased as coverage** ("not covered unless...") are the hardest extraction cases, and where most of the extraction error concentrates.
 - **Retrieval recall@1 is 72%, not 100%.** Deterministic code and state lookup doesn't always rank the correct policy first when a code is shared across many policies. Recall@5 is 100% on this query set, so the correct policy is essentially always found, just not always ranked first.
-- **Correct-abstention rate is 44 to 64%, not near 100%.** The checker's `insufficient_evidence` verdict doesn't perfectly align with the cases that actually warrant abstention. That's disclosed here rather than left out, since abstaining correctly is arguably the most safety-relevant metric in this project, and it's the one solved the least.
+- **Correct-abstention rate is 44 to 64%, not near 100%.** The checker's `insufficient_evidence` verdict doesn't perfectly align with the cases that actually warrant abstention. Abstaining correctly is arguably the most safety-relevant metric in this project, and it's the one solved the least.
 - **The clinical notes are synthetic, not real patient notes.** Ground truth comes from the note-generating model's own self-report rather than an independent clinician review, so this measures internal consistency more than real-world clinical accuracy.
 - **Medicare only.** Commercial payer policies have different structures and aren't covered by this pipeline as built.
 - **No clinician in the loop.** This is a research and portfolio artifact, not a validated clinical tool. See the disclaimer below.
