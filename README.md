@@ -12,19 +12,6 @@ Give it a procedure code, a diagnosis code, a state, and a clinical note. It ret
 
 ---
 
-## Status
-
-
-|---|---|---|
-
-
-
-
-
-
-
-
-
 ## Results
 
 Full model sweep against the golden set — 20 labeled policies for extraction, 50 combined-query + 30 NCD-only retrieval queries, 30 synthetic notes (10 policies × 3 variants: meets all / fails one / ambiguous one) for the checker and appeal drafter. Reproduce with `python -m priorauth.cli eval --full --sweep`.
