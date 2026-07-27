@@ -8,7 +8,7 @@ Give it a procedure code, a diagnosis code, a state, and a clinical note. It ret
 
 **Why this exists.** CMS-0057-F went operational on 1 January 2026. Payers must now issue prior authorization decisions in 72 hours for urgent requests or 7 days for standard ones, give specific denial reasons, and starting 31 March 2026 publicly report their approval, denial, and appeal-overturn rates. Denial rates across those first disclosures range from under 2% to over 27%. Commercial vendors sell closed-box appeal automation into this gap. This project is an open, measured alternative.
 
-**Why the eval matters.** Every metric below is measured against a golden set labeled to a rubric defined up front, including the failure modes, not just the cases where extraction and retrieval succeeded. That includes the rate at which the pipeline invents citations, reported directly instead of glossed over.
+**Why the eval matters.** This is a RAG pipeline over Medicare coverage policies. Every metric below is measured against a golden set labeled to a rubric defined up front, including the failure modes, not just the cases where extraction and retrieval succeeded. That includes the rate at which the pipeline invents citations, reported directly instead of glossed over.
 
 ---
 
@@ -95,7 +95,7 @@ CPT/HCPCS + ICD-10 + state + clinical note
 ## Data sources
 
 - **CMS Medicare Coverage Database**: bulk LCD, NCD, and Article downloads (CSV, with data dictionaries). 1,301 active policies ingested (947 LCDs, 354 NCDs) after filtering out policies with insufficient coverage text. Requires accepting ADA/AMA/NUBC license terms at download time.
-- Clinical notes are LLM-synthesized against the actual retrieved policy criteria, with the generating model self-reporting which criteria its own note addresses. That self-report is used as ground truth for the checker eval, not assumed independently. Synthetic throughout, no real patient data touches this repo.
+- Clinical notes are LLM-synthesized against the actual retrieved policy criteria, with the generating model self-reporting which criteria its own note addresses. That self-report is used as ground truth for the checker eval, not assumed independently. Synthetic throughout, no real PHI touches this repo.
 
 ## Honest limitations
 
