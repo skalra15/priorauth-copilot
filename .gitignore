@@ -18,3 +18,13 @@ data/index/
 
 # eval outputs are committed on purpose (they're the point) — but not scratch runs
 evals/results/scratch/
+
+# internal files and writing drafts -- not part of the public repo
+the project docs
+the project docs
+the project docs
+the writeup
+the post
+web/the project docs
+a config file
+design-system/

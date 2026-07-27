@@ -49,14 +49,12 @@ pip install -e ".[dev,retrieval,ui]"
 cp .env.example .env        # then add your ANTHROPIC_API_KEY
 pytest
 
-# Download CMS coverage data (see the project docs Step 1.1 — requires accepting a license)
+# Download CMS coverage data from the Medicare Coverage Database (requires accepting a license)
 python -m priorauth.cli ingest --source data/raw --normalize
 
 # Inspect what landed
 python -m priorauth.cli stats
 ```
-
-New to the project? Start with **[the project docs](the project docs)** — the literal, command-by-command walkthrough. Then move to **[the project docs](the project docs)** for the seven phases and their gates.
 
 ### Running the live demo locally
 
