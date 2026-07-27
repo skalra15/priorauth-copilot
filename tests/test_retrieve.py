@@ -44,6 +44,20 @@ def seeded_db(tmp_path, monkeypatch):
     add_policy("L-BOTH-CODES", "LCD", ["CA"], [("99213", "HCPCS"), ("J30.0", "ICD10")])
     add_policy("L-SINGLE-CODE-ONLY", "LCD", ["NY"], [("99213", "HCPCS")])
 
+    # A code whose description happens to contain a query string that's also
+    # a prefix match on a different code -- exercises search_codes' ranking
+    # (prefix match on the code itself beats a description-substring match).
+    with db.connect() as conn:
+        conn.execute(
+            "INSERT INTO code_descriptions (code, code_system, description) VALUES (?, ?, ?)",
+            ("86003", "HCPCS", "Allergen specific IgE test"),
+        )
+        conn.execute(
+            "INSERT INTO code_descriptions (code, code_system, description) VALUES (?, ?, ?)",
+            ("99213", "HCPCS", "Office visit, established patient, level 3"),
+        )
+        conn.commit()
+
     return tmp_path
 
 
@@ -83,3 +97,40 @@ def test_retrieve_falls_back_to_none_with_no_match_and_no_query_text(seeded_db):
     result = retrieve.retrieve(cpt="00000", icd10=None, state=None, top_k=5)
     assert result["method"] == "none"
     assert result["results"] == []
+
+
+# search_codes: regression coverage for a real bug found in production --
+# `SELECT DISTINCT ... ORDER BY <expression not in the select list>` runs
+# fine on SQLite but raises psycopg2.errors.InvalidColumnReference on
+# Postgres, since Postgres requires every ORDER BY expression to appear in
+# the SELECT list when DISTINCT is used. This only surfaced against the real
+# deployed Postgres database -- SQLite's leniency let it pass every local
+# and CI run silently.
+
+
+def test_search_codes_ranks_prefix_match_above_description_match(seeded_db):
+    # "99213" is a prefix match on its own code; "86003"'s description
+    # doesn't contain "99213" anywhere, so only the prefix match should
+    # come back, and it must not error (this is the exact query shape that
+    # broke on Postgres).
+    results = retrieve.search_codes("HCPCS", "9921", limit=15)
+    codes = [r["code"] for r in results]
+    assert "99213" in codes
+
+
+def test_search_codes_matches_on_description_substring(seeded_db):
+    results = retrieve.search_codes("HCPCS", "allergen", limit=15)
+    codes = [r["code"] for r in results]
+    assert "86003" in codes
+
+
+def test_search_codes_returns_no_duplicate_codes(seeded_db):
+    # 86003 appears on three different policies (L-STATE-MATCH, N-NATIONAL,
+    # L-OTHER-STATE) -- DISTINCT must still collapse it to one row.
+    results = retrieve.search_codes("HCPCS", "86003", limit=15)
+    codes = [r["code"] for r in results]
+    assert codes.count("86003") == 1
+
+
+def test_search_codes_empty_query_returns_nothing(seeded_db):
+    assert retrieve.search_codes("HCPCS", "", limit=15) == []

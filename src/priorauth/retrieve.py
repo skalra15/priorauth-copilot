@@ -89,21 +89,25 @@ def search_codes(code_system: str, query: str, limit: int = 15) -> list[dict]:
     desc_substring = f"%{query}%"
 
     with db.connect() as conn:
+        # Postgres (unlike SQLite) requires every ORDER BY expression to appear
+        # in the SELECT list when DISTINCT is used -- ordering by a bare CASE/
+        # length() expression not in the select list works fine on SQLite but
+        # raises psycopg2.errors.InvalidColumnReference on Postgres. Aliasing
+        # the two sort expressions into the select list satisfies both.
         rows = conn.execute(
             """
-            SELECT DISTINCT pc.code, cd.description
+            SELECT DISTINCT pc.code, cd.description,
+                CASE WHEN pc.code LIKE ? THEN 0 ELSE 1 END AS prefix_rank,
+                length(pc.code) AS code_length
             FROM policy_codes pc
             LEFT JOIN code_descriptions cd
                 ON cd.code = pc.code AND cd.code_system = pc.code_system
             WHERE pc.code_system = ?
               AND (pc.code LIKE ? OR cd.description LIKE ?)
-            ORDER BY
-                CASE WHEN pc.code LIKE ? THEN 0 ELSE 1 END,
-                length(pc.code),
-                pc.code
+            ORDER BY prefix_rank, code_length, pc.code
             LIMIT ?
             """,
-            (code_system, code_prefix, desc_substring, code_prefix, limit),
+            (code_prefix, code_system, code_prefix, desc_substring, limit),
         ).fetchall()
 
     return [{"code": r["code"], "description": r["description"]} for r in rows]
