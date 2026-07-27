@@ -4,7 +4,7 @@ import { OutcomeBadge } from "@/components/outcome-badge";
 
 /** The side-by-side evidence view: policy citation vs. note evidence span,
  * for one criterion. This is the whole point of the UI -- it's what makes
- * the system inspectable rather than magic (see the project docs ).
+ * the system inspectable rather than magic.
  *
  * Deliberately monochrome except the OutcomeBadge pill: color used to live
  * on the card's left border, both citation boxes, and the confidence bar too

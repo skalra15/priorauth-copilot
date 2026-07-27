@@ -5,7 +5,7 @@ the clinical narrative (why the evidence fell short, what would fix it); the cit
 criterion's own `source_span`, already verified grounded against the policy text back in
 extract.py. That's not a defense-in-depth check bolted on after the fact -- it structurally
 can't hallucinate a citation, because it never gets asked to produce one. Every citation is
-still re-verified in draft_appeal() anyway, since the project docs's rule is "verify programmatically,"
+still re-verified in draft_appeal() anyway -- verify programmatically,
 not "trust the design."
 """
 

@@ -1,4 +1,4 @@
-"""Policy prose -> structured criteria. Correctness-critical (see the project docs).
+"""Policy prose -> structured criteria. Correctness-critical.
 
 Every criterion's `source_span` must be a verbatim substring of the policy's
 coverage_text — that's enforced by `verify.span_is_grounded`, not by asking the
@@ -102,7 +102,7 @@ def extract_criteria(
 
 
 # ---------------------------------------------------------------------------
-# Scoring against hand-labeled golden criteria 
+# Scoring against labeled golden criteria
 # ---------------------------------------------------------------------------
 
 MATCH_THRESHOLD = 0.5  # token-overlap needed to count two criteria as the same one
@@ -153,7 +153,7 @@ def _atoms(criteria: list[Criterion]) -> list[tuple[int, str]]:
     extracting purely descriptive/definitional sentences as their own
     criterion. Scoring precision on that difference measures a stylistic
     choice, not whether the correctness-critical content was extracted right
-    -- found while comparing models in the Haiku and Opus both
+    -- found while comparing models in the eval sweep: Haiku and Opus both
     extract background-definition sentences as 'informational' criteria that
     Sonnet and this project's own gold labels don't bother with, which
     inflated their apparent false-positive rate for a reason that had nothing
@@ -201,7 +201,7 @@ def match_atoms(
 
 
 def score_extraction(gold: ExtractedCriteria, predicted: ExtractedCriteria) -> dict:
-    """Precision/recall of one extraction against its hand-labeled gold, plus the
+    """Precision/recall of one extraction against its labeled gold, plus the
     grounding (hallucination) check on the predicted spans.
 
     Scored on atomic facts, not top-level criteria (see `_atoms`/`match_atoms`) --

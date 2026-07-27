@@ -30,10 +30,10 @@ CACHE_ENABLED = os.getenv("PRIORAUTH_CACHE", "1") == "1"
 # scripts/migrate_to_postgres.py from the local SQLite file instead.
 DATABASE_URL = os.getenv("DATABASE_URL", "")
 
-# Local, free, no API cost — semantic fallback for retrieval ().
+# Local, free, no API cost — semantic fallback for retrieval.
 EMBEDDING_MODEL = os.getenv("PRIORAUTH_EMBEDDING_MODEL", "all-MiniLM-L6-v2")
 
-# Models swept in the cost/accuracy comparison.
+# Models swept in the eval harness's cost/accuracy comparison.
 SWEEP_MODELS = ["claude-haiku-4-5-20251001", "claude-sonnet-5", "claude-opus-5"]
 
 for _d in (DATA_DIR, RAW_DIR, INDEX_DIR, GOLDEN_DIR, RESULTS_DIR):

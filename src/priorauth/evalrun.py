@@ -1,8 +1,8 @@
-"""one reproducible, versioned eval run across extraction + retrieval + checking.
+"""One reproducible, versioned eval run across extraction + retrieval + checking.
 
-Everything before this phase produced ad-hoc numbers from separate commands. This ties
-them into one EvalResult per model, so the model sweep ('s actual differentiator)
-is an apples-to-apples comparison, not three different people's idea of "ran the eval."
+Earlier iterations produced ad-hoc numbers from separate commands. This ties
+them into one EvalResult per model, so the model sweep is an apples-to-apples
+comparison, not three different people's idea of "ran the eval."
 
 Cost is computed from every call's stored token counts, cache hit or not -- it represents
 the cost to reproduce this eval sweep from scratch, a fixed property of the sweep rather

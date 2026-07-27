@@ -1,11 +1,11 @@
 """FastAPI wrapper around the retrieve -> extract -> check -> appeal pipeline.
 
-only. This is a thin HTTP layer -- it orchestrates the same
+Deployment layer only. This is a thin HTTP layer -- it orchestrates the same
 functions the CLI and eval harness call, it doesn't reimplement any of the
-correctness-critical logic. See the project docs's Deployment section: this runs on
-Render, SQLite stays canonical, the Next.js frontend on Vercel is the only
-caller in practice but CORS is left open since this is a read-only demo API
-with no auth and no PHI (the project docs rule 5 -- synthetic notes only).
+correctness-critical logic. Runs on Render, SQLite stays canonical, the
+Next.js frontend on Vercel is the only caller in practice but CORS is left
+open since this is a read-only demo API with no auth and no PHI (synthetic
+notes only).
 """
 
 from __future__ import annotations
@@ -103,7 +103,7 @@ def check_endpoint(req: CheckRequest) -> CheckResponse:
             appeal_text, appeal_sections, appeal_closing, _ = appeal.draft_appeal(
                 policy_id, p["title"], p["coverage_text"], predicted.criteria, decision, model=config.MODEL
             )
-        except Exception as exc:  # surfaced to the UI, not swallowed -- the project docs rule
+        except Exception as exc:  # surfaced to the UI, not swallowed
             appeal_error = str(exc)
 
     return CheckResponse(

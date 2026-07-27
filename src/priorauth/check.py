@@ -1,6 +1,6 @@
 """Clinical note + extracted criteria -> per-criterion verdicts -> coverage decision.
 
-Correctness-critical (see the project docs). Same grounding discipline as extract.py: every
+Correctness-critical. Same grounding discipline as extract.py: every
 evidence_span must be a verbatim substring of the NOTE, verified by verify.span_is_grounded.
 
 The aggregate decision (approve/deny/needs_review) is computed deterministically from the

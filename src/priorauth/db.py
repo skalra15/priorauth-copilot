@@ -7,7 +7,7 @@ interface is identical on both backends, so those call sites never need to
 know which one is live -- only `connect()` here does.
 
 Postgres is prod-only and is never written to by `ingest.normalize()` --
-the project docs's rule is SQLite stays canonical for ingest/extract/eval. The prod
+SQLite stays canonical for ingest/extract/eval. The prod
 Postgres DB is populated once via `scripts/migrate_to_postgres.py`, which
 copies the already-computed tables (policies, policy_codes,
 code_descriptions, extracted_criteria, llm_cache) out of local SQLite. From

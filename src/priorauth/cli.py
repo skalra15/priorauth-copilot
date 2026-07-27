@@ -42,7 +42,7 @@ def ingest_cmd(
     console.print(table)
     console.print(
         "\n[bold]Next:[/bold] run [cyan]inspect[/cyan] and read the real schema "
-        "before implementing normalize() — see the project docs Step 1.3."
+        "before implementing normalize()."
     )
     if normalize:
         n_pol, n_codes = ingest.normalize()
@@ -72,17 +72,17 @@ def inspect(
 
 @app.command()
 def stats() -> None:
-    """check: how much normalized policy data do we actually have?"""
+    """How much normalized policy data do we actually have?"""
     s = ingest.policy_stats()
     table = Table("metric", "value")
     for key, value in s.items():
         table.add_row(key, f"{value:,}")
     console.print(table)
     if s["with_coverage_text"] >= 1000:
-        console.print("[green]✓ .[/green]")
+        console.print("[green]✓ Coverage threshold met.[/green]")
     else:
         console.print(
-            "[yellow]yet — need ≥1,000 policies with "
+            "[yellow]Coverage threshold not met yet — need ≥1,000 policies with "
             "coverage_text.[/yellow]"
         )
 
@@ -136,9 +136,9 @@ def extract_cmd(
 @app.command("eval-extraction")
 def eval_extraction_cmd(
     model: str = typer.Option(config.MODEL, help="Model to use for extraction"),
-    golden_dir: Path = typer.Option(config.GOLDEN_DIR / "criteria", help="Hand-labeled golden files"),
+    golden_dir: Path = typer.Option(config.GOLDEN_DIR / "criteria", help="Labeled golden files"),
 ) -> None:
-    """: precision/recall/hallucination-rate against your hand labels."""
+    """Precision/recall/hallucination-rate against the labeled golden set."""
     files = sorted(golden_dir.glob("*.json"))
     if not files:
         console.print(f"[yellow]No golden files in {golden_dir}[/yellow]")
@@ -170,7 +170,7 @@ def eval_extraction_cmd(
             predicted, _ = extract.extract_criteria(policy_id, p["title"], p["coverage_text"], model=model)
         except Exception as exc:
             # Visible in the report, not swallowed — a malformed extraction is a
-            # real data point (see the project docs: failures should show up in the eval).
+            # real data point that should show up in the eval, not be hidden.
             failed.append((policy_id, str(exc)))
             table.add_row(policy_id, str(len(gold.criteria)), "FAILED", "-", "-", "-", "-", "-")
             continue
@@ -228,16 +228,15 @@ def eval_extraction_cmd(
     )
 
     if precision > 0.80 and recall > 0.80 and hallucination < 0.05:
-        console.print("[green]✓ — continue to .[/green]")
+        console.print("[green]✓ Extraction quality threshold met.[/green]")
     elif precision >= 0.60 and recall >= 0.60 and hallucination < 0.10:
-        console.print("[yellow]: fixable range — one more weekend of prompt tuning, then re-decide.[/yellow]")
+        console.print("[yellow]In the fixable range — more prompt tuning before re-deciding.[/yellow]")
     else:
         console.print(
-            "[red]— per the project docs, stop and pivot to the "
-            "CMS-0057-F Transparency Agent.[/red]"
+            "[red]Extraction quality threshold not met.[/red]"
         )
 
-    # type_agreement isn't one of the project docs's thresholds, but a matched
+    # type_agreement isn't one of the primary thresholds above, but a matched
     # span with the wrong type (e.g. exclusion mislabeled required) inverts the
     # actual coverage decision downstream -- too consequential to bury.
     if all_type_disagreements:
@@ -285,7 +284,7 @@ def eval_retrieval_cmd(
     queries_path: Path = typer.Option(config.GOLDEN_DIR / "retrieval_queries.json"),
     ncd_queries_path: Path = typer.Option(config.GOLDEN_DIR / "retrieval_queries_ncd.json"),
 ) -> None:
-    """: recall@1/@5, reported per scenario rather than one blended number.
+    """Retrieval eval: recall@1/@5, reported per scenario rather than one blended number.
 
     Three genuinely different situations, not one system: LCDs are code-indexed
     and the caller has both a procedure and a diagnosis code (the common case);
@@ -300,7 +299,7 @@ def eval_retrieval_cmd(
     queries = json.loads(queries_path.read_text())
     n = len(queries)
 
-    # Scenario 1: both codes + state — the query shape the project docs actually specifies.
+    # Scenario 1: both codes + state — the realistic query shape this project targets.
     both_r1 = both_r5 = 0
     # Scenario 2: only one of the two codes — the weaker, still-realistic case.
     single_r1 = single_r5 = 0
@@ -342,9 +341,9 @@ def eval_retrieval_cmd(
     )
 
     if both_recall[1] > 0.90:
-        console.print(f"\n[green]✓ [/green] (LCD combined-code recall@5 = {both_recall[1]:.2f})")
+        console.print(f"\n[green]✓ Retrieval threshold met[/green] (LCD combined-code recall@5 = {both_recall[1]:.2f})")
     else:
-        console.print(f"\n[red][/red] (LCD combined-code recall@5 = {both_recall[1]:.2f}, need > 0.90)")
+        console.print(f"\n[red]Retrieval threshold not met[/red] (LCD combined-code recall@5 = {both_recall[1]:.2f}, need > 0.90)")
 
 
 DEFAULT_NOTE_POLICIES = [
@@ -359,7 +358,7 @@ def synthesize_notes_cmd(
     notes_dir: Path = typer.Option(config.GOLDEN_DIR / "notes"),
     model: str = typer.Option(config.MODEL),
 ) -> None:
-    """synthesize meets_all/fails_one/ambiguous_one notes per policy."""
+    """Synthesize meets_all/fails_one/ambiguous_one notes per policy."""
     import random
 
     ids = policy_id or DEFAULT_NOTE_POLICIES
@@ -412,7 +411,7 @@ def eval_checker_cmd(
     notes_dir: Path = typer.Option(config.GOLDEN_DIR / "notes"),
     model: str = typer.Option(config.MODEL),
 ) -> None:
-    """: per-criterion verdict accuracy, abstention correctness, and appeal
+    """Per-criterion verdict accuracy, abstention correctness, and appeal
     citation integrity across the synthesized note set."""
     files = sorted(f for f in notes_dir.glob("*.json") if f.name != ".gitkeep")
     if not files:
@@ -493,9 +492,9 @@ def eval_checker_cmd(
     )
 
     if verdict_accuracy >= 0.80 and n_appeal_failed == 0:
-        console.print("[green]✓ [/green]")
+        console.print("[green]✓ Checker threshold met[/green]")
     else:
-        console.print("[yellow]not clearly passed — review the numbers above[/yellow]")
+        console.print("[yellow]Checker threshold not clearly met — review the numbers above[/yellow]")
 
 
 @app.command()
@@ -505,7 +504,7 @@ def eval(
     model: str = typer.Option(config.MODEL, help="Model to use (ignored if --sweep)"),
     report: Path = typer.Option(None, help="Write JSON results here, e.g. evals/results/20260725.json"),
 ) -> None:
-    """one reproducible eval run. The published number, not an ad-hoc one."""
+    """One reproducible eval run. The published number, not an ad-hoc one."""
     if not full:
         console.print("Only --full is implemented — runs extraction, retrieval, and checking together.")
         raise typer.Exit(1)

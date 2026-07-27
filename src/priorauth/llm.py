@@ -22,7 +22,7 @@ from . import config, db
 
 T = TypeVar("T", bound=BaseModel)
 
-# Per-million-token prices, used for the cost table.
+# Per-million-token prices, used for the eval harness's cost table.
 # Sonnet 5 carries an intro rate ($2/$10) through 2026-08-31; base rate ($3/$15)
 # applies after that -- revisit this entry once the intro window closes.
 PRICING_USD_PER_MTOK: dict[str, tuple[float, float]] = {

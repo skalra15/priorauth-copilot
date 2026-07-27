@@ -1,6 +1,7 @@
-"""Synthesize clinical notes for the eval set.
+"""Synthesize clinical notes for the checker eval set.
 
-Three variants per policy, per the project docs meets_all     -- clearly satisfies every APPLICABLE required criterion, triggers no exclusions
+Three variants per policy:
+  meets_all     -- clearly satisfies every APPLICABLE required criterion, triggers no exclusions
   fails_one     -- satisfies everything applicable except one targeted criterion, which it fails
   ambiguous_one -- satisfies everything applicable except one targeted criterion, left unaddressed
 
@@ -96,8 +97,8 @@ def expected_verdicts(criteria: list[Criterion], note: SyntheticNote) -> dict[st
     the service at all; a "conditional on a specific prior episode" exclusion may not be
     something a first encounter note should be expected to address either way). Not fixed here:
     doing so generally requires distinguishing those exclusion sub-types, which the current
-    schema doesn't encode. Known, disclosed limitation -- see the project docs-style honesty, not
-    something to paper over with a special case per policy.
+    schema doesn't encode. Known, disclosed limitation, not something to paper
+    over with a special case per policy.
     """
     expected: dict[str, str] = {}
     for c in _testable(criteria):

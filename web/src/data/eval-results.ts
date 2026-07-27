@@ -1,4 +1,4 @@
-// Synced by hand from evals/results/20260725.json ().
+// Synced by hand from evals/results/20260725.json (the full model sweep).
 // Regenerate that file with `python -m priorauth.cli eval --full --sweep --report evals/results/<date>.json`
 // and copy the updated numbers here -- this frontend doesn't read across the repo at build time
 // since only web/ is deployed to Vercel.

@@ -1,6 +1,7 @@
 // A handful of the synthetic golden notes, so a first-time visitor can
-// see the checker work without already knowing a CPT/ICD-10 pair (:
-// "someone who doesn't know the project can use it without you explaining anything").
+// see the checker work without already knowing a CPT/ICD-10 pair --
+// someone who doesn't know the project should be able to use it without
+// anything being explained to them first.
 
 export type Example = {
   label: string;

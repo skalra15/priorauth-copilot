@@ -67,7 +67,7 @@ def load_raw(source: Path | None = None) -> dict[str, int]:
     csv_paths = sorted(source.rglob("*.csv"))
     if not csv_paths:
         raise FileNotFoundError(
-            f"No CSVs under {source}. See the project docs Step 1.1 — the CMS bulk "
+            f"No CSVs under {source}. The CMS bulk "
             "downloads must be fetched manually (they require a license click-through)."
         )
 
@@ -121,7 +121,7 @@ def describe_raw() -> dict[str, dict]:
 
 
 # ---------------------------------------------------------------------------
-# STAGE 2 — YOU IMPLEMENT THIS (, step 1.3)
+# STAGE 2 — normalization
 # ---------------------------------------------------------------------------
 
 
@@ -164,7 +164,7 @@ def _coverage_text(row: sqlite3.Row) -> str:
 def normalize() -> tuple[int, int]:
     """Map raw CMS tables onto `policies` and `policy_codes`.
 
-    Real schema notes (differs from the generic description in the project docs):
+    Real schema notes (differs from the CMS documentation's generic description):
       * LCDs don't have one HTML coverage blob — it's split across `indication`,
         `diagnoses_support(_dont_support)`, `coding_guidelines`, `doc_reqs`,
         `associated_info`. See `_coverage_text()`.
