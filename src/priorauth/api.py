@@ -10,28 +10,19 @@ notes only).
 
 from __future__ import annotations
 
+import time
+from collections import defaultdict, deque
 from typing import Literal
 
 from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
-from slowapi import Limiter, _rate_limit_exceeded_handler
-from slowapi.errors import RateLimitExceeded
-from slowapi.util import get_remote_address
 
 from . import appeal, check, config, db, extract, retrieve
 from .appeal import AppealSection
 from .schemas import Criterion, CoverageDecision
 
 app = FastAPI(title="PriorAuth Copilot API")
-
-# In-memory, per-process rate limiting -- this API makes real, paid Claude
-# calls with no auth and CORS open to any origin, so it needs a floor against
-# casual abuse even though it's a single-instance deployment with no shared
-# limiter state across processes.
-limiter = Limiter(key_func=get_remote_address)
-app.state.limiter = limiter
-app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 app.add_middleware(
     CORSMiddleware,
@@ -41,6 +32,25 @@ app.add_middleware(
 )
 
 MAX_NOTE_CHARS = 6000
+
+# In-memory, per-process rate limiting -- this API makes real, paid Claude
+# calls with no auth and CORS open to any origin, so it needs a floor against
+# casual abuse even though it's a single-instance deployment with no shared
+# limiter state across processes. Plain stdlib sliding window, not a third-
+# party dependency: fewer moving parts to break in a deployed environment
+# for something this small.
+_request_log: dict[str, deque[float]] = defaultdict(deque)
+
+
+def _enforce_rate_limit(request: Request, *, max_requests: int, window_seconds: float) -> None:
+    ip = request.client.host if request.client else "unknown"
+    now = time.monotonic()
+    log = _request_log[ip]
+    while log and now - log[0] > window_seconds:
+        log.popleft()
+    if len(log) >= max_requests:
+        raise HTTPException(429, "Too many requests. Please wait a moment and try again.")
+    log.append(now)
 
 
 class CheckRequest(BaseModel):
@@ -79,19 +89,19 @@ def health() -> dict:
 
 
 @app.get("/api/codes", response_model=list[CodeSuggestion])
-@limiter.limit("60/minute")
 def codes_endpoint(
     request: Request,
     system: Literal["HCPCS", "ICD10"],
     q: str = Query("", max_length=64),
     limit: int = Query(15, ge=1, le=50),
 ) -> list[CodeSuggestion]:
+    _enforce_rate_limit(request, max_requests=60, window_seconds=60)
     return [CodeSuggestion(**c) for c in retrieve.search_codes(system, q, limit=limit)]
 
 
 @app.post("/api/check", response_model=CheckResponse)
-@limiter.limit("20/minute")
 def check_endpoint(request: Request, req: CheckRequest) -> CheckResponse:
+    _enforce_rate_limit(request, max_requests=20, window_seconds=60)
     if not req.cpt and not req.icd10:
         raise HTTPException(400, "Provide at least one of cpt or icd10")
 

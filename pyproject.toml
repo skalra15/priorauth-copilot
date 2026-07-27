@@ -20,7 +20,7 @@ dependencies = [
 
 [project.optional-dependencies]
 retrieval = ["sentence-transformers>=3.0", "numpy>=1.26"]
-ui = ["fastapi>=0.111", "uvicorn>=0.30", "psycopg2-binary>=2.9", "slowapi>=0.1.9"]
+ui = ["fastapi>=0.111", "uvicorn>=0.30", "psycopg2-binary>=2.9"]
 dev = ["pytest>=8.2"]
 
 [tool.setuptools.packages.find]
