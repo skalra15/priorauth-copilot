@@ -77,8 +77,10 @@ export class ApiError extends Error {
 // Extraction + checking (and sometimes appeal drafting) means multiple real
 // Claude calls per request -- generous, but bounded, so a hung backend or a
 // cold Render instance fails with a clear message instead of an indefinite
-// spinner.
-const CHECK_TIMEOUT_MS = 45_000;
+// spinner. A fresh, never-before-seen code/note combination on the deployed
+// instance runs all three calls sequentially and has measured up to ~40s, so
+// this leaves real margin rather than sitting right at that line.
+const CHECK_TIMEOUT_MS = 60_000;
 
 export async function checkNote(req: CheckRequest): Promise<CheckResponse> {
   const controller = new AbortController();
