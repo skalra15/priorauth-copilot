@@ -1,4 +1,6 @@
-anthropic>=0.40.0
+# Pinned exactly. This was unpinned until SDK 2.x removed `temperature` from
+# messages.create and a routine Render rebuild took the live demo down.
+anthropic==0.120.0
 pydantic>=2.7
 python-dotenv>=1.0
 typer>=0.12
