@@ -10,8 +10,11 @@ notes only).
 
 from __future__ import annotations
 
+import asyncio
+import logging
 import time
 from collections import defaultdict, deque
+from contextlib import asynccontextmanager
 from typing import Literal
 
 from fastapi import FastAPI, HTTPException, Query, Request
@@ -22,7 +25,43 @@ from . import appeal, check, config, db, extract, retrieve
 from .appeal import AppealSection
 from .schemas import Criterion, CoverageDecision
 
-app = FastAPI(title="PriorAuth Copilot API")
+logger = logging.getLogger(__name__)
+
+# Supabase's free tier pauses a project after about 7 days with no database
+# activity, and a paused database takes every endpoint except /api/health
+# down with it. This happened twice in production during quiet weeks. The
+# Render instance runs continuously, so a small query every 12 hours keeps
+# the database active without any outside scheduler. It only runs against
+# Postgres; local SQLite never pauses.
+KEEPALIVE_INTERVAL_SECONDS = 12 * 60 * 60
+
+
+def _ping_database() -> None:
+    with db.connect() as conn:
+        conn.execute("SELECT policy_id FROM policies LIMIT 1").fetchone()
+
+
+async def _keep_database_awake() -> None:
+    while True:
+        try:
+            await asyncio.to_thread(_ping_database)
+        except Exception:
+            # A failed ping shouldn't kill the loop. If the database is
+            # already paused, it has to be resumed by hand in Supabase,
+            # and the next ping picks up from there.
+            logger.exception("Database keep-alive ping failed")
+        await asyncio.sleep(KEEPALIVE_INTERVAL_SECONDS)
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    task = asyncio.create_task(_keep_database_awake()) if config.DATABASE_URL else None
+    yield
+    if task:
+        task.cancel()
+
+
+app = FastAPI(title="PriorAuth Copilot API", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
