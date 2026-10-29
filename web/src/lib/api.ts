@@ -77,10 +77,11 @@ export class ApiError extends Error {
 // Extraction + checking (and sometimes appeal drafting) means multiple real
 // Claude calls per request -- generous, but bounded, so a hung backend or a
 // cold Render instance fails with a clear message instead of an indefinite
-// spinner. A fresh, never-before-seen code/note combination on the deployed
-// instance runs all three calls sequentially and has measured up to ~40s, so
-// this leaves real margin rather than sitting right at that line.
-const CHECK_TIMEOUT_MS = 60_000;
+// spinner. The slowest case is the first-ever check against a large policy:
+// extraction, checking, and appeal drafting all run fresh and in sequence.
+// One with 46 criteria measured ~59s on the deployed instance, so 90s leaves
+// real margin. Once a policy's extraction is cached, checks take seconds.
+const CHECK_TIMEOUT_MS = 90_000;
 
 export async function checkNote(req: CheckRequest): Promise<CheckResponse> {
   const controller = new AbortController();
